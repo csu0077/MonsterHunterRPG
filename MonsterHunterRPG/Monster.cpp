@@ -1,11 +1,12 @@
 #include "Monster.h"
 
 Monster::Monster()
+	:HP(1),MP(1),atk(1),def(1),mag(1)
 {
 }
 
-Monster::Monster(int hp, int mp)
-	:HP(hp),MP(mp)
+Monster::Monster(int hp, int mp, int atk, int def, int mag)
+	:HP(hp),MP(mp),atk(atk),def(def),mag(mag)
 {}
 
 void Monster::setHP(int hp)

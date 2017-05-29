@@ -3,7 +3,7 @@ class Monster
 {
 public:
 	Monster();
-	Monster(int hp, int sp);
+	Monster(int hp, int mp, int atk, int def, int mag);
 	int getHP();
 	void setHP(int hp);
 	int getMP();
