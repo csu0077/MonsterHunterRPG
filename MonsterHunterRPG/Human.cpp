@@ -28,6 +28,46 @@ void Human::setMP(int mp)
 	this->MP = mp;
 }
 
+int Human::getAtk()
+{
+	return this->atk;
+}
+
+void Human::setAtk(int atk)
+{
+	this->atk = atk;
+}
+
+int Human::getDef()
+{
+	return this->def;
+}
+
+void Human::setDef(int def)
+{
+	this->def = def;
+}
+
+int Human::getMag()
+{
+	return this->def;
+}
+
+void Human::setMag(int mag)
+{
+	this->mag = mag;
+}
+
+int Human::getMDef()
+{
+	return this->def;
+}
+
+void Human::setMDef(int mDef)
+{
+	this->mDef = mDef;
+}
+
 bool* Human::getStatus()
 {
 	return status;

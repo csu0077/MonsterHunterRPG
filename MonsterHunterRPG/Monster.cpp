@@ -35,6 +35,46 @@ void Monster::setStatus(int ailment)
 	this->status[ailment] = !this->status[ailment];  //pretty much just flip the bool
 }
 
+int Monster::getAtk()
+{
+	return this->atk;
+}
+
+void Monster::setAtk(int atk)
+{
+	this->atk = atk;
+}
+
+int Monster::getDef()
+{
+	return this->def;
+}
+
+void Monster::setDef(int def)
+{
+	this->def = def;
+}
+
+int Monster::getMag()
+{
+	return this->def;
+}
+
+void Monster::setMag(int mag)
+{
+	this->mag = mag;
+}
+
+int Monster::getMDef()
+{
+	return this->def;
+}
+
+void Monster::setMDef(int mDef)
+{
+	this->mDef = mDef;
+}
+
 bool* Monster::getStatus()
 {
 	return status;
