@@ -18,6 +18,10 @@ public:
 	void setMDef(int mDef);
 	bool* getStatus();
 	void setStatus(int status);
+	bool* getRes();
+	void setRes(int res);
+
+
 	~Monster();
 
 private:

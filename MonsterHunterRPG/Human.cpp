@@ -78,6 +78,16 @@ void Human::setStatus(int ailment)
 	this->status[ailment] = !this->status[ailment];	//pretty much just flip the bool
 }
 
+bool* Human::getRes()
+{
+	return this->resistances;
+}
+
+void Human::setRes(int res)
+{
+	this->resistances[res] = !this->resistances[res];  //pretty much just flip the bool
+}
+
 Human::~Human()
 {
 }
