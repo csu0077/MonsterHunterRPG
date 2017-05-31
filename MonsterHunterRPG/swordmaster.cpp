@@ -1,10 +1,15 @@
 #include "swordmaster.h"
 
-swordmaster::swordmaster()
+Swordmaster::Swordmaster()
 {
+	Monster();
 }
 
+void Swordmaster::attack(Monster mon)
+{
+	slash1(mon);
+}
 
-swordmaster::~swordmaster()
+Swordmaster::~Swordmaster()
 {
 }

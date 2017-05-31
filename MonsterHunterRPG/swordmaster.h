@@ -1,11 +1,12 @@
 #pragma once
 #include "Human.h"
 
-class swordmaster :
+class Swordmaster :
 	public Human
 {
 	public:
-		swordmaster();
-		virtual ~swordmaster();
+		Swordmaster();
+		void attack(Monster mon);
+		virtual ~Swordmaster();
 };
 

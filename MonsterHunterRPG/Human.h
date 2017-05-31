@@ -7,6 +7,7 @@ class Human:
 public:
 	Human();
 	Human(int hp, int mp, int atk, int def, int mag);
+	void attack(Monster mon);
 	~Human();
 
 private:
