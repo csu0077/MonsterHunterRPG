@@ -1,7 +1,5 @@
 #include "swordmaster.h"
 
-
-
 swordmaster::swordmaster()
 {
 }
