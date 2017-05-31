@@ -1,11 +1,11 @@
 #pragma once
 #include "Human.h"
-class Monk :
+class Sharpshooter :
 	public Human
 {
 public:
-	Monk();
+	Sharpshooter();
 	void attack(Monster mon);
-	~Monk();
+	~Sharpshooter();
 };
 
