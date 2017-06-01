@@ -22,11 +22,24 @@ enum Pwr
 Monster::Monster()
 	:HP(1),MP(1),atk(1),def(1),mag(1)
 {
+	maxHP = HP;
+	maxMP = MP;
+	maxAtk = atk;
+	maxDef = def;
+	maxMag = mag;
+	maxMDef = mDef;
 }
 
 Monster::Monster(int hp, int mp, int atk, int def, int mag)
 	:HP(hp),MP(mp),atk(atk),def(def),mag(mag)
-{}
+{
+	maxHP = HP;
+	maxMP = MP;
+	maxAtk = atk;
+	maxDef = def;
+	maxMag = mag;
+	maxMDef = mDef;
+}
 
 void Monster::setHP(int hp)
 {
@@ -106,6 +119,66 @@ bool* Monster::getRes()
 void Monster::setRes(int res)
 {
 	this->resistances[res] = !this->resistances[res];  //pretty much just flip the bool
+}
+
+int Monster::getMaxHP()
+{
+	return this->maxHP;
+}
+
+int Monster::getMaxMP()
+{
+	return maxMP;
+}
+
+int Monster::getMaxAtk()
+{
+	return maxAtk;
+}
+
+int Monster::getMaxDef()
+{
+	return maxDef;
+}
+
+int Monster::getMaxMag()
+{
+	return maxMag;
+}
+
+int Monster::getMaxMDef()
+{
+	return maxMDef;
+}
+
+void Monster::setMaxHP(int hp)
+{
+	this->maxHP = hp;
+}
+
+void Monster::setMaxMP(int mp)
+{
+	this->maxMP = mp;
+}
+
+void Monster::setMaxAtk(int atk)
+{
+	this->maxAtk = atk;
+}
+
+void Monster::setMaxDef(int def)
+{
+	this->maxDef = def;
+}
+
+void Monster::setMaxMag(int mag)
+{
+	this->maxMag = mag;
+}
+
+void Monster::setMaxMDef(int mdef)
+{
+	this->maxMDef = mdef;
 }
 
 void Monster::slash1(Monster mon) //weak slash damage

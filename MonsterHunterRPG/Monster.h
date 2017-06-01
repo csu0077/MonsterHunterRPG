@@ -39,6 +39,20 @@ public:
 	bool* getRes();
 	void setRes(int res);
 
+	int getMaxHP();
+	int getMaxMP();
+	int getMaxAtk();
+	int getMaxDef();
+	int getMaxMag();
+	int getMaxMDef();
+
+	void setMaxHP(int hp);
+	void setMaxMP(int mp);
+	void setMaxAtk(int atk);
+	void setMaxDef(int def);
+	void setMaxMag(int mag);
+	void setMaxMDef(int mdef);
+
 	//1= weak, 2 = medium, 3 = strong
 	void slash1(Monster mon); //weak slash damage
 	void slash2(Monster mon); //medium slash damage
@@ -77,11 +91,17 @@ public:
 
 private:
 	int HP;
+	int maxHP;
 	int MP; //magic points
+	int maxMP;
 	int atk; //attack
+	int maxAtk;
 	int def; //defence
+	int maxDef;
 	int mag; //magic
+	int maxMag;
 	int mDef; //magic defence
+	int maxMDef;
 	bool status[14]; //status effect array
 	int statusCounter[14];
 	bool resistances[8]; //resistances array i.e. whether or not weak to ice/ resist to fire
@@ -119,7 +139,12 @@ private:
 		if (!statusCounter[ailment])	//counter is zero, meaning no blight yet
 			statusCounter[ailment] = 3;
 		else
+		{
 			statusCounter[ailment]--;
+
+			if (!statusCounter[ailment])
+				setStatus(ailment);
+		}
 	}
 
 	void ailmentCounter(int ailment)
@@ -129,12 +154,7 @@ private:
 		switch (ailment)
 		{
 		case FIREBLIGHT:
-			
 			counter(FIREBLIGHT);
-			damage = 0.05 * double(getHP()); //i have to make it max hp instead of current hp or it will never be reduced down to death
-
-			setHP(getHP() - damage);
-
 			break;
 		case WATERBLIGHT:
 			counter(WATERBLIGHT);
@@ -142,9 +162,11 @@ private:
 			break;
 		case THUNDERBLIGHT:
 			counter(THUNDERBLIGHT);
+			//todo: add status vulerability chance
 			break;
 		case ICEBLIGHT:
 			counter(ICEBLIGHT);
+			//todo implement turn system before hand
 			break;
 		case DRAGONBLIGHT:
 			counter(DRAGONBLIGHT);
@@ -154,12 +176,18 @@ private:
 			break;
 		case POISON:
 			counter(POISON);
+			damage = 0.05 * double(getMaxHP()); 
+			setHP(getHP() - damage);
 			break;
 		case DEADLYPOISON:
 			counter(DEADLYPOISON);
+			damage = 0.1 * double(getMaxHP());
+			setHP(getHP() - damage);
 			break;
 		case LETHALPOISON:
 			counter(LETHALPOISON);
+			damage = 0.15 * double(getMaxHP());
+			setHP(getHP() - damage);
 			break;
 		case KO:
 			counter(KO);
