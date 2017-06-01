@@ -1,4 +1,22 @@
 #pragma once
+enum Ailment
+{
+	FIREBLIGHT,
+	WATERBLIGHT,
+	ICEBLIGHT,
+	THUNDERBLIGHT,
+	DRAGONBLIGHT,
+	BLASTBLIGHT,
+	POISON,
+	DEADLYPOISON,
+	LETHALPOISON,
+	KO,
+	PARALYSIS,
+	MUDSNOW,
+	SLEEP,
+	BLEED
+};
+
 class Monster
 {
 public:
@@ -54,20 +72,6 @@ public:
 	void dragon2(Monster mon);
 	void dragon3(Monster mon);
 
-	void fireBlight();
-	void waterBlight();
-	void thunderBlight();
-	void iceBlight();
-	void dragonBlight();
-	void blastBlight();
-	void poison();
-	void dPoison();	//deadly poison
-	void lPoison(); //lethal poison
-	void KO(); 
-	void para();
-	void mudSnow(); //mud/snow ailment
-	void sleep();
-	void bleed(); 
 
 	~Monster();
 
@@ -105,6 +109,39 @@ private:
 			damage = 0;					//no damage if negative value
 
 		mon.setHP(mon.getHP() - damage);
+	}
+	void ailmentCounter(int ailment)
+	{
+		double damage = 0.0;
+
+		switch (ailment)
+		{
+		case FIREBLIGHT:
+			if (!statusCounter[FIREBLIGHT])	//counter is zero, meaning no blight yet
+				statusCounter[FIREBLIGHT] = 3;
+			else
+				statusCounter[FIREBLIGHT]--;
+
+			damage = 0.05 * double(getHP()); //i have to make it max hp instead of current hp or it will never be reduced down to death
+
+			setHP(getHP() - damage);
+
+		case WATERBLIGHT:
+		case THUNDERBLIGHT:
+		case ICEBLIGHT:
+		case DRAGONBLIGHT:
+		case BLASTBLIGHT:
+		case POISON:
+		case DEADLYPOISON:
+		case LETHALPOISON:
+		case KO:
+		case PARALYSIS:
+		case MUDSNOW:
+		case SLEEP:
+		case BLEED:
+		default:
+			break;
+		}
 	}
 };
 
