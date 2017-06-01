@@ -94,10 +94,13 @@ private:
 		{
 		case 1:
 			damage *= 1.25;
+			break;
 		case 2:
 			damage *= 1.5;
+			break;
 		default:
 			damage *= 1;
+			break;
 		}
 
 		if (mon.getRes()[type])		//if the bool is true at index, that is the weakness
@@ -110,6 +113,15 @@ private:
 
 		mon.setHP(mon.getHP() - damage);
 	}
+
+	void counter(int ailment)
+	{
+		if (!statusCounter[ailment])	//counter is zero, meaning no blight yet
+			statusCounter[ailment] = 3;
+		else
+			statusCounter[ailment]--;
+	}
+
 	void ailmentCounter(int ailment)
 	{
 		double damage = 0.0;
@@ -117,28 +129,53 @@ private:
 		switch (ailment)
 		{
 		case FIREBLIGHT:
-			if (!statusCounter[FIREBLIGHT])	//counter is zero, meaning no blight yet
-				statusCounter[FIREBLIGHT] = 3;
-			else
-				statusCounter[FIREBLIGHT]--;
-
+			
+			counter(FIREBLIGHT);
 			damage = 0.05 * double(getHP()); //i have to make it max hp instead of current hp or it will never be reduced down to death
 
 			setHP(getHP() - damage);
 
+			break;
 		case WATERBLIGHT:
+			counter(WATERBLIGHT);
+			//todo implement turn system before hand
+			break;
 		case THUNDERBLIGHT:
+			counter(THUNDERBLIGHT);
+			break;
 		case ICEBLIGHT:
+			counter(ICEBLIGHT);
+			break;
 		case DRAGONBLIGHT:
+			counter(DRAGONBLIGHT);
+			break;
 		case BLASTBLIGHT:
+			counter(BLASTBLIGHT);
+			break;
 		case POISON:
+			counter(POISON);
+			break;
 		case DEADLYPOISON:
+			counter(DEADLYPOISON);
+			break;
 		case LETHALPOISON:
+			counter(LETHALPOISON);
+			break;
 		case KO:
+			counter(KO);
+			break;
 		case PARALYSIS:
+			counter(PARALYSIS);
+			break;
 		case MUDSNOW:
+			counter(MUDSNOW);
+			break;
 		case SLEEP:
+			counter(SLEEP);
+			break;
 		case BLEED:
+			counter(BLEED);
+			break;
 		default:
 			break;
 		}
