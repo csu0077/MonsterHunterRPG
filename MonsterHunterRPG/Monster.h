@@ -1,4 +1,6 @@
 #pragma once
+
+
 enum Ailment
 {
 	FIREBLIGHT,
@@ -21,7 +23,7 @@ class Monster
 {
 public:
 	Monster();
-	Monster(int hp, int mp, int atk, int def, int mag);
+	Monster(int hp, int mp, int atk, int def, int mag, int mdef);
 	int getHP();
 	void setHP(int hp);
 	int getMP();

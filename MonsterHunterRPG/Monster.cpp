@@ -20,7 +20,7 @@ enum Pwr
 };
 
 Monster::Monster()
-	:HP(1),MP(1),atk(1),def(1),mag(1)
+	:HP(1),MP(1),atk(1),def(1),mag(1), mDef(1)
 {
 	maxHP = HP;
 	maxMP = MP;
@@ -30,7 +30,7 @@ Monster::Monster()
 	maxMDef = mDef;
 }
 
-Monster::Monster(int hp, int mp, int atk, int def, int mag)
+Monster::Monster(int hp, int mp, int atk, int def, int mag, int mdef)
 	:HP(hp),MP(mp),atk(atk),def(def),mag(mag)
 {
 	maxHP = HP;
