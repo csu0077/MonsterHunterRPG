@@ -20,7 +20,7 @@ enum Pwr
 };
 
 Monster::Monster()
-	:HP(1),MP(1),atk(1),def(1),mag(1), mDef(1)
+	:name("doofus"),HP(1),MP(1),atk(1),def(1),mag(1), mDef(1)
 {
 	maxHP = HP;
 	maxMP = MP;
@@ -30,9 +30,10 @@ Monster::Monster()
 	maxMDef = mDef;
 }
 
-Monster::Monster(int hp, int mp, int atk, int def, int mag, int mdef)
+Monster::Monster(string name, int hp, int mp, int atk, int def, int mag, int mdef)
 	:HP(hp),MP(mp),atk(atk),def(def),mag(mag)
 {
+	name = name;
 	maxHP = HP;
 	maxMP = MP;
 	maxAtk = atk;
@@ -151,6 +152,11 @@ int Monster::getMaxMDef()
 	return maxMDef;
 }
 
+string Monster::getName()
+{
+	return this->name;
+}
+
 void Monster::setMaxHP(int hp)
 {
 	this->maxHP = hp;
@@ -181,9 +187,14 @@ void Monster::setMaxMDef(int mdef)
 	this->maxMDef = mdef;
 }
 
+void Monster::setName(string name)
+{
+	this->name = name;
+}
+
 void Monster::slash1(Monster mon) //weak slash damage
 {
-	damageCalc(mon, SLASH, WEAK);
+	damageCalc(mon, SLASH, WEAK); //in the monster.h file
 }
 
 void Monster::slash2(Monster mon) //medium slash damage
