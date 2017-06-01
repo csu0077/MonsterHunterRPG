@@ -229,6 +229,63 @@ void Monster::dragon3(Monster mon)
 	damageCalc(mon, DRAGON, STRONG);
 }
 
+void Monster::fireBlight()
+{
+
+}
+
+void Monster::waterBlight()
+{
+}
+
+void Monster::thunderBlight()
+{
+}
+
+void Monster::iceBlight()
+{
+}
+
+void Monster::dragonBlight()
+{
+}
+
+void Monster::blastBlight()
+{
+}
+
+void Monster::poison()
+{
+}
+
+void Monster::dPoison()
+{
+}
+
+void Monster::lPoison()
+{
+}
+
+void Monster::KO()
+{
+}
+
+void Monster::para()
+{
+}
+
+void Monster::mudSnow()
+{
+}
+
+void Monster::sleep()
+{
+}
+
+void Monster::bleed()
+{
+}
+
 Monster::~Monster()
 {
 }

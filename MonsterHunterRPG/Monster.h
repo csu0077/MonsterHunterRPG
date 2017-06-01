@@ -54,6 +54,21 @@ public:
 	void dragon2(Monster mon);
 	void dragon3(Monster mon);
 
+	void fireBlight();
+	void waterBlight();
+	void thunderBlight();
+	void iceBlight();
+	void dragonBlight();
+	void blastBlight();
+	void poison();
+	void dPoison();	//deadly poison
+	void lPoison(); //lethal poison
+	void KO(); 
+	void para();
+	void mudSnow(); //mud/snow ailment
+	void sleep();
+	void bleed(); 
+
 	~Monster();
 
 private:
@@ -64,6 +79,7 @@ private:
 	int mag; //magic
 	int mDef; //magic defence
 	bool status[14]; //status effect array
+	int statusCounter[14];
 	bool resistances[8]; //resistances array i.e. whether or not weak to ice/ resist to fire
 
 	void damageCalc(Monster mon, int type, int power)	//type is type of damage i.e. slash damage, power is how strong the attack will be i.e. weak/medium/strong
