@@ -1,5 +1,7 @@
 #pragma once
+#include <string>
 
+using namespace std;
 
 enum Ailment
 {
@@ -23,37 +25,38 @@ class Monster
 {
 public:
 	Monster();
-	Monster(int hp, int mp, int atk, int def, int mag, int mdef);
+	Monster(string name, int hp, int mp, int atk, int def, int mag, int mdef);
 	int getHP();
-	void setHP(int hp);
 	int getMP();
-	void setMP(int mp);
 	int getAtk();
-	void setAtk(int atk);
 	int getDef();
-	void setDef(int def);
 	int getMag();
-	void setMag(int mag);
 	int getMDef();
-	void setMDef(int mDef);
 	bool* getStatus();
-	void setStatus(int status);
 	bool* getRes();
-	void setRes(int res);
-
 	int getMaxHP();
 	int getMaxMP();
 	int getMaxAtk();
 	int getMaxDef();
 	int getMaxMag();
 	int getMaxMDef();
+	string getName();
 
+	void setHP(int hp);
+	void setMP(int mp);
+	void setAtk(int atk);
+	void setDef(int def);
+	void setMag(int mag);
+	void setMDef(int mDef);
+	void setStatus(int status);
+	void setRes(int res);
 	void setMaxHP(int hp);
 	void setMaxMP(int mp);
 	void setMaxAtk(int atk);
 	void setMaxDef(int def);
 	void setMaxMag(int mag);
 	void setMaxMDef(int mdef);
+	void setName(string name);
 
 	//1= weak, 2 = medium, 3 = strong
 	void slash1(Monster mon); //weak slash damage
@@ -92,6 +95,7 @@ public:
 	~Monster();
 
 private:
+	string name;
 	int HP;
 	int maxHP;
 	int MP; //magic points

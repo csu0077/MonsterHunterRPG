@@ -24,9 +24,9 @@ Human::Human()
 	Monster();
 }
 
-Human::Human(int hp, int mp, int atk, int def, int mag, int mdef)
+Human::Human(string name, int hp, int mp, int atk, int def, int mag, int mdef)
 {
-	Monster(hp, mp, atk, def, mag, mdef );
+	Monster(name, hp, mp, atk, def, mag, mdef );
 }
 
 void Human::attack(Monster mon)
