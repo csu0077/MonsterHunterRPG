@@ -22,11 +22,15 @@ enum MyEnum1
 Human::Human()
 {
 	Monster();
+	Item filler;
+	inventory.push_back(filler);
 }
 
 Human::Human(string name, int hp, int mp, int atk, int def, int mag, int mdef)
 {
 	Monster(name, hp, mp, atk, def, mag, mdef );
+	Item filler;
+	inventory.push_back(filler);
 }
 
 void Human::attack(Monster mon)
