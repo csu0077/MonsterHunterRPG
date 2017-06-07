@@ -33,6 +33,40 @@ void Human::attack(Monster mon)
 {
 }
 
+Item Human::getItem(int i)
+{
+	return inventory[i];
+}
+
+void Human::addItem(Item item)
+{
+	for (int i = 0; i < inventory.size() - 1; i++)
+	{
+		if (inventory[i].getName() == "")
+		{
+			inventory[i] = item;
+			return;
+		}
+	}
+
+	inventory.push_back(item);
+}
+
+void Human::removeItem(string name)
+{
+	for (int i = 0; i < inventory.size() - 1; i++)
+	{
+		if (inventory[i].getName() == name)	
+		{ 
+			inventory[i].setName("");
+			inventory[i].setCount(0);
+			inventory[i].setTier(0);
+			break;
+		}
+			
+	}
+}
+
 Human::~Human()
 {
 }
