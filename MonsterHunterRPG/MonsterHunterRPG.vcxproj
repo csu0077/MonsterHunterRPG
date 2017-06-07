@@ -113,6 +113,7 @@
   <ItemGroup>
     <ClCompile Include="Human.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Source.cpp" />
     <ClCompile Include="swordmaster.cpp" />
   </ItemGroup>
   <ItemGroup>
