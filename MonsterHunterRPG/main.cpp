@@ -7,29 +7,38 @@
 
 using namespace std;
 
+void printStats(Monster m)
+{
+	cout << "name:" << m.getName() << endl <<
+		"HP:" << m.getHP() << endl <<
+		"MP:" << m.getMP() << endl <<
+		"Atk:" << m.getAtk() << endl <<
+		"Def:" << m.getDef() << endl <<
+		"Mag:" << m.getMag() << endl <<
+		"Mdef:" << m.getMDef() << endl << endl;
+}
+
 void testCode()
 {
-	//Monster(string name, int hp, int mp, int atk, int def, int mag, mdef)
-	Swordmaster masterFoo;
-	cout << "Master foo hp: " << masterFoo.getMaxHP() << endl;
-	cout << "Master foo mp: " << masterFoo.getMaxMP() << endl;
-	cout << "Master foo atk: " << masterFoo.getMaxAtk() << endl;
-	cout << "Master foo def: " << masterFoo.getMaxDef() << endl;
-	cout << "Master foo mDef: " << masterFoo.getMaxMDef() << endl;
-	cout << "Master foo mag: " << masterFoo.getMaxMag() << endl;
-	Sharpshooter shooterBar("obama", 10, 10, 10, 10, 0, 0);
-	cout << shooterBar.getName() << endl;
-	cout << shooterBar.getMaxHP() << endl;
-	cout << shooterBar.getMaxMP() << endl;
-	cout << shooterBar.getMaxAtk() << endl;
-	cout << shooterBar.getMaxDef() << endl;
-	cout << shooterBar.getMaxMDef() << endl;
-	cout << shooterBar.getMaxMag() << endl;
+	//testing Monster class Monster(string name, int hp, int mp, int atk, int def, int mag, int mdef);
+	Swordmaster sm("swordmaster",   100, 100, 10, 0, 10, 10);
+	Sharpshooter ss("sharpshooter", 100, 100, 10, 2, 10, 10);
+	//Monk m("monk", 100, 100, 10, 10, 10, 10);
+
+	printStats(sm);
+	printStats(ss);
+	//printStats(m);
+
+	cout << sm.getName() << " attacks " << ss.getName() << endl << endl;
+	sm.attack(ss);
+	printStats(ss);
+
+	//testing Item class
 }
 
 int main()
 {
 	testCode();
 	string doo;
-	getline(cin , doo);
+	for (int i = 0; i < 2000000000; i++);
 }
