@@ -56,11 +56,12 @@ int goToInn()
 		break;
 	}
 	//TODO rest,eat,storage, save
+	return 0;
 }
 
 int goToShop()
 {
-
+	return 0;
 }
 
 

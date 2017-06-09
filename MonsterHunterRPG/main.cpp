@@ -40,5 +40,5 @@ int main()
 {
 	testCode();
 	string doo;
-	for (int i = 0; i < 2000000000; i++);
+	cin >> doo;
 }
