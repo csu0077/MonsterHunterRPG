@@ -18,20 +18,6 @@ void printStats(Monster m)
 		"Mdef:" << m.getMDef() << endl << endl;
 }
 
-void printRes(Monster m)
-{
-	cout << "printing " << m.getName() << "'s resistances..." << endl;
-	cout << "slash: " << m.getRes()[0] << endl;
-	cout << "impact: " << m.getRes()[1] << endl;
-	cout << "shot: " << m.getRes()[2] << endl;
-	cout << "fire: " << m.getRes()[3] << endl;
-	cout << "water: " << m.getRes()[4] << endl;
-	cout << "thunder: " << m.getRes()[5] << endl;
-	cout << "ice: " << m.getRes()[6] << endl;
-	cout << "dragon: " << m.getRes()[7] << endl;
-
-}
-
 void testCode()
 {
 	//testing Monster class Monster(string name, int hp, int mp, int atk, int def, int mag, int mdef);
@@ -46,7 +32,6 @@ void testCode()
 	cout << sm.getName() << " attacks " << ss.getName() << endl << endl;
 	sm.attack(ss);
 	printStats(ss);
-	printRes(ss);
 
 	//testing Item class
 }
@@ -55,6 +40,5 @@ int main()
 {
 	testCode();
 	string doo;
-	cin >> doo;
-	//for (int i = 0; i < 2000000000; i++);
+	for (int i = 0; i < 2000000000; i++);
 }
