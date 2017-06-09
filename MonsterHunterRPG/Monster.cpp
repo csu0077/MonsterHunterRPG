@@ -84,7 +84,7 @@ void Monster::setDef(int def)
 
 int Monster::getMag()
 {
-	return this->def;
+	return this->mag;
 }
 
 void Monster::setMag(int mag)
@@ -94,7 +94,7 @@ void Monster::setMag(int mag)
 
 int Monster::getMDef()
 {
-	return this->def;
+	return this->mDef;
 }
 
 void Monster::setMDef(int mDef)
@@ -102,9 +102,9 @@ void Monster::setMDef(int mDef)
 	this->mDef = mDef;
 }
 
-bool* Monster::getStatus()
+vector<bool> Monster::getStatus()
 {
-	return this->status;
+	return status;
 }
 
 void Monster::setStatus(int ailment)
@@ -112,14 +112,14 @@ void Monster::setStatus(int ailment)
 	this->status[ailment] = !this->status[ailment];  //pretty much just flip the bool
 }
 
-bool* Monster::getRes()
+vector<int> Monster::getRes()
 {
 	return this->resistances;
 }
 
-void Monster::setRes(int res)
+void Monster::setRes(int res, int i)	//i represents whenever or not the unit is weak to said element i.e. 0 = no damage, 1 = neutral, 2 = weakness
 {
-	this->resistances[res] = !this->resistances[res];  //pretty much just flip the bool
+	this->resistances[res] = i;  //pretty much just flip the bool
 }
 
 int Monster::getMaxHP()
@@ -192,124 +192,148 @@ void Monster::setName(string name)
 	this->name = name;
 }
 
-void Monster::slash1(Monster mon) //weak slash damage
+void Monster::slash1(Monster & mon) //weak slash damage
 {
+	cout << "slash 1" << endl;
 	damageCalc(mon, SLASH, WEAK); //in the monster.h file
 }
 
-void Monster::slash2(Monster mon) //medium slash damage
+void Monster::slash2(Monster & mon) //medium slash damage
 {
+	cout << "slash 2" << endl;
 	damageCalc(mon, SLASH, MEDIUM);
 }
 
-void Monster::slash3(Monster mon) //strong slash damage
+void Monster::slash3(Monster & mon) //strong slash damage
 {
+	cout << "slash 3" << endl;
 	damageCalc(mon, SLASH, STRONG);
 }
 
-void Monster::impact1(Monster mon) 
+void Monster::impact1(Monster & mon) 
 {
+	cout << "impact 1" << endl;
 	damageCalc(mon, IMPACT, WEAK);
 }
 
-void Monster::impact2(Monster mon)
+void Monster::impact2(Monster & mon)
 {
+	cout << "impact 2" << endl;
 	damageCalc(mon, IMPACT, MEDIUM);
 }
 
-void Monster::impact3(Monster mon)
+void Monster::impact3(Monster & mon)
 {
+	cout << "impact 3" << endl;
 	damageCalc(mon, IMPACT, STRONG);
 }
 
-void Monster::shot1(Monster mon)
+void Monster::shot1(Monster & mon)
 {
+	cout << "shot 1" << endl;
 	damageCalc(mon, SHOT, WEAK);
 }
 
-void Monster::shot2(Monster mon)
+void Monster::shot2(Monster & mon)
 {
+	cout << "shot 2" << endl;
 	damageCalc(mon, SHOT, MEDIUM);
 }
 
-void Monster::shot3(Monster mon)
+void Monster::shot3(Monster & mon)
 {
+	cout << "shot 3" << endl;
 	damageCalc(mon, SHOT, STRONG);
 }
 
-void Monster::fire1(Monster mon)
+void Monster::fire1(Monster & mon)
 {
+	cout << "fire 1" << endl;
 	damageCalc(mon, FIRE, WEAK);
 }
 
-void Monster::fire2(Monster mon)
+void Monster::fire2(Monster & mon)
 {
+	cout << "fire 2" << endl;
 	damageCalc(mon, FIRE, MEDIUM);
 }
 
-void Monster::fire3(Monster mon)
+void Monster::fire3(Monster & mon)
 {
+	cout << "fire 3" << endl;
 	damageCalc(mon, FIRE, STRONG);
 }
 
 
-void Monster::ice1(Monster mon)
+void Monster::ice1(Monster & mon)
 {
+	cout << "ice 1" << endl;
 	damageCalc(mon, ICE, WEAK);
 }
 
-void Monster::ice2(Monster mon)
+void Monster::ice2(Monster & mon)
 {
+	cout << "ice 2" << endl;
 	damageCalc(mon, ICE, MEDIUM);
 }
 
-void Monster::ice3(Monster mon)
+void Monster::ice3(Monster & mon)
 {
+	cout << "ice 3" << endl;
 	damageCalc(mon, ICE, STRONG);
 }
 
-void Monster::water1(Monster mon)
+void Monster::water1(Monster & mon)
 {
+	cout << "water 1" << endl;
 	damageCalc(mon, WATER, WEAK);
 }
 
-void Monster::water2(Monster mon)
+void Monster::water2(Monster & mon)
 {
+	cout << "water 2" << endl;
 	damageCalc(mon, WATER, MEDIUM);
 }
 
-void Monster::water3(Monster mon)
+void Monster::water3(Monster & mon)
 {
+	cout << "water 3" << endl;
 	damageCalc(mon, WATER, STRONG);
 }
 
-void Monster::thunder1(Monster mon)
+void Monster::thunder1(Monster & mon)
 {
+	cout << "thunder 1" << endl;
 	damageCalc(mon, THUNDER, WEAK);
 }
 
-void Monster::thunder2(Monster mon)
+void Monster::thunder2(Monster & mon)
 {
+	cout << "thunder 2" << endl;
 	damageCalc(mon, THUNDER, MEDIUM);
 }
 
-void Monster::thunder3(Monster mon)
+void Monster::thunder3(Monster & mon)
 {
+	cout << "thunder 3" << endl;
 	damageCalc(mon, THUNDER, STRONG);
 }
 
-void Monster::dragon1(Monster mon)
+void Monster::dragon1(Monster & mon)
 {
+	cout << "dragon 1" << endl;
 	damageCalc(mon, DRAGON, WEAK);
 }
 
-void Monster::dragon2(Monster mon)
+void Monster::dragon2(Monster & mon)
 {
+	cout << "dragon 2" << endl;
 	damageCalc(mon, DRAGON, MEDIUM);
 }
 
-void Monster::dragon3(Monster mon)
+void Monster::dragon3(Monster & mon)
 {
+	cout << "dragon 3" << endl;
 	damageCalc(mon, DRAGON, STRONG);
 }
 

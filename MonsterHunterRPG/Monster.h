@@ -1,5 +1,7 @@
 #pragma once
+#include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -32,8 +34,8 @@ public:
 	int getDef();
 	int getMag();
 	int getMDef();
-	bool* getStatus();
-	bool* getRes();
+	vector <bool> getStatus();
+	vector <int> getRes();
 	int getMaxHP();
 	int getMaxMP();
 	int getMaxAtk();
@@ -49,7 +51,7 @@ public:
 	void setMag(int mag);
 	void setMDef(int mDef);
 	void setStatus(int status);
-	void setRes(int res);
+	void setRes(int res, int i);
 	void setMaxHP(int hp);
 	void setMaxMP(int mp);
 	void setMaxAtk(int atk);
@@ -59,37 +61,37 @@ public:
 	void setName(string name);
 
 	//1= weak, 2 = medium, 3 = strong
-	void slash1(Monster mon); //weak slash damage
-	void slash2(Monster mon); //medium slash damage
-	void slash3(Monster mon); //strong slash damage
+	void slash1(Monster & mon); //weak slash damage
+	void slash2(Monster & mon); //medium slash damage
+	void slash3(Monster & mon); //strong slash damage
 
-	void impact1(Monster mon); //weak impact damage
-	void impact2(Monster mon); //medium impact damage
-	void impact3(Monster mon); //strong impact damage
+	void impact1(Monster & mon); //weak impact damage
+	void impact2(Monster & mon); //medium impact damage
+	void impact3(Monster & mon); //strong impact damage
 
-	void shot1(Monster mon);
-	void shot2(Monster mon);
-	void shot3(Monster mon);
+	void shot1(Monster & mon);
+	void shot2(Monster & mon);
+	void shot3(Monster & mon);
 
-	void fire1(Monster mon);
-	void fire2(Monster mon);
-	void fire3(Monster mon);
+	void fire1(Monster & mon);
+	void fire2(Monster & mon);
+	void fire3(Monster & mon);
 
-	void ice1(Monster mon);
-	void ice2(Monster mon);
-	void ice3(Monster mon);
+	void ice1(Monster & mon);
+	void ice2(Monster & mon);
+	void ice3(Monster & mon);
 
-	void water1(Monster mon);
-	void water2(Monster mon);
-	void water3(Monster mon);
+	void water1(Monster & mon);
+	void water2(Monster & mon);
+	void water3(Monster & mon);
 
-	void thunder1(Monster mon);
-	void thunder2(Monster mon);
-	void thunder3(Monster mon);
+	void thunder1(Monster & mon);
+	void thunder2(Monster & mon);
+	void thunder3(Monster & mon);
 
-	void dragon1(Monster mon);
-	void dragon2(Monster mon);
-	void dragon3(Monster mon);
+	void dragon1(Monster & mon);
+	void dragon2(Monster & mon);
+	void dragon3(Monster & mon);
 
 
 	~Monster();
@@ -108,13 +110,17 @@ private:
 	int maxMag;
 	int mDef; //magic defence
 	int maxMDef;
-	bool status[14]; //status effect array
-	int statusCounter[14];
-	bool resistances[8]; //resistances array i.e. whether or not weak to ice/ resist to fire
+	vector<bool> status = vector<bool>(14); //status effect array
+	vector<int> statusCounter = vector<int>(14);
+	vector <int> resistances = vector<int>(8); //resistances array i.e. whether or not weak to ice/ resist to fire
 
-	void damageCalc(Monster mon, int type, int power)	//type is type of damage i.e. slash damage, power is how strong the attack will be i.e. weak/medium/strong
+	void damageCalc(Monster & mon, int type, int power)	//type is type of damage i.e. slash damage, power is how strong the attack will be i.e. weak/medium/strong
 	{
-		double damage = mon.getDef() - getAtk();
+		
+		double damage = getAtk() - mon.getDef();
+
+		cout << "attacker's attack: " << getAtk() << endl;
+		cout << "defender's defence: " << mon.getDef() << endl;
 
 		switch (power)
 		{
@@ -129,15 +135,16 @@ private:
 			break;
 		}
 
-		if (mon.getRes()[type])		//if the bool is true at index, that is the weakness
+		if (mon.getRes()[type] == 2)		//if the bool is true at index, that is the weakness
 			damage *= 2;
-		else
-			damage /= 2;
+		else if(!mon.getRes()[type])
+			damage == 0;
 
 		if (damage <= 0)
-			damage = 0;					//no damage if negative value
+			damage = 0;					//no damage if negative value*/
 
-		mon.setHP(mon.getHP() - damage);
+		cout << "calculated damage: " << damage << endl;
+		//mon.setHP(mon.getMaxHP() - damage);
 	}
 
 	void counter(int ailment)

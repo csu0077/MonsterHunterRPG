@@ -1,15 +1,25 @@
 #pragma once
+#include <string>
+using namespace std;
+
 class Item
 {
 public:
 	Item();
-	Item(int t);
+	Item(int tier, int count, string name);
 	int getTier();
+	int getCount();
+	string getName();
+	void setName(string name);
+	void setCount(int count);
 	void setTier(int tier);
+	void operator = (const Item & I);
 	~Item();
 
 private:
 	int tier;
+	string name;
+	int count;
 	//Potion
 	//0 == 50 hp one target, 1 == 50 hp all, 2 == 100 hp one target, 3 == 100 hp all, 4 == 200 hp one, 
 	//5 == 200 hp all, 6 == 500 hp one, 7 == 500 all, 8 == full heal, 9 == full heal all
