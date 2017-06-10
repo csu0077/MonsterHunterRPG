@@ -6,6 +6,7 @@ class Potion :
 public:
 	Potion();
 	Potion(int tier);
+	Potion(int tier, int count, string name);
 	~Potion();
 };
 

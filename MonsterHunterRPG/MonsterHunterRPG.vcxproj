@@ -111,14 +111,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Hub.cpp" />
     <ClCompile Include="Human.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Monk.cpp" />
+    <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="Potion.cpp" />
+    <ClCompile Include="Sharpshooter.cpp" />
     <ClCompile Include="swordmaster.cpp" />
+    <ClCompile Include="Tonic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Human.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="Monk.h" />
+    <ClInclude Include="Monster.h" />
+    <ClInclude Include="Potion.h" />
+    <ClInclude Include="Sharpshooter.h" />
     <ClInclude Include="swordmaster.h" />
+    <ClInclude Include="Tonic.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

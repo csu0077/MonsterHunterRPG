@@ -93,7 +93,6 @@ public:
 	void dragon2(Monster & mon);
 	void dragon3(Monster & mon);
 
-
 	~Monster();
 
 private:
@@ -116,24 +115,24 @@ private:
 
 	void damageCalc(Monster & mon, int type, int power)	//type is type of damage i.e. slash damage, power is how strong the attack will be i.e. weak/medium/strong
 	{
-		
-		double damage = getAtk() - mon.getDef();
-
-		cout << "attacker's attack: " << getAtk() << endl;
-		cout << "defender's defence: " << mon.getDef() << endl;
-
+		int attackPow = getAtk();
 		switch (power)
 		{
 		case 1:
-			damage *= 1.25;
+			attackPow *= 1.25;
 			break;
 		case 2:
-			damage *= 1.5;
+			attackPow *= 1.5;
 			break;
 		default:
-			damage *= 1;
+			attackPow *= 1;
 			break;
 		}
+
+		double damage =  attackPow - mon.getDef();
+
+		cout << "attacker's attack: " << attackPow << endl;
+		cout << "defender's defence: " << mon.getDef() << endl;
 
 		if (mon.getRes()[type] == 2)		//if the bool is true at index, that is the weakness
 			damage *= 2;
@@ -143,8 +142,8 @@ private:
 		if (damage <= 0)
 			damage = 0;					//no damage if negative value*/
 
-		cout << "calculated damage: " << damage << endl;
-		//mon.setHP(mon.getMaxHP() - damage);
+		cout << "calculated damage: " << damage << endl << endl;
+		mon.setHP(mon.getHP() - damage);
 	}
 
 	void counter(int ailment)

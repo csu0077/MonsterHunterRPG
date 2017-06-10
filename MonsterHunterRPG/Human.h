@@ -13,10 +13,11 @@ public:
 	Item getItem(int i);	//returns item at index i
 	void addItem(Item item); //not increment but just add to the inventory
 	void removeItem(string item); //removes item from invetory
+	vector <Item> getInventory();
 	~Human();
 
 private:
-	vector <Item> inventory;
+	vector <Item> inventory = vector <Item> (30);
 	//inventory class
 	//gem class 
 
