@@ -97,6 +97,7 @@ void Human::useItem(string name)
 					break;
 				}
 			}
+
 		}
 	}
 }
