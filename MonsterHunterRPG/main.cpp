@@ -69,7 +69,6 @@ void testCode()
 	m.addItem(p);
 	printInventory(m);
 
-	Potion q(0, 1, "hamburger");	//0 is lowest tier
 	cout << m.getName() << " puts a hamburger in his inventory..." << endl;
 	m.addItem(p);
 	printInventory(m);

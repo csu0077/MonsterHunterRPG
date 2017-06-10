@@ -13,7 +13,7 @@ Potion::Potion(int tier)
 
 Potion::Potion(int tier, int count, string name)
 {
-	setName( name);
+	setName(name);
 	setCount(count);
 	setTier(tier);
 }

@@ -76,6 +76,31 @@ void Human::removeItem(string name)
 	}
 }
 
+void Human::useItem(string name)
+{
+	for (int i = 0; i < inventory.size(); i++)
+	{
+		if (inventory[i].getName() == name)
+		{
+			if (inventory[i].getName() == "hamburger")
+			{
+				int health = 50;
+
+				if (getHP() + health > getMaxHP())
+				{
+					setHP(getMaxHP());
+					break;
+				}
+				else
+				{
+					setMaxHP(getHP() + health);
+					break;
+				}
+			}
+		}
+	}
+}
+
 vector<Item> Human::getInventory()
 {
 	return inventory;
