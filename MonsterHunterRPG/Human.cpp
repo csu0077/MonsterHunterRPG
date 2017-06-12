@@ -67,37 +67,82 @@ void Human::removeItem(string name)
 	{
 		if (inventory[i].getName() == name)	
 		{ 
-			inventory[i].setName("");
-			inventory[i].setCount(0);
-			inventory[i].setTier(0);
-			break;
+			if (inventory[i].getCount())
+			{
+				inventory[i].setCount(inventory[i].getCount() - 1);
+				return;
+			}
+			else
+			{
+				inventory[i].setName("");
+				inventory[i].setCount(0);
+				inventory[i].setTier(0);
+				return;
+			}
 		}
-			
+	}
+}
+
+void hpMPCheck(int points, Human & h, Item i)	//helper function for use item
+{
+	if (h.getHP() + points > h.getMaxHP())
+	{
+		h.setHP(h.getMaxHP());
+		h.removeItem(i.getName());
+		return;
+	}
+	else
+	{
+		h.setHP(h.getHP() + points);
+		h.removeItem(i.getName());
+		return;
 	}
 }
 
 void Human::useItem(string name)
 {
+	//Potion
+	//0 == 50 hp one target, 1 == 50 hp all, 2 == 100 hp one target, 3 == 100 hp all, 4 == 200 hp one, 
+	//5 == 200 hp all, 6 == 500 hp one, 7 == 500 all, 8 == full heal, 9 == full heal all
+
+	//Ether
+	//0 == 25 mp one target, 1 == 25 mp all, 2 == 50 mp target, 3 == 50 mp all, 4 == 100 sp one, 
+	//5 == 100 sp all, 6 == 250 sp one, 7 == 250 all, 8 == full sp heal, 9 == full sp heal all
+
+	//Tonic
+	//0 == blight heal, 1 == poison heal, 2 == para heal, 3 == mud/snow cleanse, 4 == wake up
+	//5 == bleed heal
 	for (int i = 0; i < inventory.size(); i++)
 	{
 		if (inventory[i].getName() == name)
 		{
-			if (inventory[i].getName() == "hamburger")
+			if (name == "hamburger")
 			{
 				int health = 50;
 
-				if (getHP() + health > getMaxHP())
-				{
-					setHP(getMaxHP());
-					break;
-				}
-				else
-				{
-					setMaxHP(getHP() + health);
-					break;
-				}
+				hpMPCheck(health, *this, inventory[i]);
 			}
+			else if (name == "cheeseburger")
+			{
+				int health = 100;
 
+				hpMPCheck(health, *this, inventory[i]);
+			}
+			else if (name == "Western bacon burger")
+			{
+				int health = 200;
+				hpMPCheck(health, *this, inventory[i]);
+			}
+			else if (name == "7up")
+			{
+				int mp = 25;
+				hpMPCheck(mp, *this, inventory[i]);
+			}
+			else if (name == "Coke")
+			{
+				int mp = 50;
+				hpMPCheck(mp, *this, inventory[i]);
+			}
 		}
 	}
 }

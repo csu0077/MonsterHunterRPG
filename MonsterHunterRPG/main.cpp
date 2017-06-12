@@ -46,16 +46,16 @@ void testCode()
 	Monk m("monk", 100, 100, 10, 10, 10, 10);
 
 	printStats(sm);
-	printStats(ss);
+	//printStats(ss);
 	printStats(m);
 
-	cout << sm.getName() << " attacks " << ss.getName() << endl << endl;
-	sm.attack(ss);
-	printStats(ss);
+	//cout << sm.getName() << " attacks " << ss.getName() << endl << endl;
+	//sm.attack(ss);
+	//printStats(ss);
 
-	cout << sm.getName() << " attacks with medium strength " << m.getName() << endl << endl;
-	sm.slash2(m);
-	printStats(m);
+	//cout << sm.getName() << " attacks with medium strength " << m.getName() << endl << endl;
+	//sm.slash2(m);
+	//printStats(m);
 
 	cout << sm.getName() << " attacks with high strength " << m.getName() << endl << endl;
 	sm.slash3(m);
@@ -67,11 +67,16 @@ void testCode()
 
 	cout << m.getName() << " puts a hamburger in his inventory..." << endl;
 	m.addItem(p);
-	printInventory(m);
+	//printInventory(m);
 
 	cout << m.getName() << " puts a hamburger in his inventory..." << endl;
 	m.addItem(p);
+	//printInventory(m);
+
+	cout << m.getName() << " eats a hamburger" << endl;
+	m.useItem("hamburger");
 	printInventory(m);
+	printStats(m);
 }
 
 int main()

@@ -192,6 +192,71 @@ void Monster::setName(string name)
 	this->name = name;
 }
 
+void Monster::addPartyM(Monster & m)
+{
+	//todo do something about empty spots
+	party.push_back(m);
+	m.party.push_back(*this);
+}
+
+void Monster::removePartyM(Monster & m)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		if (party[i].name == m.getName())
+		{
+			if (i != party.size() - 1)
+			{
+				Monster fluff;
+				party[i] = fluff;
+				return;
+			}
+			else
+			{
+				party.pop_back();
+				return;
+			}
+		}
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		if (m.party[i].name == getName())
+		{
+			if (i != 3)
+			{
+				Monster fluff;
+				party[i] = fluff;
+				return;
+			}
+			else
+			{
+				party.pop_back();
+				return;
+			}
+		}
+	}
+}
+
+void Monster::operator=(const Monster & m)
+{
+	this->name = m.name;
+	this->HP = m.HP;
+	this->MP = m.MP;
+	this->atk = m.atk;
+	this->def = m.def;
+	this->mag = m.mag;
+	this->mDef = m.mDef;
+
+	this->maxHP = m.maxHP;
+	this->maxMP = m.maxMP;
+	this->maxAtk = m.maxAtk;
+	this->maxDef = m.maxDef;
+	this->maxMag = m.maxMag;
+	this->maxMDef = m.maxMDef;
+
+}
+
 void Monster::slash1(Monster & mon) //weak slash damage
 {
 	cout << "slash 1" << endl;

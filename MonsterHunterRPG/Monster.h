@@ -60,6 +60,10 @@ public:
 	void setMaxMDef(int mdef);
 	void setName(string name);
 
+	void addPartyM(Monster & m);
+	void removePartyM(Monster & m);
+	void operator = (const Monster & m);
+
 	//1= weak, 2 = medium, 3 = strong
 	void slash1(Monster & mon); //weak slash damage
 	void slash2(Monster & mon); //medium slash damage
@@ -112,7 +116,7 @@ private:
 	vector<bool> status = vector<bool>(14); //status effect array
 	vector<int> statusCounter = vector<int>(14);
 	vector <int> resistances = vector<int>(8); //resistances array i.e. whether or not weak to ice/ resist to fire
-
+	vector <Monster> party = vector<Monster>(3);
 	void damageCalc(Monster & mon, int type, int power)	//type is type of damage i.e. slash damage, power is how strong the attack will be i.e. weak/medium/strong
 	{
 		int attackPow = getAtk();
@@ -220,5 +224,6 @@ private:
 			break;
 		}
 	}
+
 };
 
