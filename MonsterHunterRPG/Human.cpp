@@ -22,15 +22,53 @@ enum MyEnum1
 Human::Human()
 {
 	Monster();
+	Item filler;
+	inventory.push_back(filler);
 }
 
 Human::Human(string name, int hp, int mp, int atk, int def, int mag, int mdef)
 {
 	Monster(name, hp, mp, atk, def, mag, mdef );
+	Item filler;
+	inventory.push_back(filler);
 }
 
 void Human::attack(Monster mon)
 {
+}
+
+Item Human::getItem(int i)
+{
+	return inventory[i];
+}
+
+void Human::addItem(Item item)
+{
+	for (int i = 0; i < inventory.size() - 1; i++)
+	{
+		if (inventory[i].getName() == "")
+		{
+			inventory[i] = item;
+			return;
+		}
+	}
+
+	inventory.push_back(item);
+}
+
+void Human::removeItem(string name)
+{
+	for (int i = 0; i < inventory.size() - 1; i++)
+	{
+		if (inventory[i].getName() == name)	
+		{ 
+			inventory[i].setName("");
+			inventory[i].setCount(0);
+			inventory[i].setTier(0);
+			break;
+		}
+			
+	}
 }
 
 Human::~Human()
