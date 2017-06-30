@@ -19,7 +19,6 @@ public:
 
 private:
 	vector <Item> inventory = vector <Item> (30);
-	
 	//gem class 
 
 };

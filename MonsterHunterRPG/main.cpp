@@ -77,6 +77,19 @@ void testCode()
 	m.useItem("hamburger");
 	printInventory(m);
 	printStats(m);
+	m.printParty();
+	cout << endl;
+	m.addPartyM(ss);
+	m.printParty();
+	m.printPartySize();
+
+	m.removePartyM(ss);
+	m.printParty();
+	m.printPartySize();
+
+	m.addPartyM(ss);
+	m.printParty();
+	m.printPartySize();
 }
 
 int main()

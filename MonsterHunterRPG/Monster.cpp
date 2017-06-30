@@ -28,6 +28,8 @@ Monster::Monster()
 	maxDef = def;
 	maxMag = mag;
 	maxMDef = mDef;
+	//party.push_back(*this);
+	//partySize++;
 }
 
 Monster::Monster(string name, int hp, int mp, int atk, int def, int mag, int mdef)
@@ -40,6 +42,18 @@ Monster::Monster(string name, int hp, int mp, int atk, int def, int mag, int mde
 	maxDef = def;
 	maxMag = mag;
 	maxMDef = mDef;
+	//party.push_back(*this);
+	//partySize++;
+}
+
+void Monster::printParty()
+{
+	cout << "Party" << endl;
+	for (int i = 0; i < party.size(); i++)
+	{
+		if(party[i].getName() != "doofus")
+			cout << party[i].getName() << endl;
+	}
 }
 
 void Monster::setHP(int hp)
@@ -195,47 +209,49 @@ void Monster::setName(string name)
 void Monster::addPartyM(Monster & m)
 {
 	//todo do something about empty spots
-	party.push_back(m);
-	m.party.push_back(*this);
+
+	for (int i = 0; i < party.size(); i++)
+	{
+		if (party[i].getName() == "doofus")
+		{
+			party[i] = m;
+			partySize++;
+			return;
+		}
+	}
+
+	if (partySize != 3 && party.size() != 3)
+	{
+		party.push_back(m);
+		partySize++;
+		return;
+	}
+
+	else if (partySize == 3)
+	{
+		cout << "party is full" << endl;
+		return;
+	}	
 }
+
 
 void Monster::removePartyM(Monster & m)
 {
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < party.size(); i++)
 	{
-		if (party[i].name == m.getName())
+		if (party[i].getName() == m.getName())
 		{
-			if (i != party.size() - 1)
-			{
-				Monster fluff;
-				party[i] = fluff;
-				return;
-			}
-			else
-			{
-				party.pop_back();
-				return;
-			}
+			Monster blank;
+			party[i] = blank;
+			partySize--;
 		}
 	}
+}
 
-	for (int i = 0; i < 4; i++)
-	{
-		if (m.party[i].name == getName())
-		{
-			if (i != 3)
-			{
-				Monster fluff;
-				party[i] = fluff;
-				return;
-			}
-			else
-			{
-				party.pop_back();
-				return;
-			}
-		}
-	}
+void Monster::printPartySize()
+{
+	cout << "Party Size: " << partySize << endl;
+	cout << "Party Vector Size: " << party.size() << endl;
 }
 
 void Monster::operator=(const Monster & m)

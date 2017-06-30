@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <list>
 
 using namespace std;
 
@@ -28,6 +29,7 @@ class Monster
 public:
 	Monster();
 	Monster(string name, int hp, int mp, int atk, int def, int mag, int mdef);
+	void printParty();
 	int getHP();
 	int getMP();
 	int getAtk();
@@ -62,6 +64,7 @@ public:
 
 	void addPartyM(Monster & m);
 	void removePartyM(Monster & m);
+	void printPartySize();
 	void operator = (const Monster & m);
 
 	//1= weak, 2 = medium, 3 = strong
@@ -116,7 +119,9 @@ private:
 	vector<bool> status = vector<bool>(14); //status effect array
 	vector<int> statusCounter = vector<int>(14);
 	vector <int> resistances = vector<int>(8); //resistances array i.e. whether or not weak to ice/ resist to fire
-	vector <Monster> party = vector<Monster>(3);
+	vector <Monster> party;
+	int partySize;
+
 	void damageCalc(Monster & mon, int type, int power)	//type is type of damage i.e. slash damage, power is how strong the attack will be i.e. weak/medium/strong
 	{
 		int attackPow = getAtk();
