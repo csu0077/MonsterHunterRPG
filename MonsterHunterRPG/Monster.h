@@ -61,9 +61,10 @@ public:
 	void setMaxMag(int mag);
 	void setMaxMDef(int mdef);
 	void setName(string name);
-
+	Monster getPartyM(int i);
 	void addPartyM(Monster & m);
 	void removePartyM(Monster & m);
+	int getPartySize();
 	void printPartySize();
 	void operator = (const Monster & m);
 

@@ -206,6 +206,11 @@ void Monster::setName(string name)
 	this->name = name;
 }
 
+Monster Monster::getPartyM(int i)
+{
+	return party[i];
+}
+
 void Monster::addPartyM(Monster & m)
 {
 	//todo do something about empty spots
@@ -246,6 +251,11 @@ void Monster::removePartyM(Monster & m)
 			partySize--;
 		}
 	}
+}
+
+int Monster::getPartySize()
+{
+	return partySize;
 }
 
 void Monster::printPartySize()

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include "Monster.h"
 #include "Sharpshooter.h"
 #include "swordmaster.h"
@@ -38,6 +39,62 @@ void printInventory(Human h)
 	}
 }
 
+void battle(Monster you, Monster enemy )
+{
+	cout << "Initializing Combat..." << endl;
+	bool battleEnd = false;
+	int yourTurns = you.getPartySize() + 1;
+	int enemyTurns = enemy.getPartySize() + 1;
+	bool yourTurn = true; //true == your turn, false == enemy turn
+
+	cout << "You: " << you.getName() << endl;
+	you.printParty();
+	cout << endl;
+	cout << "Enemy: " << enemy.getName() << endl;
+	enemy.printParty();
+	cout << endl;
+	
+	while (!battleEnd)
+	{
+		if (yourTurn)
+		{
+			cout << "-----------------------------------------" << endl;
+			cout << "Your Turn" << endl;
+			cout << "Remaining Turns: " << yourTurns << endl;
+			cout << "-----------------------------------------" << endl;
+			cout << you.getName() << "\t\t";
+
+			for (int i = 0; i < you.getPartySize(); i++)
+				cout << you.getPartyM(i).getName() << "\t\t";
+
+			cout << endl;
+
+			cout << "HP: " << you.getHP() << "\t\t";
+
+			for (int i = 0; i < you.getPartySize(); i++)
+				cout << "HP: " << you.getPartyM(i).getHP() << "\t\t";
+
+			cout << endl;
+
+			cout << "MP: " << you.getMP() << "\t\t";
+
+			for (int i = 0; i < you.getPartySize(); i++)
+				cout << "MP: " << you.getPartyM(i).getHP() << "\t\t";
+
+			cout << endl;
+		}
+		else
+		{
+			cout << "-----------------------------------------" << endl;
+			cout << "Enemy's Turn" << endl;
+			cout << "Remaining Turns: " << enemyTurns << endl;
+			cout << "-----------------------------------------" << endl;
+		}
+		
+		battleEnd = true;
+	}
+}
+
 void testCode()
 {
 	//testing Monster class Monster(string name, int hp, int mp, int atk, int def, int mag, int mdef);
@@ -45,7 +102,9 @@ void testCode()
 	Sharpshooter ss("sharpshooter", 100, 100, 10, 2, 10, 10);
 	Monk m("monk", 100, 100, 10, 10, 10, 10);
 
-	printStats(sm);
+	m.addPartyM(sm);
+
+	/*printStats(sm);
 	//printStats(ss);
 	printStats(m);
 
@@ -77,7 +136,7 @@ void testCode()
 	m.useItem("hamburger");
 	printInventory(m);
 	printStats(m);
-	m.printParty();
+	/*m.printParty();
 	cout << endl;
 	m.addPartyM(ss);
 	m.printParty();
@@ -89,7 +148,9 @@ void testCode()
 
 	m.addPartyM(ss);
 	m.printParty();
-	m.printPartySize();
+	m.printPartySize();*/
+
+	battle(m, ss);
 }
 
 int main()
