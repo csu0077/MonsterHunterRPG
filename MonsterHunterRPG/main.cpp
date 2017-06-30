@@ -39,6 +39,14 @@ void printInventory(Human h)
 	}
 }
 
+void printMenu()
+{
+	cout << "a. Attack" << endl;
+	cout << "s. Skills" << endl;
+	cout << "d. Defend" << endl;
+	cout << "f. Item" << endl;
+}
+
 void battle(Monster you, Monster enemy )
 {
 	cout << "Initializing Combat..." << endl;
@@ -59,7 +67,7 @@ void battle(Monster you, Monster enemy )
 		if (yourTurn)
 		{
 			cout << "-----------------------------------------" << endl;
-			cout << "Your Turn" << endl;
+			cout << "Your Party's Turn" << endl;
 			cout << "Remaining Turns: " << yourTurns << endl;
 			cout << "-----------------------------------------" << endl;
 			cout << you.getName() << "\t\t";
@@ -82,17 +90,26 @@ void battle(Monster you, Monster enemy )
 				cout << "MP: " << you.getPartyM(i).getHP() << "\t\t";
 
 			cout << endl;
+
+			cout << you.getName() << "'s turn" << endl;
+
+			string choice;
+			printMenu();
+			cout << ">>";
+			cin >> choice;
+
 		}
 		else
 		{
 			cout << "-----------------------------------------" << endl;
-			cout << "Enemy's Turn" << endl;
+			cout << "Enemy's Party Turn" << endl;
 			cout << "Remaining Turns: " << enemyTurns << endl;
 			cout << "-----------------------------------------" << endl;
 		}
 		
 		battleEnd = true;
 	}
+	cout << "Battle Complete" << endl;
 }
 
 void testCode()
