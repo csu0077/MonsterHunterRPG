@@ -93,10 +93,71 @@ void battle(Monster you, Monster enemy )
 
 			cout << you.getName() << "'s turn" << endl;
 
-			string choice;
-			printMenu();
-			cout << ">>";
-			cin >> choice;
+			bool choiceLoop = false;
+			while (!choiceLoop)
+			{
+				string choice;
+				printMenu();
+				cout << ">>";
+				cin >> choice;
+
+				if (choice == "a")
+				{
+					cout << "choose target or cancel by pressing c" << endl;
+
+					bool targetChosen = false;
+
+					while (!targetChosen)
+					{
+						//choose who to attack
+						cout << "1. " << enemy.getName() << endl;
+
+						if (enemy.getPartySize() > 1)
+						{
+							for (int i = 0; i < enemy.getPartySize(); i++)
+							{
+								cout << i + 1 << ". " << enemy.getPartyM(i).getName() << endl;
+							}
+						}
+
+						//test edge cases
+						int target;
+						int rightChoices = 1 + enemy.getPartySize();
+						cout << ">>";
+						cin >> target; 
+
+						if (target > rightChoices)
+						{
+							cout << "Invalid input" << endl;
+						}
+						else
+						{
+							targetChosen = true;
+						}
+
+						//todo: do damage to target
+					}
+					
+					choiceLoop = true;
+				}
+				else if (choice == "s")
+				{
+					choiceLoop = true;
+				}
+				else if (choice == "d")
+				{
+					choiceLoop = true;
+				}
+				else if (choice == "f")
+				{
+					choiceLoop = true;
+				}
+				else
+				{
+					cout << "Invalid input" << endl;
+					
+				}
+			}
 
 		}
 		else
