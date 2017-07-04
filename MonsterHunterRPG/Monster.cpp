@@ -20,7 +20,7 @@ enum Pwr
 };
 
 Monster::Monster()
-	:name("doofus"),HP(1),MP(1),atk(1),def(1),mag(1), mDef(1)
+	:name("doofus"),HP(1),MP(1),atk(1),def(1),mag(1), mDef(1), role("nothing")
 {
 	maxHP = HP;
 	maxMP = MP;
@@ -32,10 +32,11 @@ Monster::Monster()
 	//partySize++;
 }
 
-Monster::Monster(string name, int hp, int mp, int atk, int def, int mag, int mdef)
+Monster::Monster(string name, int hp, int mp, int atk, int def, int mag, int mdef, string role)
 	:HP(hp),MP(mp),atk(atk),def(def),mag(mag)
 {
-	name = name;
+	this->name = name;
+	this->role = role;
 	maxHP = HP;
 	maxMP = MP;
 	maxAtk = atk;
@@ -171,6 +172,16 @@ string Monster::getName()
 	return this->name;
 }
 
+string Monster::getRole()
+{
+	return this->role;
+}
+
+void Monster::setRole(string role)
+{
+	this->role = role;
+}
+
 void Monster::setMaxHP(int hp)
 {
 	this->maxHP = hp;
@@ -211,6 +222,31 @@ Monster Monster::getPartyM(int i)
 	return party[i];
 }
 
+void Monster::setPartyMHP(int i, int hp)
+{
+	party[i].setHP(hp);
+}
+
+void Monster::setPartyMMP(int i, int mp)
+{
+	party[i].setMP(mp);
+}
+
+void Monster::setPartyMAtk(int i, int atk)
+{
+	party[i].setAtk(atk);
+}
+
+void Monster::setPartyMDef(int i, int def)
+{
+	party[i].setDef(def);
+}
+
+void Monster::setPartyMMDef(int i, int mDef)
+{
+	party[i].setMDef(mDef);
+}
+
 void Monster::addPartyM(Monster & m)
 {
 	//todo do something about empty spots
@@ -221,6 +257,7 @@ void Monster::addPartyM(Monster & m)
 		{
 			party[i] = m;
 			partySize++;
+			cout << getName() << " added " << m.getName() << " to the party" << endl;
 			return;
 		}
 	}
@@ -229,6 +266,7 @@ void Monster::addPartyM(Monster & m)
 	{
 		party.push_back(m);
 		partySize++;
+		cout << getName() << " added " << m.getName() << " to the party" << endl;
 		return;
 	}
 
@@ -281,6 +319,11 @@ void Monster::operator=(const Monster & m)
 	this->maxMag = m.maxMag;
 	this->maxMDef = m.maxMDef;
 
+}
+
+void Monster::attack(Monster & m)
+{
+	damageCalc(m, 100, WEAK); //100 is non elemental damage
 }
 
 void Monster::slash1(Monster & mon) //weak slash damage

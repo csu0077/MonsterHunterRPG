@@ -20,7 +20,7 @@ Swordmaster::Swordmaster(string name, int hp, int mp, int atk, int def, int mag,
 	setMaxDef(def);
 	setMaxMag(mag);
 	setMaxMDef(mdef);
-
+	setRole("Swordmaster");
 	for (int i = 0; i < getRes().size() - 1; i++)
 	{
 		setRes(i, 1);

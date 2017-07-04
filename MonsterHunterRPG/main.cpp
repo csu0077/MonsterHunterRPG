@@ -87,7 +87,7 @@ void battle(Monster you, Monster enemy )
 			cout << "MP: " << you.getMP() << "\t\t";
 
 			for (int i = 0; i < you.getPartySize(); i++)
-				cout << "MP: " << you.getPartyM(i).getHP() << "\t\t";
+				cout << "MP: " << you.getPartyM(i).getMP() << "\t\t";
 
 			cout << endl;
 
@@ -103,39 +103,70 @@ void battle(Monster you, Monster enemy )
 
 				if (choice == "a")
 				{
-					cout << "choose target or cancel by pressing c" << endl;
-
 					bool targetChosen = false;
-
+					
 					while (!targetChosen)
 					{
+						cout << "choose target or cancel by pressing c" << endl;
 						//choose who to attack
 						cout << "1. " << enemy.getName() << endl;
 
-						if (enemy.getPartySize() > 1)
+						if (enemy.getPartySize() > 0)
 						{
 							for (int i = 0; i < enemy.getPartySize(); i++)
 							{
-								cout << i + 1 << ". " << enemy.getPartyM(i).getName() << endl;
+								cout << i + 2 << ". " << enemy.getPartyM(i).getName() << endl;
 							}
 						}
 
 						//test edge cases
-						int target;
+						string target;
 						int rightChoices = 1 + enemy.getPartySize();
 						cout << ">>";
 						cin >> target; 
 
-						if (target > rightChoices)
-						{
+						if (target != "1" && target != "2" && target != "3" && target != "4" && target != "c")
 							cout << "Invalid input" << endl;
-						}
+						else if (target == "4" && enemy.getPartySize() < 3)
+							cout << "Invalid input" << endl;
+						else if (target == "3" && enemy.getPartySize() < 2)
+							cout << "Invalid input" << endl;
+						else if (target == "2" && enemy.getPartySize() < 1)
+							cout << "Invalid input" << endl;
 						else
 						{
-							targetChosen = true;
+							//todo: do damage to target
+							if (you.getRole() == "Monk")
+							{
+								int tgt = 5;	//5 is the leader
+
+							   if (target == "2")
+									tgt = 0;
+								else if (target == "3")
+									tgt = 1;
+								else if (target == "4")
+									tgt = 2;
+
+							   if (tgt != 5)
+							   {
+								   Monster temp = enemy.getPartyM(tgt);
+								   you.attack(temp);
+								   int modHP = temp.getHP();
+
+								   enemy.setPartyMHP(tgt, modHP);
+								   cout << you.getName() << " attacks " << enemy.getPartyM(tgt).getName() << endl;
+							   }
+							   else
+							   {
+								   you.attack(enemy);
+								   cout << you.getName() << " attacks " << enemy.getName() << endl;
+								   cout << enemy.getName() << "'s HP: " << enemy.getHP() << endl;
+							   }
+								
+							}
 						}
 
-						//todo: do damage to target
+						
 					}
 					
 					choiceLoop = true;
@@ -155,7 +186,6 @@ void battle(Monster you, Monster enemy )
 				else
 				{
 					cout << "Invalid input" << endl;
-					
 				}
 			}
 
@@ -179,9 +209,9 @@ void testCode()
 	Swordmaster sm("swordmaster",   100, 100, 10, 0, 10, 10);
 	Sharpshooter ss("sharpshooter", 100, 100, 10, 2, 10, 10);
 	Monk m("monk", 100, 100, 10, 10, 10, 10);
-
+	Monster rathalos("Rathalos", 5000, 500, 500, 250, 250, 250, "Flying Wyvern");
 	m.addPartyM(sm);
-
+	ss.addPartyM(rathalos);
 	/*printStats(sm);
 	//printStats(ss);
 	printStats(m);
@@ -227,7 +257,7 @@ void testCode()
 	m.addPartyM(ss);
 	m.printParty();
 	m.printPartySize();*/
-
+	//cout << "Rathalos MP: " << rathalos.getMP() << endl;
 	battle(m, ss);
 }
 

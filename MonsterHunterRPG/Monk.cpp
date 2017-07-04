@@ -20,6 +20,7 @@ Monk::Monk(string name, int hp, int mp, int atk, int def, int mag, int mdef)
 	setMaxDef(def);
 	setMaxMag(mag);
 	setMaxMDef(mdef);
+	setRole("Monk");
 
 	for (int i = 0; i < getRes().size() - 1; i++)
 	{

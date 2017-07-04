@@ -28,7 +28,7 @@ Human::Human()
 
 Human::Human(string name, int hp, int mp, int atk, int def, int mag, int mdef)
 {
-	Monster(name, hp, mp, atk, def, mag, mdef );	
+	Monster(name, hp, mp, atk, def, mag, mdef, "Human");	
 	Item filler;
 	inventory.push_back(filler);
 }

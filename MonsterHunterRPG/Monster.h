@@ -28,7 +28,7 @@ class Monster
 {
 public:
 	Monster();
-	Monster(string name, int hp, int mp, int atk, int def, int mag, int mdef);
+	Monster(string name, int hp, int mp, int atk, int def, int mag, int mdef, string role);
 	void printParty();
 	int getHP();
 	int getMP();
@@ -45,6 +45,8 @@ public:
 	int getMaxMag();
 	int getMaxMDef();
 	string getName();
+	string getRole();
+	void setRole(string role);
 
 	void setHP(int hp);
 	void setMP(int mp);
@@ -62,12 +64,18 @@ public:
 	void setMaxMDef(int mdef);
 	void setName(string name);
 	Monster getPartyM(int i);
+	void setPartyMHP(int i, int hp);
+	void setPartyMMP(int i, int mp);
+	void setPartyMAtk(int i, int atk);
+	void setPartyMDef(int i, int def); //defence not regular magic defence
+	void setPartyMMDef(int i, int mDef);
+	//maybe add setting max stuff for party members as well
 	void addPartyM(Monster & m);
 	void removePartyM(Monster & m);
 	int getPartySize();
 	void printPartySize();
 	void operator = (const Monster & m);
-
+	void attack(Monster & m);
 	//1= weak, 2 = medium, 3 = strong
 	void slash1(Monster & mon); //weak slash damage
 	void slash2(Monster & mon); //medium slash damage
@@ -122,7 +130,7 @@ private:
 	vector <int> resistances = vector<int>(8); //resistances array i.e. whether or not weak to ice/ resist to fire
 	vector <Monster> party;
 	int partySize;
-
+	string role;
 	void damageCalc(Monster & mon, int type, int power)	//type is type of damage i.e. slash damage, power is how strong the attack will be i.e. weak/medium/strong
 	{
 		int attackPow = getAtk();
@@ -144,11 +152,14 @@ private:
 		cout << "attacker's attack: " << attackPow << endl;
 		cout << "defender's defence: " << mon.getDef() << endl;
 
-		if (mon.getRes()[type] == 2)		//if the bool is true at index, that is the weakness
-			damage *= 2;
-		else if(!mon.getRes()[type])
-			damage == 0;
-
+		if (type != 100)
+		{
+			if (mon.getRes()[type] == 2)		//if the bool is true at index, that is the weakness
+				damage *= 2;
+			else if (!mon.getRes()[type])
+				damage == 0;
+		}
+		
 		if (damage <= 0)
 			damage = 0;					//no damage if negative value*/
 

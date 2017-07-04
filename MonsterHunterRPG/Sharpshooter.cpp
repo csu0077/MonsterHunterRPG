@@ -19,6 +19,7 @@ Sharpshooter::Sharpshooter(string name, int hp, int mp, int atk, int def, int ma
 	setMaxDef(def);
 	setMaxMag(mag);
 	setMaxMDef(mdef);
+	setRole("Sharpshooter");
 
 	for (int i = 0; i < getRes().size() - 1; i++)
 	{
