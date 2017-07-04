@@ -155,12 +155,14 @@ void battle(Monster you, Monster enemy )
 
 								   enemy.setPartyMHP(tgt, modHP);
 								   cout << you.getName() << " attacks " << enemy.getPartyM(tgt).getName() << endl;
+								   targetChosen = true;
 							   }
 							   else
 							   {
 								   you.attack(enemy);
 								   cout << you.getName() << " attacks " << enemy.getName() << endl;
 								   cout << enemy.getName() << "'s HP: " << enemy.getHP() << endl;
+								   targetChosen = true;
 							   }
 								
 							}
