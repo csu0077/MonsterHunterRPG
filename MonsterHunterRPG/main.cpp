@@ -47,6 +47,8 @@ void printMenu()
 	cout << "f. Item" << endl;
 }
 
+bool stopBlocking = false;
+
 void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 {
 	bool choiceLoop = false;
@@ -122,6 +124,11 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 			}
 
 			choiceLoop = true;
+			yTurns--;
+
+			cout << "-----------------------------------------" << endl;
+			cout << "Remaining Turns: " << yTurns << endl;
+			cout << "-----------------------------------------" << endl;
 		}
 		else if (choice == "s")	//skills
 		{
@@ -129,8 +136,22 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 		}
 		else if (choice == "d")	//defend
 		{
-			if (yTurns < (you.getPartySize() + 1) * 2)
+			if (yTurns <= (you.getPartySize() + 1) * 2 && !stopBlocking)
+			{
 				yTurns++;
+				cout << "-----------------------------------------" << endl;
+				cout << "Remaining Turns: " << yTurns << endl;
+				cout << "-----------------------------------------" << endl;
+			}
+			
+			else
+			{
+				stopBlocking = true;
+				yTurns--;
+				cout << "-----------------------------------------" << endl;
+				cout << "Remaining Turns: " << yTurns << endl;
+				cout << "-----------------------------------------" << endl;
+			}
 			choiceLoop = true;
 		}
 		else if (choice == "f")	//item
@@ -177,44 +198,22 @@ void turnLoop(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 
 		choice(you, enemy, yTurns, eTurns);
 
-		yTurns--;
-
-		cout << "-----------------------------------------" << endl;
-		cout << "Remaining Turns: " << yTurns << endl;
-		cout << "-----------------------------------------" << endl;
 
 		if (you.getPartySize() >= 1)
 		{
 			cout << you.getPartyM(0).getName() << "'s turn" << endl;
 			choice(you.getPartyM(0), enemy, yTurns, eTurns);
 
-			yTurns--;
-
-			cout << "-----------------------------------------" << endl;
-			cout << "Remaining Turns: " << yTurns << endl;
-			cout << "-----------------------------------------" << endl;
-
 			if (you.getPartySize() >= 2)
 			{
 				cout << you.getPartyM(1).getName() << "'s turn" << endl;
 				choice(you.getPartyM(1), enemy, yTurns, eTurns);
-
-				yTurns--;
-
-				cout << "-----------------------------------------" << endl;
-				cout << "Remaining Turns: " << yTurns << endl;
-				cout << "-----------------------------------------" << endl;
 
 				if (you.getPartySize() >= 3)
 				{
 					cout << you.getPartyM(2).getName() << "'s turn" << endl;
 					choice(you.getPartyM(2), enemy, yTurns, eTurns);
 
-					yTurns--;
-
-					cout << "-----------------------------------------" << endl;
-					cout << "Remaining Turns: " << yTurns << endl;
-					cout << "-----------------------------------------" << endl;
 				}
 			}
 		}
@@ -255,6 +254,7 @@ void battle(Monster you, Monster enemy)
 			while (enemyTurns)
 			{
 				enemyTurns--;
+				stopBlocking = false;
 			}
 
 			yourTurn = true;
