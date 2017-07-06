@@ -74,9 +74,9 @@ void Human::removeItem(string name)
 			}
 			else
 			{
-				inventory[i].setName("");
-				inventory[i].setCount(0);
-				inventory[i].setTier(0);
+				Item temp = inventory[inventory.size() - 1];
+				inventory[i] = temp;
+				inventory.pop_back();
 				return;
 			}
 		}

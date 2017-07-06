@@ -274,7 +274,7 @@ void testCode()
 	Monk m("monk", 100, 100, 10, 10, 10, 10);
 	Monster rathalos("Rathalos", 5000, 500, 500, 250, 250, 250, "Flying Wyvern");
 	m.addPartyM(sm);
-	ss.addPartyM(rathalos);
+	rathalos.addPartyM(ss);
 	/*printStats(sm);
 	//printStats(ss);
 	printStats(m);
@@ -321,7 +321,7 @@ void testCode()
 	m.printParty();
 	m.printPartySize();*/
 	//cout << "Rathalos MP: " << rathalos.getMP() << endl;
-	battle(m, ss);
+	battle(m, rathalos);
 }
 
 int main()

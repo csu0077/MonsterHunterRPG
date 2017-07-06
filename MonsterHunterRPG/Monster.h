@@ -76,6 +76,10 @@ public:
 	void printPartySize();
 	void operator = (const Monster & m);
 	void attack(Monster & m);
+	void skill(Monster & m);
+	void addSkill(string s);
+	void removeSkill(string s);
+
 	//1= weak, 2 = medium, 3 = strong
 	void slash1(Monster & mon); //weak slash damage
 	void slash2(Monster & mon); //medium slash damage
@@ -131,6 +135,8 @@ private:
 	vector <Monster> party;
 	int partySize;
 	string role;
+	vector <string> skills;
+
 	void damageCalc(Monster & mon, int type, int power)	//type is type of damage i.e. slash damage, power is how strong the attack will be i.e. weak/medium/strong
 	{
 		int attackPow = getAtk();
@@ -165,7 +171,9 @@ private:
 
 		cout << "calculated damage: " << damage << endl << endl;
 		mon.setHP(mon.getHP() - damage);
+		cout << "Remaining HP: " << mon.getHP() << endl << endl;
 	}
+
 
 	void counter(int ailment)
 	{

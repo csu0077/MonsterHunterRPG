@@ -284,8 +284,9 @@ void Monster::removePartyM(Monster & m)
 	{
 		if (party[i].getName() == m.getName())
 		{
-			Monster blank;
-			party[i] = blank;
+			Monster temp = party[party.size() - 1];
+			party[i] = temp;
+			party.pop_back();
 			partySize--;
 		}
 	}
@@ -324,6 +325,32 @@ void Monster::operator=(const Monster & m)
 void Monster::attack(Monster & m)
 {
 	damageCalc(m, 100, WEAK); //100 is non elemental damage
+}
+
+void Monster::skill(Monster & m)
+{
+
+}
+
+void Monster::addSkill(string s)
+{
+	skills.push_back(s);
+}
+
+void Monster::removeSkill(string s)
+{
+	for (int i = 0; i < skills.size(); i++)
+	{
+		if (s == skills[i])
+		{
+			string temp = skills[skills.size() - 1];
+			skills[i] = temp;
+			skills.pop_back();
+			return;
+		}
+	}
+
+	cout << "No such skill" << endl;
 }
 
 void Monster::slash1(Monster & mon) //weak slash damage
