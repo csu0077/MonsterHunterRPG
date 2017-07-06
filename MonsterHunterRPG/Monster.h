@@ -29,6 +29,7 @@ class Monster
 public:
 	Monster();
 	Monster(string name, int hp, int mp, int atk, int def, int mag, int mdef, string role);
+	void printSkills();
 	void printParty();
 	int getHP();
 	int getMP();

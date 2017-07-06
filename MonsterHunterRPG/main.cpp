@@ -132,6 +132,7 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 		}
 		else if (choice == "s")	//skills
 		{
+			you.printSkills();
 			choiceLoop = true;
 		}
 		else if (choice == "d")	//defend
@@ -272,7 +273,7 @@ void testCode()
 	Swordmaster sm("swordmaster",   100, 100, 10, 0, 10, 10);
 	Sharpshooter ss("sharpshooter", 100, 100, 10, 2, 10, 10);
 	Monk m("monk", 100, 100, 10, 10, 10, 10);
-	Monster rathalos("Rathalos", 5000, 500, 500, 250, 250, 250, "Flying Wyvern");
+	Monster rathalos("Rathalos", 5000, 500, 500, 250, 250, 250, "Rathalos");
 	m.addPartyM(sm);
 	rathalos.addPartyM(ss);
 	/*printStats(sm);

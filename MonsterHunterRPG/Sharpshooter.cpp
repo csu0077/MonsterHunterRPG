@@ -32,6 +32,7 @@ Sharpshooter::Sharpshooter(string name, int hp, int mp, int atk, int def, int ma
 		setStatus(i);
 	}
 
+	addSkill("shot1");
 }
 
 void Sharpshooter::attack(Monster & mon)

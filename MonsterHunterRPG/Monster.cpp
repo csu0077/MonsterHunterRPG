@@ -43,18 +43,30 @@ Monster::Monster(string name, int hp, int mp, int atk, int def, int mag, int mde
 	maxDef = def;
 	maxMag = mag;
 	maxMDef = mDef;
+
+	if (this->role == "Rathalos")
+	{
+		this->addSkill("fire2");
+		this->addSkill("slash2");
+	}
+	
 	//party.push_back(*this);
 	//partySize++;
+}
+
+void Monster::printSkills()
+{
+	cout << "# of Skills: " << skills.size() << endl;
+
+	for (int i = 0; i < skills.size(); i++)
+		cout << skills[i] << endl;
 }
 
 void Monster::printParty()
 {
 	cout << "Party" << endl;
 	for (int i = 0; i < party.size(); i++)
-	{
-		if(party[i].getName() != "doofus")
-			cout << party[i].getName() << endl;
-	}
+		cout << party[i].getName() << endl;
 }
 
 void Monster::setHP(int hp)
