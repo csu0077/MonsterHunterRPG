@@ -47,7 +47,183 @@ void printMenu()
 	cout << "f. Item" << endl;
 }
 
-void battle(Monster you, Monster enemy )
+void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
+{
+	bool choiceLoop = false;
+	while (!choiceLoop)
+	{
+		string choice;
+		printMenu();
+		cout << ">>";
+		cin >> choice;
+
+		if (choice == "a")
+		{
+			bool targetChosen = false;
+
+			while (!targetChosen)
+			{
+				cout << "choose target or cancel by pressing c" << endl;
+				//choose who to attack
+				cout << "1. " << enemy.getName() << endl;
+
+				if (enemy.getPartySize() > 0)
+				{
+					for (int i = 0; i < enemy.getPartySize(); i++)
+					{
+						cout << i + 2 << ". " << enemy.getPartyM(i).getName() << endl;
+					}
+				}
+
+				//test edge cases
+				string target;
+				int rightChoices = 1 + enemy.getPartySize();
+				cout << ">>";
+				cin >> target;
+
+				if (target != "1" && target != "2" && target != "3" && target != "4" && target != "c")
+					cout << "Invalid input" << endl;
+				else if (target == "4" && enemy.getPartySize() < 3)
+					cout << "Invalid input" << endl;
+				else if (target == "3" && enemy.getPartySize() < 2)
+					cout << "Invalid input" << endl;
+				else if (target == "2" && enemy.getPartySize() < 1)
+					cout << "Invalid input" << endl;
+				else
+				{
+				//todo: do damage to target
+					int tgt = 5;	//5 is the leader
+
+					if (target == "2")
+						tgt = 0;
+					else if (target == "3")
+						tgt = 1;
+					else if (target == "4")
+						tgt = 2;
+
+					if (tgt != 5)
+					{
+						Monster temp = enemy.getPartyM(tgt);
+						you.attack(temp);
+						int modHP = temp.getHP();
+
+						enemy.setPartyMHP(tgt, modHP);
+						cout << you.getName() << " attacks " << enemy.getPartyM(tgt).getName() << endl;
+						targetChosen = true;
+					}
+					else
+					{
+						you.attack(enemy);
+						cout << you.getName() << " attacks " << enemy.getName() << endl;
+						cout << enemy.getName() << "'s HP: " << enemy.getHP() << endl;
+						targetChosen = true;
+					}
+				}
+			}
+
+			choiceLoop = true;
+		}
+		else if (choice == "s")	//skills
+		{
+			choiceLoop = true;
+		}
+		else if (choice == "d")	//defend
+		{
+			if (yTurns < (you.getPartySize() + 1) * 2)
+				yTurns++;
+			choiceLoop = true;
+		}
+		else if (choice == "f")	//item
+		{
+			choiceLoop = true;
+		}
+		else
+		{
+			cout << "Invalid input" << endl;
+		}
+	}
+}
+
+void turnLoop(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
+{
+	while (yTurns)
+	{
+		cout << "-----------------------------------------" << endl;
+		cout << you.getName() << "'s Party Turn" << endl;
+		cout << "Remaining Turns: " << yTurns << endl;
+		cout << "-----------------------------------------" << endl;
+		cout << you.getName() << "\t\t";
+
+		for (int i = 0; i < you.getPartySize(); i++)
+			cout << you.getPartyM(i).getName() << "\t\t";
+
+		cout << endl;
+
+		cout << "HP: " << you.getHP() << "\t\t";
+
+		for (int i = 0; i < you.getPartySize(); i++)
+			cout << "HP: " << you.getPartyM(i).getHP() << "\t\t";
+
+		cout << endl;
+
+		cout << "MP: " << you.getMP() << "\t\t";
+
+		for (int i = 0; i < you.getPartySize(); i++)
+			cout << "MP: " << you.getPartyM(i).getMP() << "\t\t";
+
+		cout << endl;
+
+		cout << you.getName() << "'s turn" << endl;
+
+		choice(you, enemy, yTurns, eTurns);
+
+		yTurns--;
+
+		cout << "-----------------------------------------" << endl;
+		cout << "Remaining Turns: " << yTurns << endl;
+		cout << "-----------------------------------------" << endl;
+
+		if (you.getPartySize() >= 1)
+		{
+			cout << you.getPartyM(0).getName() << "'s turn" << endl;
+			choice(you.getPartyM(0), enemy, yTurns, eTurns);
+
+			yTurns--;
+
+			cout << "-----------------------------------------" << endl;
+			cout << "Remaining Turns: " << yTurns << endl;
+			cout << "-----------------------------------------" << endl;
+
+			if (you.getPartySize() >= 2)
+			{
+				cout << you.getPartyM(1).getName() << "'s turn" << endl;
+				choice(you.getPartyM(1), enemy, yTurns, eTurns);
+
+				yTurns--;
+
+				cout << "-----------------------------------------" << endl;
+				cout << "Remaining Turns: " << yTurns << endl;
+				cout << "-----------------------------------------" << endl;
+
+				if (you.getPartySize() >= 3)
+				{
+					cout << you.getPartyM(2).getName() << "'s turn" << endl;
+					choice(you.getPartyM(2), enemy, yTurns, eTurns);
+
+					yTurns--;
+
+					cout << "-----------------------------------------" << endl;
+					cout << "Remaining Turns: " << yTurns << endl;
+					cout << "-----------------------------------------" << endl;
+				}
+			}
+		}
+
+		eTurns = enemy.getPartySize() + 1;
+	}
+}
+
+void battle(Monster you, Monster enemy)
 {
 	cout << "Initializing Combat..." << endl;
 	bool battleEnd = false;
@@ -66,131 +242,8 @@ void battle(Monster you, Monster enemy )
 	{
 		if (yourTurn)
 		{
-			cout << "-----------------------------------------" << endl;
-			cout << "Your Party's Turn" << endl;
-			cout << "Remaining Turns: " << yourTurns << endl;
-			cout << "-----------------------------------------" << endl;
-			cout << you.getName() << "\t\t";
-
-			for (int i = 0; i < you.getPartySize(); i++)
-				cout << you.getPartyM(i).getName() << "\t\t";
-
-			cout << endl;
-
-			cout << "HP: " << you.getHP() << "\t\t";
-
-			for (int i = 0; i < you.getPartySize(); i++)
-				cout << "HP: " << you.getPartyM(i).getHP() << "\t\t";
-
-			cout << endl;
-
-			cout << "MP: " << you.getMP() << "\t\t";
-
-			for (int i = 0; i < you.getPartySize(); i++)
-				cout << "MP: " << you.getPartyM(i).getMP() << "\t\t";
-
-			cout << endl;
-
-			cout << you.getName() << "'s turn" << endl;
-
-			bool choiceLoop = false;
-			while (!choiceLoop)
-			{
-				string choice;
-				printMenu();
-				cout << ">>";
-				cin >> choice;
-
-				if (choice == "a")
-				{
-					bool targetChosen = false;
-					
-					while (!targetChosen)
-					{
-						cout << "choose target or cancel by pressing c" << endl;
-						//choose who to attack
-						cout << "1. " << enemy.getName() << endl;
-
-						if (enemy.getPartySize() > 0)
-						{
-							for (int i = 0; i < enemy.getPartySize(); i++)
-							{
-								cout << i + 2 << ". " << enemy.getPartyM(i).getName() << endl;
-							}
-						}
-
-						//test edge cases
-						string target;
-						int rightChoices = 1 + enemy.getPartySize();
-						cout << ">>";
-						cin >> target; 
-
-						if (target != "1" && target != "2" && target != "3" && target != "4" && target != "c")
-							cout << "Invalid input" << endl;
-						else if (target == "4" && enemy.getPartySize() < 3)
-							cout << "Invalid input" << endl;
-						else if (target == "3" && enemy.getPartySize() < 2)
-							cout << "Invalid input" << endl;
-						else if (target == "2" && enemy.getPartySize() < 1)
-							cout << "Invalid input" << endl;
-						else
-						{
-							//todo: do damage to target
-							if (you.getRole() == "Monk")
-							{
-								int tgt = 5;	//5 is the leader
-
-							   if (target == "2")
-									tgt = 0;
-								else if (target == "3")
-									tgt = 1;
-								else if (target == "4")
-									tgt = 2;
-
-							   if (tgt != 5)
-							   {
-								   Monster temp = enemy.getPartyM(tgt);
-								   you.attack(temp);
-								   int modHP = temp.getHP();
-
-								   enemy.setPartyMHP(tgt, modHP);
-								   cout << you.getName() << " attacks " << enemy.getPartyM(tgt).getName() << endl;
-								   targetChosen = true;
-							   }
-							   else
-							   {
-								   you.attack(enemy);
-								   cout << you.getName() << " attacks " << enemy.getName() << endl;
-								   cout << enemy.getName() << "'s HP: " << enemy.getHP() << endl;
-								   targetChosen = true;
-							   }
-								
-							}
-						}
-
-						
-					}
-					
-					choiceLoop = true;
-				}
-				else if (choice == "s")
-				{
-					choiceLoop = true;
-				}
-				else if (choice == "d")
-				{
-					choiceLoop = true;
-				}
-				else if (choice == "f")
-				{
-					choiceLoop = true;
-				}
-				else
-				{
-					cout << "Invalid input" << endl;
-				}
-			}
-
+			turnLoop(you, enemy, yourTurns, enemyTurns);
+			yourTurn = false;
 		}
 		else
 		{
@@ -198,9 +251,17 @@ void battle(Monster you, Monster enemy )
 			cout << "Enemy's Party Turn" << endl;
 			cout << "Remaining Turns: " << enemyTurns << endl;
 			cout << "-----------------------------------------" << endl;
+
+			while (enemyTurns)
+			{
+				enemyTurns--;
+			}
+
+			yourTurn = true;
+			yourTurns = you.getPartySize() + 1;
 		}
 		
-		battleEnd = true;
+		//battleEnd = true;
 	}
 	cout << "Battle Complete" << endl;
 }
