@@ -134,6 +134,13 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 		{
 			you.printSkills();
 
+			bool skillChoiceValid = false;
+			while (!skillChoiceValid)
+			{
+				int input = 0;
+				cin >> input;
+				skillChoiceValid = you.skill(enemy, input);
+			}
 			choiceLoop = true;
 		}
 		else if (choice == "d")	//defend

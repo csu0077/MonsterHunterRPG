@@ -77,7 +77,7 @@ public:
 	void printPartySize();
 	void operator = (const Monster & m);
 	void attack(Monster & m);
-	void skill(Monster & m, int i);
+	bool skill(Monster & m, int i);
 	void addSkill(string s);
 	void removeSkill(int i);
 

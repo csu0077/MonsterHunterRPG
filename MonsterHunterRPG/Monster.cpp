@@ -365,9 +365,15 @@ void Monster::attack(Monster & m)
 	damageCalc(m, 100, WEAK); //100 is non elemental damage
 }
 
-void Monster::skill(Monster & m, int i)
+bool Monster::skill(Monster & m, int i)
 {
-	string s = skills[i];
+	if (i > skills.size())
+	{
+		cout << "Invalid input" << endl;
+		return false;
+	}
+
+	string s = skills[i - 1];
 
 	if (s == "slash1")
 		slash1(m);
@@ -417,6 +423,8 @@ void Monster::skill(Monster & m, int i)
 		dragon2(m);
 	else if (s == "dragon3")
 		dragon3(m);
+
+	return true;
 }
 
 void Monster::addSkill(string s)
