@@ -61,31 +61,17 @@ void Human::addItem(Item item)
 	inventory.push_back(item);
 }
 
-void Human::removeItem(string name)
+void Human::removeItem(int i)
 {
-	for (int i = 0; i < inventory.size() - 1; i++)
-	{
-		if (inventory[i].getName() == name)	
-		{ 
-			if (inventory[i].getCount())
-			{
-				inventory[i].setCount(inventory[i].getCount() - 1);
-				return;
-			}
-			else
-			{
-				Item temp = inventory[inventory.size() - 1];
-				inventory[i] = temp;
-				inventory.pop_back();
-				return;
-			}
-		}
-	}
+	Item temp = inventory[inventory.size() - 1];
+	inventory[i] = temp;
+	inventory.pop_back();
+	return;
 }
 
 void hpMPCheck(int points, Human & h, Item i)	//helper function for use item
 {
-	if (h.getHP() + points > h.getMaxHP())
+	/*if (h.getHP() + points > h.getMaxHP())
 	{
 		h.setHP(h.getMaxHP());
 		h.removeItem(i.getName());
@@ -96,7 +82,7 @@ void hpMPCheck(int points, Human & h, Item i)	//helper function for use item
 		h.setHP(h.getHP() + points);
 		h.removeItem(i.getName());
 		return;
-	}
+	}*/
 }
 
 void Human::useItem(string name)

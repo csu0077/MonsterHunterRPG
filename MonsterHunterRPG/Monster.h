@@ -77,9 +77,9 @@ public:
 	void printPartySize();
 	void operator = (const Monster & m);
 	void attack(Monster & m);
-	void skill(Monster & m);
+	void skill(Monster & m, int i);
 	void addSkill(string s);
-	void removeSkill(string s);
+	void removeSkill(int i);
 
 	//1= weak, 2 = medium, 3 = strong
 	void slash1(Monster & mon); //weak slash damage

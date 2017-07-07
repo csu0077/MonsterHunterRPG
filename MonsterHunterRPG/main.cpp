@@ -133,6 +133,7 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 		else if (choice == "s")	//skills
 		{
 			you.printSkills();
+
 			choiceLoop = true;
 		}
 		else if (choice == "d")	//defend

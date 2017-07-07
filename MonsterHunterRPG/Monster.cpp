@@ -16,7 +16,15 @@ enum Pwr
 {
 	WEAK,
 	MEDIUM,
-	STRONG
+	STRONG,
+	HEAVY,
+	MASSIVE,
+	SERVERE,
+	COLOSSAL,
+	AFUCKTON,
+	MEGA,
+	GIGA,
+	TOOFUCKINGMUCH
 };
 
 Monster::Monster()
@@ -46,10 +54,28 @@ Monster::Monster(string name, int hp, int mp, int atk, int def, int mag, int mde
 
 	if (this->role == "Rathalos")
 	{
-		this->addSkill("fire2");
+		this->addSkill("fire3");
 		this->addSkill("slash2");
 	}
-	
+	else if (this->role == "Rathian")
+	{
+		this->addSkill("fire2");
+		this->addSkill("slash3");
+	}
+	else if (this->role == "Queropeco")
+	{
+		this->addSkill("fire1");
+		this->addSkill("impact1");
+		this->addSkill("heal1");
+	}
+	else if (this->role == "Royal Ludroth")
+	{
+		this->addSkill("water2");
+	}
+	else if (this->role == "Ludroth")
+	{
+		this->addSkill("water1");
+	}
 	//party.push_back(*this);
 	//partySize++;
 }
@@ -59,7 +85,7 @@ void Monster::printSkills()
 	cout << "# of Skills: " << skills.size() << endl;
 
 	for (int i = 0; i < skills.size(); i++)
-		cout << skills[i] << endl;
+		cout << i + 1 << ". " << skills[i] << endl;
 }
 
 void Monster::printParty()
@@ -339,30 +365,89 @@ void Monster::attack(Monster & m)
 	damageCalc(m, 100, WEAK); //100 is non elemental damage
 }
 
-void Monster::skill(Monster & m)
+void Monster::skill(Monster & m, int i)
 {
+	string s = skills[i];
 
+	if (s == "slash1")
+		slash1(m);
+	else if (s == "slash2")
+		slash2(m);
+	else if (s == "slash3")
+		slash3(m);
+	else if (s == "impact1")
+		impact1(m);
+	else if (s == "impact2")
+		impact2(m);
+	else if (s == "imapact3")
+		impact3(m);
+	else if (s == "shot1")
+		shot1(m);
+	else if (s == "shot2")
+		shot2(m);
+	else if (s == "shot3")
+		shot3(m);
+	else if (s == "fire1")
+		fire1(m);
+	else if (s == "fire2")
+		fire2(m);
+	else if (s == "fire3")
+		fire3(m);
+	else if (s == "ice1")
+		ice1(m);
+	else if (s == "ice2")
+		ice2(m);
+	else if (s == "ice3")
+		ice3(m);
+	else if (s == "thunder1")
+		thunder1(m);
+	else if (s == "thunder2")
+		thunder2(m);
+	else if (s == "thunder3")
+		thunder3(m);
+	else if (s == "water1")
+		water1(m);
+	else if (s == "water2")
+		water2(m);
+	else if (s == "water3")
+		water3(m);
+	else if (s == "dragon1")
+		dragon1(m);
+	else if (s == "dragon2")
+		dragon2(m);
+	else if (s == "dragon3")
+		dragon3(m);
 }
 
 void Monster::addSkill(string s)
 {
-	skills.push_back(s);
-}
-
-void Monster::removeSkill(string s)
-{
-	for (int i = 0; i < skills.size(); i++)
+	if (skills.size() < 6)
+		skills.push_back(s);
+	else
 	{
-		if (s == skills[i])
+		cout << "Skill set full. Please delete a skill or press 0 to forget new skill" << endl;
+
+		printSkills();
+
+		int input;
+		cin >> input;
+
+		if (input == 0)
 		{
-			string temp = skills[skills.size() - 1];
-			skills[i] = temp;
-			skills.pop_back();
 			return;
 		}
+		else
+		{
+			removeSkill(input);
+		}
 	}
+}
 
-	cout << "No such skill" << endl;
+void Monster::removeSkill(int i)
+{
+		string temp = skills[skills.size() - 1];
+		skills[i] = temp;
+		skills.pop_back();
 }
 
 void Monster::slash1(Monster & mon) //weak slash damage

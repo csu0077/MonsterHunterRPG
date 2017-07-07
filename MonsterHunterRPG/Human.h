@@ -12,7 +12,7 @@ public:
 	void attack(Monster mon);
 	Item getItem(int i);	//returns item at index i
 	void addItem(Item item); //not increment but just add to the inventory
-	void removeItem(string item); //removes item from invetory
+	void removeItem(int i); //removes item from invetory
 	void useItem(string name);
 	vector <Item> getInventory();
 	~Human();
