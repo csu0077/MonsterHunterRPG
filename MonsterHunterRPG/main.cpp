@@ -11,6 +11,25 @@
 
 using namespace std;
 
+enum Ailment
+{
+	FIREBLIGHT,
+	WATERBLIGHT,
+	ICEBLIGHT,
+	THUNDERBLIGHT,
+	DRAGONBLIGHT,
+	BLASTBLIGHT,
+	POISON,
+	DEADLYPOISON,
+	LETHALPOISON,
+	KO,
+	PARALYSIS,
+	MUDSNOW,
+	SLEEP,
+	BLEED,
+	DEAD
+};
+
 void printStats(Monster m)
 {
 	cout << "name:" << m.getName() << endl <<
@@ -97,6 +116,7 @@ bool checkValidTargetInput(Monster & you, Monster & enemy)
 				you.attack(enemy);
 				cout << you.getName() << " attacks " << enemy.getName() << endl;
 				cout << enemy.getName() << "'s HP: " << enemy.getHP() << endl;
+
 				return true;
 			}
 		}
@@ -314,6 +334,19 @@ void turnLoop(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 	}
 }
 
+int checkDead(Monster you, int turns)	//returns number of dead party members
+{
+	int bodyCount = 0;
+	for (int i = 0; i < you.getPartySize; i++)
+	{
+		if (you.getPartyM(i).getStatus()[DEAD])
+		{
+			bodyCount++;
+		}
+	}
+	return bodyCount;
+}
+
 void battle(Monster you, Monster enemy)
 {
 	cout << "Initializing Combat..." << endl;
@@ -414,6 +447,12 @@ void testCode()
 	m.printPartySize();*/
 	//cout << "Rathalos MP: " << rathalos.getMP() << endl;
 	battle(m, rathalos);
+	//todo
+	//add exp
+	//add level up
+	//add death status when reach 0 hp and remove turn from respective player
+	//add a cancel for choosing skills
+	//do items
 }
 
 int main()

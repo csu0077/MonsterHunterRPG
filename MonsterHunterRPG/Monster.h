@@ -21,7 +21,8 @@ enum Ailment
 	PARALYSIS,
 	MUDSNOW,
 	SLEEP,
-	BLEED
+	BLEED, 
+	DEAD
 };
 
 class Monster
@@ -131,8 +132,8 @@ private:
 	int maxMag;
 	int mDef; //magic defence
 	int maxMDef;
-	vector<bool> status = vector<bool>(14); //status effect array
-	vector<int> statusCounter = vector<int>(14);
+	vector<bool> status = vector<bool>(15); //status effect array
+	vector<int> statusCounter = vector<int>(15);
 	vector <int> resistances = vector<int>(8); //resistances array i.e. whether or not weak to ice/ resist to fire
 	vector <Monster> party;
 	int partySize;
@@ -174,6 +175,12 @@ private:
 		cout << "calculated damage: " << damage << endl << endl;
 		mon.setHP(mon.getHP() - damage);
 		cout << "Remaining HP: " << mon.getHP() << endl << endl;
+
+		if (mon.getHP() == 0)
+		{
+			cout << mon.getName() << " is dead!" << endl;
+			mon.setStatus(DEAD);
+		}
 	}
 
 
