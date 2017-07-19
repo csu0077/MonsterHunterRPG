@@ -426,6 +426,7 @@ void battle(Monster you, Monster enemy)
 		//battleEnd = true;
 	}
 	cout << "Battle Complete" << endl;
+	expCalc(you, enemy);
 }
 
 void testCode()
@@ -485,7 +486,8 @@ void testCode()
 	//cout << "Rathalos MP: " << rathalos.getMP() << endl;
 	battle(m, rathalos);
 	//todo
-	//give exp at end of battle
+	//give exp at end of battle	(done)
+	//add leveling up
 	//add death status when reach 0 hp and remove turn from respective player
 	//add a cancel for choosing skills (done)
 	//do items
