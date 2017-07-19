@@ -83,6 +83,11 @@ public:
 	void removeSkill(int i);
 	int getSkillSetSize();
 
+	int getLevel();
+	void setLevel(int level);
+	int getExp();
+	void setExp(int exp);
+
 	//1= weak, 2 = medium, 3 = strong
 	void slash1(Monster & mon); //weak slash damage
 	void slash2(Monster & mon); //medium slash damage
@@ -132,6 +137,9 @@ private:
 	int maxMag;
 	int mDef; //magic defence
 	int maxMDef;
+	int level;
+	int exp;
+
 	vector<bool> status = vector<bool>(15); //status effect array
 	vector<int> statusCounter = vector<int>(15);
 	vector <int> resistances = vector<int>(8); //resistances array i.e. whether or not weak to ice/ resist to fire

@@ -455,6 +455,26 @@ int Monster::getSkillSetSize()
 	return skills.size();
 }
 
+int Monster::getLevel()
+{
+	return level;
+}
+
+void Monster::setLevel(int level)
+{
+	this->level = level;
+}
+
+int Monster::getExp()
+{
+	return exp;
+}
+
+void Monster::setExp(int exp)
+{
+	this->exp = exp;
+}
+
 void Monster::slash1(Monster & mon) //weak slash damage
 {
 	cout << "slash 1" << endl;

@@ -11,26 +11,60 @@
 
 using namespace std;
 
-enum Ailment
+enum Ailments
 {
-	FIREBLIGHT,
-	WATERBLIGHT,
-	ICEBLIGHT,
-	THUNDERBLIGHT,
-	DRAGONBLIGHT,
-	BLASTBLIGHT,
-	POISON,
-	DEADLYPOISON,
-	LETHALPOISON,
-	KO,
-	PARALYSIS,
-	MUDSNOW,
-	SLEEP,
-	BLEED,
-	DEAD
+	FB,
+	WB,
+	IB,
+	TB,
+	DB,
+	BB,
+	PSN,
+	DPSN,
+	LPSN,
+	KNOCKOUT,
+	PARA,
+	MS,
+	SLP,
+	BLD,
+	DED
 };
 
-void printStats(Monster m)
+bool levelUp(Monster & you)
+{
+	return false;
+}
+
+int levelCheck(Monster & you, Monster & enemy)
+{
+	if (you.getLevel() <= enemy.getLevel())
+		return 10;
+	else
+		return 5;
+}
+
+void expCalc(Monster & you, Monster & enemy)
+{
+	int defExp = 10;
+	
+	vector <int> expVec = vector<int>(4);	//keeps then sets it all later
+
+	expVec[0] += levelCheck(you, enemy);
+
+	for (int i = 1; i < you.getPartySize(); i++)
+		expVec[i] += levelCheck(you.getPartyM(i - 1), enemy);
+
+	for (int i = 0; i < enemy.getPartySize(); i++)
+		expVec[0] += levelCheck(you, enemy.getPartyM(i));
+
+	for (int i = 0; i < enemy.getPartySize(); i++)
+		for (int j = 0; j < you.getPartySize(); j++)
+			expVec[j] += levelCheck(you.getPartyM(j), enemy.getPartyM(i));
+
+
+
+}
+void printStats(Monster & m)
 {
 	cout << "name:" << m.getName() << endl <<
 		"HP:" << m.getHP() << endl <<
@@ -337,9 +371,9 @@ void turnLoop(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 int checkDead(Monster you, int turns)	//returns number of dead party members
 {
 	int bodyCount = 0;
-	for (int i = 0; i < you.getPartySize; i++)
+	for (int i = 0; i < you.getPartySize(); i++)
 	{
-		if (you.getPartyM(i).getStatus()[DEAD])
+		if (you.getPartyM(i).getStatus()[DED])
 		{
 			bodyCount++;
 		}
@@ -453,6 +487,7 @@ void testCode()
 	//add death status when reach 0 hp and remove turn from respective player
 	//add a cancel for choosing skills
 	//do items
+	//test for bad inputs
 }
 
 int main()
