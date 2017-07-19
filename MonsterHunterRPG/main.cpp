@@ -35,7 +35,7 @@ bool levelUp(Monster & you)
 	return false;
 }
 
-int levelCheck(Monster & you, Monster & enemy)
+int levelCheck(Monster & you, Monster & enemy)	//checks exp
 {
 	if (you.getLevel() <= enemy.getLevel())
 		return 10;
@@ -52,16 +52,19 @@ void expCalc(Monster & you, Monster & enemy)
 	expVec[0] += levelCheck(you, enemy);
 
 	for (int i = 1; i < you.getPartySize(); i++)
-		expVec[i] += levelCheck(you.getPartyM(i - 1), enemy);
+		expVec[i] += levelCheck(you.getPartyM(i-1), enemy);
 
 	for (int i = 0; i < enemy.getPartySize(); i++)
 		expVec[0] += levelCheck(you, enemy.getPartyM(i));
 
 	for (int i = 0; i < enemy.getPartySize(); i++)
-		for (int j = 0; j < you.getPartySize(); j++)
-			expVec[j] += levelCheck(you.getPartyM(j), enemy.getPartyM(i));
+		for (int j = 1; j < you.getPartySize(); j++)
+			expVec[j] += levelCheck(you.getPartyM(j-1), enemy.getPartyM(i));
 
+	you.setExp(you.getExp() + expVec[0]);
 
+	for (int i = 0; i < you.getPartySize(); i++)
+		you.setPartyExp(i, expVec[i - 1]);
 
 }
 void printStats(Monster & m)
@@ -256,7 +259,7 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 		}
 		else if (choice == "s")	//skills
 		{
-			cout << "Choose a skill" << endl;
+			cout << "Choose a skill or type -1 to cancel" << endl;
 			you.printSkills();
 
 			bool skillChoiceValid = false;
@@ -266,15 +269,15 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 			while (!skillChoiceValid)
 			{
 				cin >> input;
-				if (input > you.getSkillSetSize() || input < 0)
+				if (input > you.getSkillSetSize() || (input < 0 && input != -1))
 				{
 					cout << "Invalid input" << endl;
 				}
 				else
 					skillChoiceValid = true;
 			}
-			
-			if (checkValidSkillTarget(you, enemy, input))
+
+			if (input != -1 && checkValidSkillTarget(you, enemy, input))
 			{
 				choiceLoop = true;
 				yTurns--;
@@ -482,10 +485,9 @@ void testCode()
 	//cout << "Rathalos MP: " << rathalos.getMP() << endl;
 	battle(m, rathalos);
 	//todo
-	//add exp
-	//add level up
+	//give exp at end of battle
 	//add death status when reach 0 hp and remove turn from respective player
-	//add a cancel for choosing skills
+	//add a cancel for choosing skills (done)
 	//do items
 	//test for bad inputs
 }

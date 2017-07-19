@@ -475,6 +475,11 @@ void Monster::setExp(int exp)
 	this->exp = exp;
 }
 
+void Monster::setPartyExp(int m, int exp)
+{
+	party[m].setExp(this->exp + exp);
+}
+
 void Monster::slash1(Monster & mon) //weak slash damage
 {
 	cout << "slash 1" << endl;

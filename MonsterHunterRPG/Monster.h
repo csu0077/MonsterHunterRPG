@@ -87,6 +87,7 @@ public:
 	void setLevel(int level);
 	int getExp();
 	void setExp(int exp);
+	void setPartyExp(int m, int exp);
 
 	//1= weak, 2 = medium, 3 = strong
 	void slash1(Monster & mon); //weak slash damage
