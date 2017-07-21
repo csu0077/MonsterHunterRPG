@@ -480,6 +480,47 @@ void Monster::setPartyExp(int m, int exp)
 	party[m].setExp(this->exp + exp);
 }
 
+void Monster::setStats(int atk, int def, int mag, int mdef)
+{
+	this->atk += atk;
+	this->def += def;
+	this->mag += mag;
+	this->mDef += mdef;
+
+	this->maxAtk += atk;
+	this->maxDef += def;
+	this->maxMag += mag;
+	this->maxMDef += mdef;
+}
+
+void Monster::resetStats()
+{
+	this->atk = maxAtk;
+	this->def = maxDef;
+	this->mag = maxMag;
+	this->mDef = maxMDef;
+
+	for (int i = 0; i < status.size(); i++)
+		status[i] = 0;
+}
+
+void Monster::levelUP()
+{
+	if (this->role == "Swordmaster")
+		setStats(30, 20, 10, 10);
+	else if (this->role == "Monk")
+		setStats(20, 20, 10, 20);
+	else if (this->role == "Sharpshooter")
+		setStats(20, 10, 20, 10);
+}
+
+void Monster::levelUpPartyM(int i)
+{
+	party[i].levelUP();
+}
+
+
+
 void Monster::slash1(Monster & mon) //weak slash damage
 {
 	cout << "slash 1" << endl;

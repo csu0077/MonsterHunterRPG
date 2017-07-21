@@ -88,6 +88,11 @@ public:
 	int getExp();
 	void setExp(int exp);
 	void setPartyExp(int m, int exp);
+	void levelUP();
+	void levelUpPartyM(int i);
+	void setStats(int atk, int def, int mag, int mdef);
+	void resetStats();	//remove buffs, debuffs, and status ailments
+	
 
 	//1= weak, 2 = medium, 3 = strong
 	void slash1(Monster & mon); //weak slash damage
@@ -139,7 +144,7 @@ private:
 	int mDef; //magic defence
 	int maxMDef;
 	int level;
-	int exp;
+	int exp;	//100 and up is a level up
 
 	vector<bool> status = vector<bool>(15); //status effect array
 	vector<int> statusCounter = vector<int>(15);

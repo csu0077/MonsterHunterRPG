@@ -66,7 +66,23 @@ void expCalc(Monster & you, Monster & enemy)
 	for (int i = 0; i < you.getPartySize(); i++)
 		you.setPartyExp(i, expVec[i - 1]);
 
+	if (you.getExp() >= 100)
+	{
+		cout << you.getName() << " leveled up!" << endl;
+		you.levelUP();//level up here
+	}
+
+	for (int i = 0; i < you.getPartySize(); i++)
+	{
+		if (you.getPartyM(i).getExp() >= 100)
+		{
+			cout << you.getPartyM(i).getName() << " leveled up!" << endl;
+			you.levelUpPartyM(i);
+		}
+	}
 }
+
+
 void printStats(Monster & m)
 {
 	cout << "name:" << m.getName() << endl <<
