@@ -92,6 +92,7 @@ public:
 	void levelUpPartyM(int i);
 	void setStats(int atk, int def, int mag, int mdef);
 	void resetStats();	//remove buffs, debuffs, and status ailments
+	void resetPartyMStats(int i);
 	
 
 	//1= weak, 2 = medium, 3 = strong

@@ -82,6 +82,13 @@ void expCalc(Monster & you, Monster & enemy)
 	}
 }
 
+void reset(Monster & m)	//reset party stats after every battle
+{
+	m.resetStats();
+
+	for (int i = 0; i < m.getPartySize(); i++)
+		m.resetPartyMStats(i);
+}
 
 void printStats(Monster & m)
 {
@@ -443,6 +450,7 @@ void battle(Monster you, Monster enemy)
 	}
 	cout << "Battle Complete" << endl;
 	expCalc(you, enemy);
+	reset(you);
 }
 
 void testCode()

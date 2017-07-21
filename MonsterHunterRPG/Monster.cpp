@@ -504,6 +504,11 @@ void Monster::resetStats()
 		status[i] = 0;
 }
 
+void Monster::resetPartyMStats(int i)
+{
+	party[i].resetStats();
+}
+
 void Monster::levelUP()
 {
 	if (this->role == "Swordmaster")
