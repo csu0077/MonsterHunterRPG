@@ -444,6 +444,14 @@ void battle(Monster you, Monster enemy)
 
 			yourTurn = true;
 			yourTurns = you.getPartySize() + 1;
+
+			if (you.getStatus()[DED])
+				yourTurns--;
+			for (int i = 0; i < you.getPartySize(); i++)
+			{
+				if (you.getPartyM(i).getStatus()[DED])
+					yourTurns--;
+			}
 		}
 		
 		//battleEnd = true;
@@ -511,11 +519,14 @@ void testCode()
 	battle(m, rathalos);
 	//todo
 	//give exp at end of battle	(done)
-	//add leveling up
-	//add death status when reach 0 hp and remove turn from respective player
+	//add leveling up (done)
 	//add a cancel for choosing skills (done)
+	//add death status when reach 0 hp and remove turn from respective player (done)
 	//do items
 	//test for bad inputs
+	//debug and test leveling up
+	//add mage class
+	//add leveling up for monsters like what stats they level up
 }
 
 int main()
