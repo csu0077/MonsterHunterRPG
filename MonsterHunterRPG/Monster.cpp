@@ -480,13 +480,17 @@ void Monster::setPartyExp(int m, int exp)
 	party[m].setExp(this->exp + exp);
 }
 
-void Monster::setStats(int atk, int def, int mag, int mdef)
+void Monster::setStats(int hp, int mp, int atk, int def, int mag, int mdef)
 {
+	this->HP = hp;
+	this->MP = mp;
 	this->atk += atk;
 	this->def += def;
 	this->mag += mag;
 	this->mDef += mdef;
 
+	this->maxHP = hp;
+	this->maxMP = mp;
 	this->maxAtk += atk;
 	this->maxDef += def;
 	this->maxMag += mag;
@@ -512,11 +516,79 @@ void Monster::resetPartyMStats(int i)
 void Monster::levelUP()
 {
 	if (this->role == "Swordmaster")
-		setStats(30, 20, 10, 10);
+		setStats(20, 10, 30, 20, 10, 10);
 	else if (this->role == "Monk")
-		setStats(20, 20, 10, 20);
+		setStats(30, 10, 20, 20, 10, 20);
 	else if (this->role == "Sharpshooter")
-		setStats(20, 10, 20, 10);
+		setStats(10, 20, 20, 10, 20, 10);
+	else if (this->role == "Mage")
+		setStats(10, 50, 10, 10, 40, 20);
+	else if (this->role == "Ludroth" ||
+		this->role == "Jaggi" ||
+		this->role == "Wroggi" ||
+		this->role == "Baggi" ||
+		this->role == "Delex")
+		setStats(5, 5, 5, 5, 5, 5);
+	else if (this->role == "Queropeco" ||
+		this->role == "Crimson Queropeco")
+		setStats(5, 5, 5, 5, 30, 5);
+	else if (this->role == "Rathian" ||
+		this->role == "Pink Rathian")
+		setStats(20, 20, 20, 10, 20, 10);
+	else if (this->role == "Great Jaggi" ||
+		this->role == "Great Wroggi" ||
+		this->role == "Great Baggi")
+		setStats(10, 10, 30, 10, 10, 10);
+	else if (this->role == "Royal Ludroth" ||
+		this->role == "Purple Ludroth" ||
+		this->role == "Gobul")
+		setStats(10, 10, 20, 20, 10, 20);
+	else if (this->role == "Rathalos" ||
+		this->role == "Azure Rathalos")
+		setStats(50, 50, 50, 20, 40, 20);
+	else if (this->role == "Nargacuga" ||
+		this->role == "Green Nargacuga" ||
+		this->role == "Barioth")
+		setStats(30, 30, 60, 10, 5, 10);
+	else if (this->role == "Lagiacrus" ||
+		this->role == "Ivory Lagiacrus")
+		setStats(40, 40, 40, 20, 50, 20);
+	else if (this->role == "Uragaan")
+		setStats(50, 10, 40, 80, 10, 10);
+	else if (this->role == "Agnaktor" ||
+		this->role == "G. Agnaktor")
+		setStats(40, 40, 30, 60, 40, 30);
+	else if (this->role == "Tigrex")
+		setStats(40, 5, 80, 40, 5, 20);
+	else if (this->role == "DK Rathalos")
+		setStats(70, 70, 70, 70, 70, 70);
+	else if (this->role == "Fatalis")
+		setStats(100, 100, 100, 100, 100, 100);
+	else if (this->role == "Plesioth" ||
+		this->role == "Green Plesioth")
+		setStats(100, 50, 50, 30, 50, 30);
+	else if (this->role == "Deviljho")
+		setStats(150, 50, 100, 70, 50, 50);
+	else if (this->role == "Duranboros")
+		setStats(100, 10, 60, 70, 0, 20);
+	else if (this->role == "Zinorge" ||
+			 this->role == "Stygian Zinorge")
+		setStats(50, 50, 70, 40, 70, 40);
+	else if (this->role == "Mizutsune")
+		setStats(40, 60, 40, 40, 60, 40);
+	else if (this->role == "Gold Rathian" ||
+			 this->role == "Silver Rathalos")
+		setStats(90, 90, 90, 100, 90, 90);
+	else if (this->role == "Silverwind Narga")
+		setStats(70, 70, 100, 50, 60, 60);
+	else if (this->role == "Barroth" ||
+		this->role == "J. Barroth")
+		setStats(60, 10, 60, 60, 10, 10);
+	else if (this->role == "Ukanlos")
+		setStats(200, 100, 150, 120, 100, 100);
+
+
+
 }
 
 void Monster::levelUpPartyM(int i)
