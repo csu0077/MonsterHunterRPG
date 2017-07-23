@@ -562,32 +562,67 @@ void Monster::levelUP()
 		setStats(40, 5, 80, 40, 5, 20);
 	else if (this->role == "DK Rathalos")
 		setStats(70, 70, 70, 70, 70, 70);
-	else if (this->role == "Fatalis")
+	else if (this->role == "Fatalis" ||
+		this->role == "Crimson Fatalis" ||
+		this->role == "White Fatalis")
 		setStats(100, 100, 100, 100, 100, 100);
 	else if (this->role == "Plesioth" ||
 		this->role == "Green Plesioth")
 		setStats(100, 50, 50, 30, 50, 30);
-	else if (this->role == "Deviljho")
+	else if (this->role == "Deviljho" ||
+		this->role == "Savage Jho")
 		setStats(150, 50, 100, 70, 50, 50);
 	else if (this->role == "Duranboros")
 		setStats(100, 10, 60, 70, 0, 20);
 	else if (this->role == "Zinorge" ||
-			 this->role == "Stygian Zinorge")
+		this->role == "Stygian Zinorge")
 		setStats(50, 50, 70, 40, 70, 40);
 	else if (this->role == "Mizutsune")
 		setStats(40, 60, 40, 40, 60, 40);
 	else if (this->role == "Gold Rathian" ||
-			 this->role == "Silver Rathalos")
+		this->role == "Silver Rathalos")
 		setStats(90, 90, 90, 100, 90, 90);
 	else if (this->role == "Silverwind Narga")
 		setStats(70, 70, 100, 50, 60, 60);
 	else if (this->role == "Barroth" ||
 		this->role == "J. Barroth")
 		setStats(60, 10, 60, 60, 10, 10);
-	else if (this->role == "Ukanlos")
+	else if (this->role == "Ukanlos" ||
+		this->role == "Akantor")
 		setStats(200, 100, 150, 120, 100, 100);
-
-
+	else if (this->role == "Rajang" ||
+		this->role == "Golden Rajang")
+		setStats(50, 50, 100, 50, 100, 50);
+	else if (this->role == "Hellblade Glavenus")
+		setStats(100, 50, 100, 50, 50, 50);
+	else if (this->role == "Raging Brachidios")
+		setStats(100, 50, 90, 90, 90, 50);
+	else if (this->role == "Alatreon" ||
+		this->role == "Teostra" ||
+		this->role == "Chameleos" ||
+		this->role == "Kush Dora" ||
+		this->role == "Shagura Magala" ||
+		this->role == "Gore Magala")
+		setStats(100, 200, 100, 100, 200, 100);
+	else if (this->role == "Hyper Zinorge" ||
+		this->role == "Hyper Rajang" ||
+		this->role == "Hyper Lagiacrus" ||
+		this->role == "Hyper S.Rathalos" ||
+		this->role == "Hyper G.Rathian")
+		setStats(150, 150, 150, 150, 150, 150);
+	else if (this->role == "T.Lord Astalos" ||
+		this->role == "T.Lord Zinorge" ||
+		this->role == "Super Dreadqueen" ||
+		this->role == "Super Dreadking" ||
+		this->role == "Super Silver Narga")
+		setStats(250, 250, 250, 250, 250, 250);
+	else if (this->role == "Abyssal Lagiacrus")
+		setStats(100, 200, 150, 150, 200, 200);
+	else if (this->role == "Apex Rajang" ||
+			 this->role == "Apex Zinorge" ||
+			 this->role == "Apex Diablos" ||
+			 this->role == "Apex Deviljho")
+		setStats(500, 500, 500, 500, 500, 500);
 
 }
 
