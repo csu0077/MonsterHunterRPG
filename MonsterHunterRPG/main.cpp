@@ -30,15 +30,13 @@ enum Ailments
 	DED
 };
 
-bool levelUp(Monster & you)
-{
-	return false;
-}
 
 int levelCheck(Monster & you, Monster & enemy)	//checks exp
 {
-	if (you.getLevel() <= enemy.getLevel())
+	if (you.getLevel() <= enemy.getLevel() && enemy.getRole() != "Boss")
 		return 10;
+	else if (you.getLevel() <= enemy.getLevel() && enemy.getRole() == "Boss")
+		return 100;
 	else
 		return 5;
 }
@@ -389,8 +387,6 @@ void turnLoop(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 				}
 			}
 		}
-
-		eTurns = enemy.getPartySize() + 1;
 	}
 }
 
@@ -428,6 +424,7 @@ void battle(Monster you, Monster enemy)
 		{
 			turnLoop(you, enemy, yourTurns, enemyTurns);
 			yourTurn = false;
+
 		}
 		else
 		{
@@ -445,16 +442,31 @@ void battle(Monster you, Monster enemy)
 			yourTurn = true;
 			yourTurns = you.getPartySize() + 1;
 
-			if (you.getStatus()[DED])
-				yourTurns--;
-			for (int i = 0; i < you.getPartySize(); i++)
-			{
-				if (you.getPartyM(i).getStatus()[DED])
-					yourTurns--;
-			}
+			
 		}
+
+		if (you.getStatus()[DED])
+			yourTurns--;
+		for (int i = 0; i < you.getPartySize(); i++)
+		{
+			if (you.getPartyM(i).getStatus()[DED])
+				yourTurns--;
+		}
+
+		if (!yourTurns)
+			battleEnd = true;
+
+		if (enemy.getStatus()[DED])
+			enemyTurns--;
+		for (int i = 0; i < enemy.getPartySize(); i++)
+		{
+			if (enemy.getPartyM(i).getStatus()[DED])
+				enemyTurns--;
+		}
+
+		if (!enemyTurns)
+			battleEnd = true;
 		
-		//battleEnd = true;
 	}
 	cout << "Battle Complete" << endl;
 	expCalc(you, enemy);
@@ -465,11 +477,12 @@ void testCode()
 {
 	//testing Monster class Monster(string name, int hp, int mp, int atk, int def, int mag, int mdef);
 	Swordmaster sm("swordmaster",   100, 100, 10, 0, 10, 10);
-	Sharpshooter ss("sharpshooter", 100, 100, 10, 2, 10, 10);
+	//Sharpshooter ss("sharpshooter", 100, 100, 10, 2, 10, 10);
+	Sharpshooter john("John");
 	Monk m("monk", 100, 100, 10, 10, 10, 10);
-	Monster rathalos("Rathalos", 5000, 500, 500, 250, 250, 250, "Rathalos");
 	m.addPartyM(sm);
-	rathalos.addPartyM(ss);
+	
+	Monster jaggi("Jaggi");
 	/*printStats(sm);
 	//printStats(ss);
 	printStats(m);
@@ -516,7 +529,7 @@ void testCode()
 	m.printParty();
 	m.printPartySize();*/
 	//cout << "Rathalos MP: " << rathalos.getMP() << endl;
-	battle(m, rathalos);
+	battle(john, jaggi);
 	//todo
 	//give exp at end of battle	(done)
 	//add leveling up (done)

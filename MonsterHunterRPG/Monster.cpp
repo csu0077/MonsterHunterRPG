@@ -40,6 +40,86 @@ Monster::Monster()
 	//partySize++;
 }
 
+void Monster::setInitStats(string name, int hp, int mp, int atk, int def, int mag, int mdef, string role)
+{
+	this->name = name;
+	this->role = role;
+	this->HP = hp;
+	this->maxHP = hp;
+	this->MP = mp;
+	this->maxMP = mp;
+	this->atk = atk;
+	this->maxAtk = atk;
+	this->def = def;
+	this->maxDef = def;
+	this->mag = mag;
+	this->maxMag = mag;
+	this->mDef = mdef;
+	this->maxMDef = mdef;
+}
+
+Monster::Monster(string name)		//mostly just for monsters
+{
+	if (name == "Ludroth")
+	{
+		setInitStats("Ludroth", 100, 25, 125, 25, 0, 25, "Ludroth");
+		this->level = 1;
+
+		this->setRes(SLASH, 2);
+	}
+	else if (name == "Jaggi")
+	{
+		setInitStats("Jaggi", 100, 25, 125, 25, 0, 25, "Jaggi");
+		this->level = 1;
+
+		setRes(IMPACT, 2);
+	}
+	else if (name == "Queropeco")
+	{
+		setInitStats("Queropeco", 200, 100, 150, 50, 50, 50, "Queropeco");
+		this->level = 3;
+		
+		setRes(WATER, 2);
+		setRes(SHOT, 2);
+		setRes(FIRE, 1);
+	}
+	else if (name == "Rathian")
+	{
+		setInitStats("Rathian", 500, 200, 200, 200, 150, 200, "Rathian");
+		this->level = 3;
+
+		setRes(THUNDER, 2);
+		setRes(SHOT, 2);
+		setRes(FIRE, 0);
+	}
+	else if (name == "Great Jaggi")
+	{
+		setInitStats("Great Jaggi", 500, 100, 20, 100, 0, 100, "Great Jaggi");
+		this->level = 3;
+
+		setRes(IMPACT, 2);
+		setRes(SLASH, 2);
+		setRes(FIRE, 2);
+	}
+	else if (name == "Royal Ludroth")
+	{
+		setInitStats("Royal Ludroth", 500, 100, 100, 500, 200, 500, "Royal Ludroth");
+		this->level = 5;
+
+		setRes(IMPACT, 2);
+		setRes(FIRE, 2);
+	}
+	else if (name == "Rathalos")
+	{
+		setInitStats("Rathalos", 5000, 500, 500, 300, 500, 300, "Boss");
+		this->level = 7;
+
+		setRes(THUNDER, 2);
+		setRes(DRAGON, 2);
+		setRes(FIRE, 2);
+	}
+}
+
 Monster::Monster(string name, int hp, int mp, int atk, int def, int mag, int mdef, string role)
 	:HP(hp),MP(mp),atk(atk),def(def),mag(mag)
 {
@@ -52,30 +132,6 @@ Monster::Monster(string name, int hp, int mp, int atk, int def, int mag, int mde
 	maxMag = mag;
 	maxMDef = mDef;
 
-	if (this->role == "Rathalos")
-	{
-		this->addSkill("fire3");
-		this->addSkill("slash2");
-	}
-	else if (this->role == "Rathian")
-	{
-		this->addSkill("fire2");
-		this->addSkill("slash3");
-	}
-	else if (this->role == "Queropeco")
-	{
-		this->addSkill("fire1");
-		this->addSkill("impact1");
-		this->addSkill("heal1");
-	}
-	else if (this->role == "Royal Ludroth")
-	{
-		this->addSkill("water2");
-	}
-	else if (this->role == "Ludroth")
-	{
-		this->addSkill("water1");
-	}
 	//party.push_back(*this);
 	//partySize++;
 }
@@ -172,7 +228,7 @@ vector<int> Monster::getRes()
 
 void Monster::setRes(int res, int i)	//i represents whenever or not the unit is weak to said element i.e. 0 = no damage, 1 = neutral, 2 = weakness
 {
-	this->resistances[res] = i;  //pretty much just flip the bool
+	this->resistances[res] = i;  
 }
 
 int Monster::getMaxHP()
@@ -482,15 +538,15 @@ void Monster::setPartyExp(int m, int exp)
 
 void Monster::setStats(int hp, int mp, int atk, int def, int mag, int mdef)
 {
-	this->HP = hp;
-	this->MP = mp;
+	this->HP += hp;
+	this->MP += mp;
 	this->atk += atk;
 	this->def += def;
 	this->mag += mag;
 	this->mDef += mdef;
 
-	this->maxHP = hp;
-	this->maxMP = mp;
+	this->maxHP += hp;
+	this->maxMP += mp;
 	this->maxAtk += atk;
 	this->maxDef += def;
 	this->maxMag += mag;

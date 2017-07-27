@@ -29,6 +29,8 @@ class Monster
 {
 public:
 	Monster();
+	void setInitStats(string name, int hp, int mp, int atk, int def, int mag, int mdef, string role);
+	Monster(string name);
 	Monster(string name, int hp, int mp, int atk, int def, int mag, int mdef, string role);
 	void printSkills();
 	void printParty();
