@@ -193,7 +193,7 @@ private:
 		mon.setHP(mon.getHP() - damage);
 		cout << "Remaining HP: " << mon.getHP() << endl << endl;
 
-		if (mon.getHP() == 0)
+		if (mon.getHP() <= 0)
 		{
 			cout << mon.getName() << " is dead!" << endl;
 			mon.setStatus(DEAD);

@@ -62,7 +62,7 @@ void expCalc(Monster & you, Monster & enemy)
 	you.setExp(you.getExp() + expVec[0]);
 
 	for (int i = 0; i < you.getPartySize(); i++)
-		you.setPartyExp(i, expVec[i - 1]);
+		you.setPartyExp(i, expVec[i + 1]);
 
 	if (you.getExp() >= 100)
 	{
@@ -166,13 +166,11 @@ bool checkValidTargetInput(Monster & you, Monster & enemy)
 				int modHP = temp.getHP();
 
 				enemy.setPartyMHP(tgt, modHP);
-				cout << you.getName() << " attacks " << enemy.getPartyM(tgt).getName() << endl;
 				return true;
 			}
 			else
 			{
 				you.attack(enemy);
-				cout << you.getName() << " attacks " << enemy.getName() << endl;
 				cout << enemy.getName() << "'s HP: " << enemy.getHP() << endl;
 
 				return true;
@@ -277,6 +275,8 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 			cout << "-----------------------------------------" << endl;
 			cout << "Remaining Turns: " << yTurns << endl;
 			cout << "-----------------------------------------" << endl;
+
+			return;
 		}
 		else if (choice == "s")	//skills
 		{
@@ -300,8 +300,9 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 
 			if (input != -1 && checkValidSkillTarget(you, enemy, input))
 			{
-				choiceLoop = true;
+				//choiceLoop = true;
 				yTurns--;
+				return;
 			}
 		}
 		else if (choice == "d")	//defend
@@ -368,21 +369,72 @@ void turnLoop(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 
 		choice(you, enemy, yTurns, eTurns);
 
+		if (enemy.getStatus()[DED])
+		{
+			eTurns--;
+		}
+
+		for (int i = 0; i < enemy.getPartySize(); i++)
+		{
+			if (enemy.getPartyM(i).getStatus()[DED])
+				eTurns--;
+		}
+
+
+		if (!eTurns)
+			return;
 
 		if (you.getPartySize() >= 1)
 		{
 			cout << you.getPartyM(0).getName() << "'s turn" << endl;
 			choice(you.getPartyM(0), enemy, yTurns, eTurns);
 
+			if (enemy.getStatus()[DED])
+			{
+				eTurns--;
+				
+			}
+				
+			for (int i = 0; i < enemy.getPartySize(); i++)
+			{
+				if (enemy.getPartyM(i).getStatus()[DED])
+					eTurns--;
+			}
+
+			if (!eTurns)
+				return;
+
 			if (you.getPartySize() >= 2)
 			{
 				cout << you.getPartyM(1).getName() << "'s turn" << endl;
 				choice(you.getPartyM(1), enemy, yTurns, eTurns);
 
+				if (enemy.getStatus()[DED])
+					eTurns--;
+				for (int i = 0; i < enemy.getPartySize(); i++)
+				{
+					if (enemy.getPartyM(i).getStatus()[DED])
+						eTurns--;
+				}
+
+				if (!eTurns)
+					return;
+
 				if (you.getPartySize() >= 3)
 				{
 					cout << you.getPartyM(2).getName() << "'s turn" << endl;
 					choice(you.getPartyM(2), enemy, yTurns, eTurns);
+
+					if (enemy.getStatus()[DED])
+						eTurns--;
+					for (int i = 0; i < enemy.getPartySize(); i++)
+					{
+						if (enemy.getPartyM(i).getStatus()[DED])
+							eTurns--;
+					}
+
+					if (!eTurns)
+						return;
 
 				}
 			}
@@ -425,6 +477,9 @@ void battle(Monster you, Monster enemy)
 			turnLoop(you, enemy, yourTurns, enemyTurns);
 			yourTurn = false;
 
+			if (!enemyTurns)
+				battleEnd = true;
+
 		}
 		else
 		{
@@ -452,7 +507,6 @@ void battle(Monster you, Monster enemy)
 			if (you.getPartyM(i).getStatus()[DED])
 				yourTurns--;
 		}
-
 		if (!yourTurns)
 			battleEnd = true;
 
@@ -464,13 +518,11 @@ void battle(Monster you, Monster enemy)
 				enemyTurns--;
 		}
 
-		if (!enemyTurns)
-			battleEnd = true;
 		
 	}
 	cout << "Battle Complete" << endl;
 	expCalc(you, enemy);
-	reset(you);
+	//reset(you);
 }
 
 void testCode()
@@ -480,9 +532,11 @@ void testCode()
 	//Sharpshooter ss("sharpshooter", 100, 100, 10, 2, 10, 10);
 	Sharpshooter john("John");
 	Monk m("monk", 100, 100, 10, 10, 10, 10);
-	m.addPartyM(sm);
+	john.addPartyM(sm);
 	
 	Monster jaggi("Jaggi");
+	Monster luddy("Ludroth");
+	jaggi.addPartyM(luddy);
 	/*printStats(sm);
 	//printStats(ss);
 	printStats(m);
@@ -540,6 +594,7 @@ void testCode()
 	//debug and test leveling up
 	//add mage class
 	//add leveling up for monsters like what stats they level up
+	//fix it so dead targets cannot be selected
 }
 
 int main()
