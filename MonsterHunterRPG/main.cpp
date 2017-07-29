@@ -385,7 +385,10 @@ void turnLoop(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 		cout << "-----------------------------------------" << endl;
 
 		if (checkDead(enemy) == 1 + enemy.getPartySize())
+		{
 			return;
+		}
+			
 			
 
 		if (you.getPartySize() >= 1)
@@ -463,7 +466,8 @@ void battle(Monster you, Monster enemy)
 			{
 				battleEnd = true;
 			}
-				
+			
+			enemyTurns = enemy.getPartySize() + 1 - checkDead(enemy);
 
 		}
 		else
@@ -480,7 +484,7 @@ void battle(Monster you, Monster enemy)
 			}
 
 			yourTurn = true;
-			yourTurns = you.getPartySize() + 1;
+			yourTurns = you.getPartySize() + 1 - checkDead(you);
 
 			
 		}
@@ -512,13 +516,13 @@ void testCode()
 	//give exp at end of battle	(done)
 	//add leveling up (done)
 	//add a cancel for choosing skills (done)
-	//add death status when reach 0 hp and remove turn from respective player (done)
+	//add death status when reach 0 hp and remove turn from respective player (kinda done)
 	//do items
-	//test for bad inputs
+	//test for bad inputs (progressing)
 	//debug and test leveling up
 	//add mage class (done)
 	//add leveling up for monsters like what stats they level up (mostly done)
-	//fix it so dead targets cannot be selected
+	//fix it so dead targets cannot be selected (done)
 }
 
 int main()
