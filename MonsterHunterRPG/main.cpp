@@ -199,7 +199,7 @@ bool checkValidTargetInput(Monster & you, Monster & enemy)
 	return false;
 }
 
-bool checkValidSkillTarget(Monster & you, Monster & enemy, int i)
+bool checkValidSkillTarget(Monster & you, Monster & enemy, string i)
 {
 	bool targetChosen = false;
 
@@ -240,6 +240,7 @@ bool checkValidSkillTarget(Monster & you, Monster & enemy, int i)
 			cout << "Invalid input" << endl;
 		else
 		{
+			
 			int tgt = 5;	//5 is the leader
 
 			if (target == "2")
@@ -250,10 +251,16 @@ bool checkValidSkillTarget(Monster & you, Monster & enemy, int i)
 				tgt = 2;
 			else if (target == "c")
 				return false;
+
+			int skill = stoi(i);
+
 			if (tgt != 5)
 			{
 				Monster temp = enemy.getPartyM(tgt);
-				you.skill(temp, i);
+
+				
+
+				you.skill(temp, skill);
 				int modHP = temp.getHP();
 
 				enemy.setPartyMHP(tgt, modHP);
@@ -261,7 +268,7 @@ bool checkValidSkillTarget(Monster & you, Monster & enemy, int i)
 			}
 			else
 			{
-				you.skill(enemy, i);
+				you.skill(enemy, skill);
 				/*cout << you.getName() << " attacks " << enemy.getName() << endl;
 				cout << enemy.getName() << "'s HP: " << enemy.getHP() << endl;*/
 				return true;
@@ -301,17 +308,18 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 		}
 		else if (choice == "s")	//skills
 		{
-			cout << "Choose a skill or type -1 to cancel" << endl;
+			cout << "Choose a skill or type c to cancel" << endl;
 			you.printSkills();
 
 			bool skillChoiceValid = false;
 			//do something about choosing a target
-			int input = 0;
+			string input;
 			
 			while (!skillChoiceValid)
 			{
 				cin >> input;
-				if (input > you.getSkillSetSize() || (input < 0 && input != -1))
+				if (input != "1" && input != "2" && input != "3" && input != "4"
+					&& input != "5" && input != "6" && input != "7" && input != "8" && input != "c")
 				{
 					//fix it so input for dead enemies don't work
 					cout << "Invalid input" << endl;
@@ -320,7 +328,7 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 					skillChoiceValid = true;
 			}
 
-			if (input != -1 && checkValidSkillTarget(you, enemy, input))
+			if (input != "c" && checkValidSkillTarget(you, enemy, input))
 			{
 				choiceLoop = true;
 				yTurns--;
