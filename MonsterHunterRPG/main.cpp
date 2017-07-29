@@ -593,7 +593,7 @@ void testCode()
 	//test for bad inputs
 	//debug and test leveling up
 	//add mage class
-	//add leveling up for monsters like what stats they level up
+	//add leveling up for monsters like what stats they level up (mostly done)
 	//fix it so dead targets cannot be selected
 }
 

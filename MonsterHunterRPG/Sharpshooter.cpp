@@ -14,10 +14,10 @@ Sharpshooter::Sharpshooter(string name)
 
 	}
 
-	for (int i = 0; i < getStatus().size() - 1; i++)
+	/*for (int i = 0; i < getStatus().size() - 1; i++)
 	{
 		setStatus(i);
-	}
+	}*/
 
 	addSkill("shot1");
 }
@@ -45,10 +45,10 @@ Sharpshooter::Sharpshooter(string name, int hp, int mp, int atk, int def, int ma
 
 	}
 
-	for (int i = 0; i < getStatus().size() - 1; i++)
+	/*for (int i = 0; i < getStatus().size() - 1; i++)
 	{
 		setStatus(i);
-	}
+	}*/
 
 	addSkill("shot1");
 }

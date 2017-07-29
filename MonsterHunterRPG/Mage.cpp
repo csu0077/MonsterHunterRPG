@@ -1,13 +1,14 @@
-#include "swordmaster.h"
+#include "Mage.h"
 
-Swordmaster::Swordmaster()
+
+
+Mage::Mage()
 {
-	Monster();
 }
 
-Swordmaster::Swordmaster(string name)
+Mage::Mage(string name)
 {
-	setInitStats(name, 100, 50, 150, 100, 50, 100, "Swordmaster");
+	setInitStats(name, 50, 200, 50, 50, 200, 150, "Mage");
 
 	for (int i = 0; i < getRes().size() - 1; i++)
 	{
@@ -15,10 +16,14 @@ Swordmaster::Swordmaster(string name)
 
 	}
 
-	this->addSkill("slash1");
+	addSkill("fire1");
+	addSkill("ice1");
+	addSkill("thunder1");
+	addSkill("water1");
+	addSkill("dragon1");
 }
 
-Swordmaster::Swordmaster(string name, int hp, int mp, int atk, int def, int mag, int mdef)
+Mage::Mage(string name, int hp, int mp, int atk, int def, int mag, int mdef)
 {
 	setName(name);
 	setHP(hp);
@@ -33,7 +38,8 @@ Swordmaster::Swordmaster(string name, int hp, int mp, int atk, int def, int mag,
 	setMaxDef(def);
 	setMaxMag(mag);
 	setMaxMDef(mdef);
-	setRole("Swordmaster");
+	setRole("Sharpshooter");
+
 	for (int i = 0; i < getRes().size() - 1; i++)
 	{
 		setRes(i, 1);
@@ -45,14 +51,16 @@ Swordmaster::Swordmaster(string name, int hp, int mp, int atk, int def, int mag,
 		setStatus(i);
 	}
 
-	this->addSkill("slash1");
+	addSkill("fire1");
+	addSkill("ice1");
+	addSkill("thunder1");
 }
 
-void Swordmaster::attack(Monster & mon)
+
+void Mage::attack(Monster & mon)
 {
-	slash1(mon);
 }
 
-Swordmaster::~Swordmaster()
+Mage::~Mage()
 {
 }
