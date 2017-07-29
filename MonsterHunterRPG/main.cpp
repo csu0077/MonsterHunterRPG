@@ -150,6 +150,14 @@ bool checkValidTargetInput(Monster & you, Monster & enemy)
 			cout << "Invalid input" << endl;
 		else if (target == "2" && enemy.getPartySize() < 1)
 			cout << "Invalid input" << endl;
+		else if (target == "1" && enemy.getHP() <= 0)
+			cout << "Invalid input" << endl;
+		else if (target == "2" && enemy.getPartyM(0).getHP() <= 0)
+			cout << "Invalid input" << endl;
+		else if (target == "3" && enemy.getPartyM(1).getHP() <= 0)
+			cout << "Invalid input" << endl;
+		else if (target == "4" && enemy.getPartyM(2).getHP() <= 0)
+			cout << "Invalid input" << endl;
 		else
 		{
 			int tgt = 5;	//5 is the leader
@@ -352,9 +360,6 @@ void turnLoop(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 
 	while (yTurns)
 	{
-		cout << "-----------------------------------------" << endl;
-		cout << "Remaining Turns: " << yTurns << endl;
-		cout << "-----------------------------------------" << endl;
 		cout << you.getName() << "\t\t";
 
 		for (int i = 0; i < you.getPartySize(); i++)
@@ -516,7 +521,7 @@ void testCode()
 	//give exp at end of battle	(done)
 	//add leveling up (done)
 	//add a cancel for choosing skills (done)
-	//add death status when reach 0 hp and remove turn from respective player (kinda done)
+	//add death status when reach 0 hp and remove turn from respective player (done)
 	//do items
 	//test for bad inputs (progressing)
 	//debug and test leveling up
