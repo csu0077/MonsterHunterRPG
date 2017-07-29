@@ -15,6 +15,11 @@ Swordmaster::Swordmaster(string name)
 
 	}
 
+	for (int i = 0; i < getStatus().size(); i++)
+	{
+		setStatus(i);
+	}
+
 	this->addSkill("slash1");
 }
 

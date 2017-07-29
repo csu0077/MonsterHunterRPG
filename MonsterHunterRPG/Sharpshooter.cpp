@@ -8,13 +8,13 @@ Sharpshooter::Sharpshooter(string name)
 {
 	setInitStats(name, 100, 100, 150, 50, 50, 50, "Sharpshooter");
 
-	for (int i = 0; i < getRes().size() - 1; i++)
+	for (int i = 0; i < getRes().size(); i++)
 	{
 		setRes(i, 1);
 
 	}
 
-	/*for (int i = 0; i < getStatus().size() - 1; i++)
+	/*for (int i = 0; i < getStatus().size(); i++)
 	{
 		setStatus(i);
 	}*/

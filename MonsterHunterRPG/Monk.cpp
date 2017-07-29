@@ -14,6 +14,10 @@ Monk::Monk(string name)
 
 	}
 
+	/*for (int i = 0; i < getStatus().size() - 1; i++)
+	{
+		setStatus(i);
+	}*/
 	addSkill("impact1");
 }
 

@@ -95,7 +95,7 @@ public:
 	void setStats(int hp, int mp, int atk, int def, int mag, int mdef);
 	void resetStats();	//remove buffs, debuffs, and status ailments
 	void resetPartyMStats(int i);
-	
+	void setPartyStatus(int i, int status, int state);
 
 	//1= weak, 2 = medium, 3 = strong
 	void slash1(Monster & mon); //weak slash damage
