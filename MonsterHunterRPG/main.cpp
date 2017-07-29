@@ -49,20 +49,28 @@ void expCalc(Monster & you, Monster & enemy)
 
 	expVec[0] += levelCheck(you, enemy);
 
-	for (int i = 1; i < you.getPartySize(); i++)
-		expVec[i] += levelCheck(you.getPartyM(i-1), enemy);
+	for (int i = 0; i < you.getPartySize(); i++)
+		expVec[i+1] += levelCheck(you.getPartyM(i), enemy);
 
 	for (int i = 0; i < enemy.getPartySize(); i++)
 		expVec[0] += levelCheck(you, enemy.getPartyM(i));
 
-	for (int i = 0; i < enemy.getPartySize(); i++)
-		for (int j = 1; j < you.getPartySize(); j++)
-			expVec[j] += levelCheck(you.getPartyM(j-1), enemy.getPartyM(i));
+	for (int i = 0; i < you.getPartySize(); i++)
+		for (int j = 0; j < enemy.getPartySize(); j++)
+		{
+			expVec[i + 1] += levelCheck(you.getPartyM(i), enemy.getPartyM(j));
+		}
+			
 
 	you.setExp(you.getExp() + expVec[0]);
+	cout << you.getName() << " received " << expVec[0] << " exp" << endl;
 
 	for (int i = 0; i < you.getPartySize(); i++)
+	{
 		you.setPartyExp(i, expVec[i + 1]);
+		cout << you.getPartyM(i).getName() << " received " << expVec[i + 1] << " exp" << endl;
+	}
+		
 
 	if (you.getExp() >= 100)
 	{
@@ -249,14 +257,13 @@ bool checkValidSkillTarget(Monster & you, Monster & enemy, int i)
 				int modHP = temp.getHP();
 
 				enemy.setPartyMHP(tgt, modHP);
-				cout << you.getName() << " attacks " << enemy.getPartyM(tgt).getName() << endl;
 				return true;
 			}
 			else
 			{
 				you.skill(enemy, i);
-				cout << you.getName() << " attacks " << enemy.getName() << endl;
-				cout << enemy.getName() << "'s HP: " << enemy.getHP() << endl;
+				/*cout << you.getName() << " attacks " << enemy.getName() << endl;
+				cout << enemy.getName() << "'s HP: " << enemy.getHP() << endl;*/
 				return true;
 			}
 		}

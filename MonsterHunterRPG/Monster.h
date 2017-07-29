@@ -181,7 +181,11 @@ private:
 		if (type != 100)
 		{
 			if (mon.getRes()[type] == 2)		//if the bool is true at index, that is the weakness
+			{
 				damage *= 2;
+				cout << mon.getName() << "'s weakness was hit!!!" << endl;
+			}
+				
 			else if (!mon.getRes()[type])
 				damage == 0;
 		}
