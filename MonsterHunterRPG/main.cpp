@@ -125,14 +125,14 @@ bool checkValidTargetInput(Monster & you, Monster & enemy)
 		cout << "choose target or cancel by pressing c" << endl;
 		//choose who to attack
 
-		if (enemy.getHP() >= 0)
+		if (enemy.getHP() > 0)
 			cout << "1. " << enemy.getName() << endl;
 
 		if (enemy.getPartySize() > 0)
 		{
 			for (int i = 0; i < enemy.getPartySize(); i++)
 			{
-				if(enemy.getPartyM(i).getHP() >= 0)
+				if(enemy.getPartyM(i).getHP() > 0)
 					cout << i + 2 << ". " << enemy.getPartyM(i).getName() << endl;
 			}
 		}
@@ -199,13 +199,15 @@ bool checkValidSkillTarget(Monster & you, Monster & enemy, int i)
 	{
 		cout << "choose target or cancel by pressing c" << endl;
 		//choose who to attack
-		cout << "1. " << enemy.getName() << endl;
+		if (enemy.getHP() > 0)
+			cout << "1. " << enemy.getName() << endl;
 
 		if (enemy.getPartySize() > 0)
 		{
 			for (int i = 0; i < enemy.getPartySize(); i++)
 			{
-				cout << i + 2 << ". " << enemy.getPartyM(i).getName() << endl;
+				if (enemy.getPartyM(i).getHP() > 0)
+					cout << i + 2 << ". " << enemy.getPartyM(i).getName() << endl;
 			}
 		}
 
@@ -221,6 +223,12 @@ bool checkValidSkillTarget(Monster & you, Monster & enemy, int i)
 		else if (target == "3" && enemy.getPartySize() < 2)
 			cout << "Invalid input" << endl;
 		else if (target == "2" && enemy.getPartySize() < 1)
+			cout << "Invalid input" << endl;
+		else if (target == "2" && enemy.getPartyM(0).getHP() <= 0)
+			cout << "Invalid input" << endl;
+		else if (target == "3" && enemy.getPartyM(1).getHP() <= 0)
+			cout << "Invalid input" << endl;
+		else if (target == "4" && enemy.getPartyM(2).getHP() <= 0)
 			cout << "Invalid input" << endl;
 		else
 		{
@@ -307,9 +315,11 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 
 			if (input != -1 && checkValidSkillTarget(you, enemy, input))
 			{
-				//choiceLoop = true;
+				choiceLoop = true;
 				yTurns--;
 			}
+
+			
 		}
 		else if (choice == "d")	//defend
 		{
