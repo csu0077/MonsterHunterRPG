@@ -277,6 +277,62 @@ bool checkValidSkillTarget(Monster & you, Monster & enemy, string i)
 	}
 }
 
+bool checkValidItemTarget(Monster & you, string i)
+{
+
+	bool targetChosen = false;
+
+	while (!targetChosen)
+	{
+		cout << "choose target or cancel by pressing c" << endl;
+
+		//test edge cases
+		string target;
+		cout << ">>";
+		cin >> target;
+
+		if (target != "1" && target != "2" && target != "3" && target != "4" && target != "c")
+			cout << "Invalid input" << endl;
+		else if (target == "4" && you.getPartySize() < 3)
+			cout << "Invalid input" << endl;
+		else if (target == "3" && you.getPartySize() < 2)
+			cout << "Invalid input" << endl;
+		else if (target == "2" && you.getPartySize() < 1)
+			cout << "Invalid input" << endl;
+
+		else
+		{
+			int tgt = 5;	//5 is the leader
+
+			if (target == "2")
+				tgt = 0;
+			else if (target == "3")
+				tgt = 1;
+			else if (target == "4")
+				tgt = 2;
+			else if (target == "c")
+				return false;
+
+			int skill = stoi(i);
+
+			if (tgt != 5)
+			{
+				
+				return true;
+			}
+			else
+			{
+				int item = stoi(i);
+				you.useItem(you.getInventory()[item].getName());
+				return true;
+			}
+		}
+	}
+
+
+	return true;
+}
+
 void printMenu()
 {
 	cout << "a. Attack" << endl;
@@ -371,8 +427,11 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 					itemChoiceValid = true;
 			}
 
-			choiceLoop = true;
-			yTurns--;
+			if (input != "c" && checkValidItemTarget(you, input))
+			{
+				choiceLoop = true;
+				yTurns--;
+			}
 		}
 		else
 		{
@@ -561,6 +620,9 @@ void testCode()
 	Monster luddy("Ludroth");
 	jaggi.addPartyM(luddy);
 	
+	m.setHP(m.getHP() - 10);
+	Item hamburger(0, 1, "hamburger");
+	m.addItem(hamburger);
 	battle(m, jaggi);
 	//todo
 	//give exp at end of battle	(done)
@@ -568,6 +630,7 @@ void testCode()
 	//add a cancel for choosing skills (done)
 	//add death status when reach 0 hp and remove turn from respective player (done)
 	//do items
+	//fix item class
 	//test for bad inputs (progressing)
 	//debug and test leveling up
 	//add mage class (done)

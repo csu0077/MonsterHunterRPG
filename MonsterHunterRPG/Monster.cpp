@@ -846,7 +846,7 @@ Item Monster::getItem(int i)
 
 void Monster::addItem(Item item)
 {
-	for (int i = 0; i < inventory.size() - 1; i++)
+	for (int i = 0; i < inventory.size(); i++)
 	{
 		if (inventory[i].getName() == "")
 		{

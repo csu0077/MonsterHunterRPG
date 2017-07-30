@@ -9,7 +9,7 @@ Item::Item()
 }
 
 Item::Item(int tier, int count, string name)
-	:tier(tier), count(count), name("sample name")
+	:tier(tier), count(count), name(name)
 {
 }
 
