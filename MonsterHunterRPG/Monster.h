@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <list>
+#include "Item.h"
 
 using namespace std;
 
@@ -96,6 +97,11 @@ public:
 	void resetStats();	//remove buffs, debuffs, and status ailments
 	void resetPartyMStats(int i);
 	void setPartyStatus(int i, int status, int state);
+	Item getItem(int i);	//returns item at index i
+	void addItem(Item item); //not increment but just add to the inventory
+	void removeItem(int i); //removes item from invetory
+	void useItem(string name);
+	vector <Item> getInventory();
 
 	//1= weak, 2 = medium, 3 = strong
 	void slash1(Monster & mon); //weak slash damage
@@ -156,6 +162,7 @@ private:
 	int partySize;
 	string role;
 	vector <string> skills;
+	vector <Item> inventory = vector <Item>(10);
 
 	void damageCalc(Monster & mon, int type, int power)	//type is type of damage i.e. slash damage, power is how strong the attack will be i.e. weak/medium/strong
 	{

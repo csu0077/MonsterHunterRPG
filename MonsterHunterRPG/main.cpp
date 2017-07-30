@@ -114,12 +114,12 @@ void printItem(Item i)
 		"count:" << i.getCount() << endl << endl;
 }
 
-void printInventory(Human h)
+void printInventory(Monster h)
 {	
 	cout << h.getName() << "'s inventory" << endl;
 	for (int i = 0; i < h.getInventory().size(); i++)
 	{
-		cout << i << ":";
+		cout << i+1 << ":";
 		printItem(h.getInventory()[i]);
 	}
 }
@@ -312,7 +312,6 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 			you.printSkills();
 
 			bool skillChoiceValid = false;
-			//do something about choosing a target
 			string input;
 			
 			while (!skillChoiceValid)
@@ -321,7 +320,7 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 				if (input != "1" && input != "2" && input != "3" && input != "4"
 					&& input != "5" && input != "6" && input != "7" && input != "8" && input != "c")
 				{
-					//fix it so input for dead enemies don't work
+					//make so nothing happens when picking an empty index
 					cout << "Invalid input" << endl;
 				}
 				else
@@ -352,7 +351,28 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 		}
 		else if (choice == "f")	//item
 		{
+			
+			printInventory(you);
+			cout << "Choose an item or type c to cancel" << endl;
+
+			bool itemChoiceValid = false;
+			string input;
+
+			while (!itemChoiceValid)
+			{
+				cin >> input;
+				if (input != "1" && input != "2" && input != "3" && input != "4"
+					&& input != "5" && input != "6" && input != "7" && input != "8" &&  input != "9" && input != "c")
+				{
+					//make so nothing happens when picking an empty index
+					cout << "Invalid input" << endl;
+				}
+				else
+					itemChoiceValid = true;
+			}
+
 			choiceLoop = true;
+			yTurns--;
 		}
 		else
 		{
