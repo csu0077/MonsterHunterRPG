@@ -912,42 +912,114 @@ void Monster::useItem(string name)
 			}
 			else if (name == "cheeseburger")
 			{
-				int health = 100;
+				int health = 150;
+
+				cout << getName() << " has healed " << health << "hp!" << endl;
 
 				if (health + getHP() > getMaxHP())
 					setHP(getMaxHP());
 				else
 					setHP(getHP() + health);
+
+				cout << "Current HP: " << getHP() << endl;
+
+				inventory[i].setCount(inventory[i].getCount() - 1);
+
+				if (inventory[i].getCount() == 0)
+					removeItem(i);
 				
 			}
 			else if (name == "Western bacon burger")
 			{
 				int health = 200;
 
+				cout << getName() << " has healed " << health << "hp!" << endl;
+
 				if (health + getHP() > getMaxHP())
 					setHP(getMaxHP());
 				else
 					setHP(getHP() + health);
+
+				cout << "Current HP: " << getHP() << endl;
+
+				inventory[i].setCount(inventory[i].getCount() - 1);
+
+				if (inventory[i].getCount() == 0)
+					removeItem(i);
 				
 			}
 			else if (name == "7up")
 			{
 				int mp = 25;
 
-				if (mp + getMP() > getMaxMP())
-					setMP(getMaxMP());
+				cout << getName() << " has healed " << mp << "hp!" << endl;
+
+				if (mp + getHP() > getMaxHP())
+					setHP(getMaxHP());
 				else
-					setMP(getMP() + mp);
+					setHP(getHP() + mp);
+
+				cout << "Current HP: " << getHP() << endl;
+
+				inventory[i].setCount(inventory[i].getCount() - 1);
+
+				if (inventory[i].getCount() == 0)
+					removeItem(i);
 				
 			}
 			else if (name == "Coke")
 			{
 				int mp = 50;
 
+				cout << getName() << " has healed " << mp << "mp!" << endl;
+
 				if (mp + getMP() > getMaxMP())
-					setMP(getMaxMP());
+					setHP(getMaxHP());
 				else
-					setMP(getMP() + mp);
+					setHP(getHP() + mp);
+
+				cout << "Current MP: " << getMP() << endl;
+
+				inventory[i].setCount(inventory[i].getCount() - 1);
+
+				if (inventory[i].getCount() == 0)
+					removeItem(i);
+			}
+			else if (name == "Pepsi")
+			{
+				int mp = 100;
+
+				cout << getName() << " has healed " << mp << "mp!" << endl;
+
+				if (mp + getMP() > getMaxMP())
+					setHP(getMaxHP());
+				else
+					setHP(getHP() + mp);
+
+				cout << "Current MP: " << getMP() << endl;
+
+				inventory[i].setCount(inventory[i].getCount() - 1);
+
+				if (inventory[i].getCount() == 0)
+					removeItem(i);
+			}
+			else if (name == "Pepsi Max")
+			{
+				int mp = 150;
+
+				cout << getName() << " has healed " << mp << "mp!" << endl;
+
+				if (mp + getMP() > getMaxMP())
+					setHP(getMaxHP());
+				else
+					setHP(getHP() + mp);
+
+				cout << "Current MP: " << getMP() << endl;
+
+				inventory[i].setCount(inventory[i].getCount() - 1);
+
+				if (inventory[i].getCount() == 0)
+					removeItem(i);
 			}
 		}
 	}
