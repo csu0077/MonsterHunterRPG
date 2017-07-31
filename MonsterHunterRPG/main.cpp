@@ -130,6 +130,7 @@ void printInventory(Monster h)
 	}
 }
 
+//checks if target for normal attacks is valid and then go throughs with damage calculations
 bool checkValidTargetInput(Monster & you, Monster & enemy)
 {
 	bool targetChosen = false;
@@ -205,6 +206,7 @@ bool checkValidTargetInput(Monster & you, Monster & enemy)
 	return false;
 }
 
+//checks if target for skills is valid and then go throughs with damage calculations
 bool checkValidSkillTarget(Monster & you, Monster & enemy, string i)
 {
 	bool targetChosen = false;
@@ -283,6 +285,7 @@ bool checkValidSkillTarget(Monster & you, Monster & enemy, string i)
 	}
 }
 
+//checks if target for item is valid and then go throughs with the calculations
 bool checkValidItemTarget(Monster & you, string i)
 {
 
@@ -328,11 +331,17 @@ bool checkValidItemTarget(Monster & you, string i)
 			else if (target == "c")
 				return false;
 
-			int skill = stoi(i);
+			int item = stoi(i)-1;
 
 			if (tgt != 5)
 			{
+				int tgt = stoi(target);
 				
+				cout << you.getName() << " uses " << you.getInventory()[item].getName() << " on " <<
+					you.getPartyM(tgt-2).getName() << endl;
+
+				you.useItemParty(tgt-2, you.getInventory()[item].getName());
+
 				return true;
 			}
 			else
@@ -425,6 +434,7 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 		else if (choice == "f")	//item
 		{
 			int checkEmptyInventory = 0;
+
 			for (int i = 0; i < you.getInventory().size(); i++)
 			{
 				if (you.getInventory()[i].getName() == "")
@@ -490,7 +500,6 @@ int checkDead(Monster y)	//returns number of dead party members
 	}
 	return bodyCount;
 }
-
 
 void turnLoop(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 {
@@ -640,9 +649,8 @@ void battle(Monster you, Monster enemy)
 
 void testCode()
 {
-	//testing Monster class Monster(string name, int hp, int mp, int atk, int def, int mag, int mdef);
+	
 	Swordmaster sm("Lyn");
-	//Sharpshooter ss("sharpshooter", 100, 100, 10, 2, 10, 10);
 	Sharpshooter john("John");
 	Monk m("Wallace");
 	m.addPartyM(sm);
@@ -657,16 +665,16 @@ void testCode()
 	
 	//printInventory(m);
 	//m.useItem("hamburger");
-	
 	//cout << m.getHP() << endl;
+
 	battle(m, jaggi);
 	//todo
 	//give exp at end of battle	(done)
 	//add leveling up (done)
 	//add a cancel for choosing skills (done)
 	//add death status when reach 0 hp and remove turn from respective player (done)
-	//do items
-	//fix item class
+	//do items (mostly done)
+	//fix item class (mostly done)
 	//test for bad inputs (progressing)
 	//debug and test leveling up
 	//add mage class (done)

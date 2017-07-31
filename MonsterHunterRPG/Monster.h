@@ -101,6 +101,7 @@ public:
 	void addItem(Item item); //not increment but just add to the inventory
 	void removeItem(int i); //removes item from invetory
 	void useItem(string name);
+	void useItemParty(int member, string name);
 	vector <Item> getInventory();
 
 	//1= weak, 2 = medium, 3 = strong

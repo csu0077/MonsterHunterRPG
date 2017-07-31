@@ -865,9 +865,14 @@ void Monster::addItem(Item item)
 
 void Monster::removeItem(int i)
 {
+
 	Item temp = inventory[inventory.size() - 1];
 	inventory[i] = temp;
 	inventory.pop_back();
+
+	Item temp2;
+	inventory.push_back(temp2);
+
 	return;
 }
 
@@ -943,6 +948,73 @@ void Monster::useItem(string name)
 					setMP(getMaxMP());
 				else
 					setMP(getMP() + mp);
+			}
+		}
+	}
+}
+
+void Monster::useItemParty(int member, string name)
+{
+
+	for (unsigned int i = 0; i < inventory.size(); i++)
+	{
+		if (inventory[i].getName() == name)
+		{
+			if (name == "hamburger")
+			{
+				int health = 50;
+				cout << party[member].getName() << " has healed " << health << "hp!" << endl;
+
+				if (health + getHP() > getMaxHP())
+					setHP(getMaxHP());
+				else
+					party[member].setHP(getHP() + health);
+
+				cout << "Current HP: " << party[member].getHP() << endl;
+
+				inventory[i].setCount(inventory[i].getCount() - 1);
+
+				if (inventory[i].getCount() == 0)
+					removeItem(i);
+			}
+			else if (name == "cheeseburger")
+			{
+				int health = 100;
+
+				if (health + getHP() > getMaxHP())
+					party[member].setHP(getMaxHP());
+				else
+					party[member].setHP(getHP() + health);
+
+			}
+			else if (name == "Western bacon burger")
+			{
+				int health = 200;
+
+				if (health + getHP() > getMaxHP())
+					party[member].setHP(getMaxHP());
+				else
+					party[member].setHP(getHP() + health);
+
+			}
+			else if (name == "7up")
+			{
+				int mp = 25;
+
+				if (mp + getMP() > getMaxMP())
+					party[member].setMP(getMaxMP());
+				else
+					party[member].setMP(getMP() + mp);
+
+			}
+			else if (name == "Coke")
+			{
+				int mp = 50;
+
+				if (mp + getMP() > getMaxMP())
+					party[member].setMP(getMaxMP());
+				else
+					party[member].setMP(getMP() + mp);
 			}
 		}
 	}
