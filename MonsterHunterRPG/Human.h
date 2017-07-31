@@ -10,14 +10,9 @@ public:
 	Human();
 	Human(string name, int hp, int mp, int atk, int def, int mag, int mdef);
 	void attack(Monster mon);
-	Item getItem(int i);	//returns item at index i
-	void addItem(Item item); //not increment but just add to the inventory
-	void removeItem(string item); //removes item from invetory
+	
 	~Human();
-
-private:
-	vector <Item> inventory;
-	//inventory class
+	
 	//gem class 
 
 };
