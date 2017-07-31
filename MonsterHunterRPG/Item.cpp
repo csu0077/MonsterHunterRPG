@@ -25,7 +25,7 @@ int Item::getCount()
 
 string Item::getName()
 {
-	return name;
+	return this->name;
 }
 
 void Item::setName(string name)

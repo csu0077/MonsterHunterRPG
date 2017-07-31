@@ -166,7 +166,7 @@ private:
 
 	void damageCalc(Monster & mon, int type, int power)	//type is type of damage i.e. slash damage, power is how strong the attack will be i.e. weak/medium/strong
 	{
-		int attackPow = getAtk();
+		double attackPow = double(getAtk());
 		switch (power)
 		{
 		case 1:
@@ -194,14 +194,14 @@ private:
 			}
 				
 			else if (!mon.getRes()[type])
-				damage == 0;
+				damage = 0;
 		}
 		
 		if (damage <= 0)
 			damage = 0;					//no damage if negative value*/
 
 		cout << "calculated damage: " << damage << endl << endl;
-		mon.setHP(mon.getHP() - damage);
+		mon.setHP(mon.getHP() - int(damage));
 		cout << "Remaining HP: " << mon.getHP() << endl << endl;
 
 		if (mon.getHP() <= 0)
@@ -255,17 +255,17 @@ private:
 		case POISON:
 			counter(POISON);
 			damage = 0.05 * double(getMaxHP()); 
-			setHP(getHP() - damage);
+			setHP(getHP() - int(damage));
 			break;
 		case DEADLYPOISON:
 			counter(DEADLYPOISON);
 			damage = 0.1 * double(getMaxHP());
-			setHP(getHP() - damage);
+			setHP(getHP() - int(damage));
 			break;
 		case LETHALPOISON:
 			counter(LETHALPOISON);
 			damage = 0.15 * double(getMaxHP());
-			setHP(getHP() - damage);
+			setHP(getHP() - int(damage));
 			break;
 		case KO:
 			counter(KO);

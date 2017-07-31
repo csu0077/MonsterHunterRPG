@@ -117,10 +117,16 @@ void printItem(Item i)
 void printInventory(Monster h)
 {	
 	cout << h.getName() << "'s inventory" << endl;
-	for (int i = 0; i < h.getInventory().size(); i++)
+	for (unsigned int i = 0; i < h.getInventory().size(); i++)
 	{
-		cout << i+1 << ":";
-		printItem(h.getInventory()[i]);
+		
+
+		if (h.getInventory()[i].getName() != "")
+		{
+			cout << i + 1 << ":";
+			printItem(h.getInventory()[i]);
+		}
+			
 	}
 }
 
@@ -285,8 +291,16 @@ bool checkValidItemTarget(Monster & you, string i)
 	while (!targetChosen)
 	{
 		cout << "choose target or cancel by pressing c" << endl;
+		cout << "1." << you.getName() << endl;
+		
+
+		for (int i = 0; i < you.getPartySize(); i++)
+		{
+			cout << i + 2 <<  "." << you.getPartyM(i).getName() << endl;
+		}
 
 		//test edge cases
+		
 		string target;
 		cout << ">>";
 		cin >> target;
@@ -302,6 +316,7 @@ bool checkValidItemTarget(Monster & you, string i)
 
 		else
 		{
+			
 			int tgt = 5;	//5 is the leader
 
 			if (target == "2")
@@ -322,7 +337,9 @@ bool checkValidItemTarget(Monster & you, string i)
 			}
 			else
 			{
-				int item = stoi(i);
+				int item = stoi(i) - 1;
+				
+				cout << you.getName() << " uses " << you.getInventory()[item].getName() << endl;
 				you.useItem(you.getInventory()[item].getName());
 				return true;
 			}
@@ -407,35 +424,51 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 		}
 		else if (choice == "f")	//item
 		{
-			
-			printInventory(you);
-			cout << "Choose an item or type c to cancel" << endl;
-
-			bool itemChoiceValid = false;
-			string input;
-
-			while (!itemChoiceValid)
+			int checkEmptyInventory = 0;
+			for (int i = 0; i < you.getInventory().size(); i++)
 			{
-				cin >> input;
-				if (input != "1" && input != "2" && input != "3" && input != "4"
-					&& input != "5" && input != "6" && input != "7" && input != "8" &&  input != "9" && input != "c")
+				if (you.getInventory()[i].getName() == "")
 				{
-					//make so nothing happens when picking an empty index
-					cout << "Invalid input" << endl;
+					checkEmptyInventory++;
+				}
+			}
+
+			if (checkEmptyInventory == 10)
+			{
+				cout << "Nothing in your inventory!" << endl;
+			}
+			else
+			{
+				printInventory(you);
+				cout << "Choose an item or type c to cancel" << endl;
+
+				bool itemChoiceValid = false;
+				string input;
+
+				while (!itemChoiceValid)
+				{
+					cin >> input;
+					if (input != "1" && input != "2" && input != "3" && input != "4"
+						&& input != "5" && input != "6" && input != "7" && input != "8" &&  input != "9" && input != "c")
+					{
+						//make so nothing happens when picking an empty index
+						cout << "Invalid input" << endl;
+					}
+					else
+						itemChoiceValid = true;
+				}
+
+				cout << "your input: " << input << endl;
+				if (input != "c" && checkValidItemTarget(you, input))
+				{
+					choiceLoop = true;
+					yTurns--;
 				}
 				else
-					itemChoiceValid = true;
+				{
+					cout << "Invalid input" << endl;
+				}
 			}
-
-			if (input != "c" && checkValidItemTarget(you, input))
-			{
-				choiceLoop = true;
-				yTurns--;
-			}
-		}
-		else
-		{
-			cout << "Invalid input" << endl;
 		}
 	}
 }
@@ -542,8 +575,6 @@ void turnLoop(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 	}
 }
 
-
-
 void battle(Monster you, Monster enemy)
 {
 	cout << "Initializing Combat..." << endl;
@@ -623,6 +654,11 @@ void testCode()
 	m.setHP(m.getHP() - 10);
 	Item hamburger(0, 1, "hamburger");
 	m.addItem(hamburger);
+	
+	//printInventory(m);
+	//m.useItem("hamburger");
+	
+	//cout << m.getHP() << endl;
 	battle(m, jaggi);
 	//todo
 	//give exp at end of battle	(done)
