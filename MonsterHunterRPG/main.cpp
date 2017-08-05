@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <time.h>
 #include "Monster.h"
 #include "Sharpshooter.h"
 #include "swordmaster.h"
@@ -639,7 +640,82 @@ void battle(Monster you, Monster enemy)
 
 			while (enemyTurns)
 			{
-				enemyTurns--;
+				if (enemy.getHP() > 0 && (enemy.getName() == "Jaggi" || enemy.getName() == "Ludroth"))	//jaggi/ludroth script
+				{
+					cout << enemy.getName() << "'s turn" << endl;
+					srand(time(NULL));
+					int randPartyM = rand() % (you.getPartySize() + 1);
+					if (!randPartyM)
+					{
+						cout << enemy.getName() << " attacks " << you.getName() << endl;
+						enemy.attack(you);
+					}	
+					else
+					{
+						cout << enemy.getName() << " attacks " << you.getPartyM(randPartyM-1).getName() << endl;
+						enemy.attack(you.getPartyM(randPartyM-1));
+					}
+					
+					enemyTurns--;
+				}
+
+				if (enemy.getPartySize() >= 1)
+				{
+					cout << enemy.getPartyM(0).getName() << "'s turn" << endl;
+					srand(time(NULL));
+					int randPartyM = rand() % (you.getPartySize() + 1);
+					if (!randPartyM)
+					{
+						cout << enemy.getPartyM(0).getName() << " attacks " << you.getName() << endl;
+						enemy.attack(you);
+					}
+					else
+					{
+						cout << enemy.getPartyM(0).getName() << " attacks " << you.getPartyM(randPartyM - 1).getName() << endl;
+						enemy.getPartyM(0).attack(you.getPartyM(randPartyM - 1));
+					}
+
+					enemyTurns--;
+
+					if (enemy.getPartySize() >= 2)
+					{
+						cout << enemy.getPartyM(1).getName() << "'s turn" << endl;
+						srand(time(NULL));
+						int randPartyM = rand() % (you.getPartySize() + 1);
+						if (!randPartyM)
+						{
+							cout << enemy.getPartyM(1).getName() << " attacks " << you.getName() << endl;
+							enemy.attack(you);
+						}
+						else
+						{
+							cout << enemy.getPartyM(1).getName() << " attacks " << you.getPartyM(randPartyM - 1).getName() << endl;
+							enemy.getPartyM(1).attack(you.getPartyM(randPartyM - 1));
+						}
+
+						enemyTurns--;
+
+						if (enemy.getPartySize() == 3)
+						{
+							cout << enemy.getPartyM(2).getName() << "'s turn" << endl;
+							srand(time(NULL));
+							int randPartyM = rand() % (you.getPartySize() + 1);
+							if (!randPartyM)
+							{
+								cout << enemy.getPartyM(2).getName() << " attacks " << you.getName() << endl;
+								enemy.attack(you);
+							}
+							else
+							{
+								cout << enemy.getPartyM(2).getName() << " attacks " << you.getPartyM(randPartyM - 1).getName() << endl;
+								enemy.getPartyM(2).attack(you.getPartyM(randPartyM - 1));
+							}
+
+							enemyTurns--;
+						}
+					}
+				}
+
 				stopBlocking = false;
 			}
 
