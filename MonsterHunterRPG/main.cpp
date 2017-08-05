@@ -409,14 +409,14 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 					skillChoiceValid = true;
 			}
 
-			if ((you.getSkill(stoi(input)) == "slash1" ||
-				you.getSkill(stoi(input)) == "impact1" ||
-				you.getSkill(stoi(input)) == "shot1" ||
-				you.getSkill(stoi(input)) == "fire1" ||
-				you.getSkill(stoi(input)) == "ice1" ||
-					you.getSkill(stoi(input)) == "thunder1" ||
-					you.getSkill(stoi(input)) == "water1" ||
-						you.getSkill(stoi(input)) == "dragon1") && you.getMP() < 5)
+			if ((you.getSkill(stoi(input)-1) == "slash1" ||
+				you.getSkill(stoi(input)-1) == "impact1" ||
+				you.getSkill(stoi(input)-1) == "shot1" ||
+				you.getSkill(stoi(input)-1) == "fire1" ||
+				you.getSkill(stoi(input)-1) == "ice1" ||
+					you.getSkill(stoi(input)-1) == "thunder1" ||
+					you.getSkill(stoi(input)-1) == "water1" ||
+						you.getSkill(stoi(input)-1) == "dragon1") && you.getMP() < 5)
 			{
 				cout << "Not enough MP!" << endl;
 			}

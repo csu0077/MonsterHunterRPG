@@ -430,49 +430,81 @@ void Monster::skill(Monster & m, int i)
 	string s = skills[i - 1];
 
 	if (s == "slash1")
+	{
+		setMP(getMP() - 5);
 		slash1(m);
+		cout << "Remaining MP: " << getMP() << endl;
+	}	
 	else if (s == "slash2")
 		slash2(m);
 	else if (s == "slash3")
 		slash3(m);
 	else if (s == "impact1")
+	{
+		setMP(getMP() - 5);
 		impact1(m);
+		cout << "Remaining MP: " << getMP() << endl;
+	}
 	else if (s == "impact2")
 		impact2(m);
 	else if (s == "imapact3")
 		impact3(m);
 	else if (s == "shot1")
+	{
+		setMP(getMP() - 5);
 		shot1(m);
+		cout << "Remaining MP: " << getMP() << endl;
+	}
 	else if (s == "shot2")
 		shot2(m);
 	else if (s == "shot3")
 		shot3(m);
 	else if (s == "fire1")
+	{
+		setMP(getMP() - 5);
 		fire1(m);
+		cout << "Remaining MP: " << getMP() << endl;
+	}
 	else if (s == "fire2")
 		fire2(m);
 	else if (s == "fire3")
 		fire3(m);
 	else if (s == "ice1")
+	{
+		setMP(getMP() - 5);
 		ice1(m);
+		cout << "Remaining MP: " << getMP() << endl;
+	}
 	else if (s == "ice2")
 		ice2(m);
 	else if (s == "ice3")
 		ice3(m);
 	else if (s == "thunder1")
+	{
+		setMP(getMP() - 5);
 		thunder1(m);
+		cout << "Remaining MP: " << getMP() << endl;
+	}
 	else if (s == "thunder2")
 		thunder2(m);
 	else if (s == "thunder3")
 		thunder3(m);
 	else if (s == "water1")
+	{
+		setMP(getMP() - 5); 
 		water1(m);
+		cout << "Remaining MP: " << getMP() << endl;
+	}
 	else if (s == "water2")
 		water2(m);
 	else if (s == "water3")
 		water3(m);
 	else if (s == "dragon1")
+	{
+		setMP(getMP() - 5);
 		dragon1(m);
+		cout << "Remaining MP: " << getMP() << endl;
+	}
 	else if (s == "dragon2")
 		dragon2(m);
 	else if (s == "dragon3")
