@@ -1054,16 +1054,9 @@ void Monster::useItemParty(int member, string name)
 				int health = 100;
 
 				if (health + getHP() > getMaxHP())
-					setHP(getMaxHP());
+					party[member].setHP(getMaxHP());
 				else
 					party[member].setHP(getHP() + health);
-
-				cout << "Current HP: " << party[member].getHP() << endl;
-
-				inventory[i].setCount(inventory[i].getCount() - 1);
-
-				if (inventory[i].getCount() == 0)
-					removeItem(i);
 
 			}
 			else if (name == "Western bacon burger")
@@ -1071,16 +1064,9 @@ void Monster::useItemParty(int member, string name)
 				int health = 200;
 
 				if (health + getHP() > getMaxHP())
-					setHP(getMaxHP());
+					party[member].setHP(getMaxHP());
 				else
 					party[member].setHP(getHP() + health);
-
-				cout << "Current HP: " << party[member].getHP() << endl;
-
-				inventory[i].setCount(inventory[i].getCount() - 1);
-
-				if (inventory[i].getCount() == 0)
-					removeItem(i);
 
 			}
 			else if (name == "7up")
@@ -1088,16 +1074,9 @@ void Monster::useItemParty(int member, string name)
 				int mp = 25;
 
 				if (mp + getMP() > getMaxMP())
-					setHP(getMaxHP());
+					party[member].setMP(getMaxMP());
 				else
-					party[member].setMP(getHP() + mp);
-
-				cout << "Current MP: " << party[member].getMP() << endl;
-
-				inventory[i].setCount(inventory[i].getCount() - 1);
-
-				if (inventory[i].getCount() == 0)
-					removeItem(i);
+					party[member].setMP(getMP() + mp);
 
 			}
 			else if (name == "Coke")
@@ -1105,46 +1084,9 @@ void Monster::useItemParty(int member, string name)
 				int mp = 50;
 
 				if (mp + getMP() > getMaxMP())
-					setHP(getMaxHP());
+					party[member].setMP(getMaxMP());
 				else
-					party[member].setMP(getHP() + mp);
-
-				cout << "Current MP: " << party[member].getMP() << endl;
-
-				inventory[i].setCount(inventory[i].getCount() - 1);
-
-				if (inventory[i].getCount() == 0)
-					removeItem(i);
-			}
-			else if (name == "Pepsi")
-			{
-				int mp = 100;
-				if (mp + getMP() > getMaxMP())
-					setHP(getMaxHP());
-				else
-					party[member].setMP(getHP() + mp);
-
-				cout << "Current MP: " << party[member].getMP() << endl;
-
-				inventory[i].setCount(inventory[i].getCount() - 1);
-
-				if (inventory[i].getCount() == 0)
-					removeItem(i);
-			}
-			else if (name == "Pepsi Max")
-			{
-				int mp = 150;
-				if (mp + getMP() > getMaxMP())
-					setHP(getMaxHP());
-				else
-					party[member].setMP(getHP() + mp);
-
-				cout << "Current MP: " << party[member].getMP() << endl;
-
-				inventory[i].setCount(inventory[i].getCount() - 1);
-
-				if (inventory[i].getCount() == 0)
-					removeItem(i);
+					party[member].setMP(getMP() + mp);
 			}
 		}
 	}
