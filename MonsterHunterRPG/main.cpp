@@ -409,7 +409,18 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 					skillChoiceValid = true;
 			}
 
-			if (input != "c" && checkValidSkillTarget(you, enemy, input))
+			if ((you.getSkill(stoi(input)) == "slash1" ||
+				you.getSkill(stoi(input)) == "impact1" ||
+				you.getSkill(stoi(input)) == "shot1" ||
+				you.getSkill(stoi(input)) == "fire1" ||
+				you.getSkill(stoi(input)) == "ice1" ||
+					you.getSkill(stoi(input)) == "thunder1" ||
+					you.getSkill(stoi(input)) == "water1" ||
+						you.getSkill(stoi(input)) == "dragon1") && you.getMP() < 5)
+			{
+				cout << "Not enough MP!" << endl;
+			}
+			else if (input != "c" && checkValidSkillTarget(you, enemy, input))
 			{
 				choiceLoop = true;
 				yTurns--;
@@ -653,16 +664,17 @@ void testCode()
 	Swordmaster sm("Lyn");
 	Sharpshooter john("John");
 	Monk m("Wallace");
-	m.addPartyM(sm);
+
 	
 	Monster jaggi("Jaggi");
 	Monster luddy("Ludroth");
 	jaggi.addPartyM(luddy);
 	
-	m.setHP(m.getHP() - 10);
+	sm.setHP(sm.getHP() - 10);
 	Item hamburger(0, 1, "hamburger");
-	m.addItem(hamburger);
+	sm.addItem(hamburger);
 	
+	m.addPartyM(sm);
 	//printInventory(m);
 	//m.useItem("hamburger");
 	//cout << m.getHP() << endl;

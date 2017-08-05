@@ -68,7 +68,8 @@ public:
 	void setMaxMag(int mag);
 	void setMaxMDef(int mdef);
 	void setName(string name);
-	Monster getPartyM(int i);
+	Monster & getPartyM(int i);
+	string getSkill(int i);
 	void setPartyMHP(int i, int hp);
 	void setPartyMMP(int i, int mp);
 	void setPartyMAtk(int i, int atk);

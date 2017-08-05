@@ -311,11 +311,15 @@ void Monster::setName(string name)
 	this->name = name;
 }
 
-Monster Monster::getPartyM(int i)
+Monster & Monster::getPartyM(int i)
 {
 	return party[i];
 }
 
+string Monster::getSkill(int i)
+{
+	return skills[i];
+}
 void Monster::setPartyMHP(int i, int hp)
 {
 	party[i].setHP(hp);
