@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <time.h>
 #include "Monster.h"
 #include "Sharpshooter.h"
 #include "swordmaster.h"
@@ -409,7 +410,18 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 					skillChoiceValid = true;
 			}
 
-			if (input != "c" && checkValidSkillTarget(you, enemy, input))
+			if ((you.getSkill(stoi(input)-1) == "slash1" ||
+				you.getSkill(stoi(input)-1) == "impact1" ||
+				you.getSkill(stoi(input)-1) == "shot1" ||
+				you.getSkill(stoi(input)-1) == "fire1" ||
+				you.getSkill(stoi(input)-1) == "ice1" ||
+					you.getSkill(stoi(input)-1) == "thunder1" ||
+					you.getSkill(stoi(input)-1) == "water1" ||
+						you.getSkill(stoi(input)-1) == "dragon1") && you.getMP() < 5)
+			{
+				cout << "Not enough MP!" << endl;
+			}
+			else if (input != "c" && checkValidSkillTarget(you, enemy, input))
 			{
 				choiceLoop = true;
 				yTurns--;
@@ -628,7 +640,82 @@ void battle(Monster you, Monster enemy)
 
 			while (enemyTurns)
 			{
-				enemyTurns--;
+				if (enemy.getHP() > 0 && (enemy.getName() == "Jaggi" || enemy.getName() == "Ludroth"))	//jaggi/ludroth script
+				{
+					cout << enemy.getName() << "'s turn" << endl;
+					srand(time(NULL));
+					int randPartyM = rand() % (you.getPartySize() + 1);
+					if (!randPartyM)
+					{
+						cout << enemy.getName() << " attacks " << you.getName() << endl;
+						enemy.attack(you);
+					}	
+					else
+					{
+						cout << enemy.getName() << " attacks " << you.getPartyM(randPartyM-1).getName() << endl;
+						enemy.attack(you.getPartyM(randPartyM-1));
+					}
+					
+					enemyTurns--;
+				}
+
+				if (enemy.getPartySize() >= 1)
+				{
+					cout << enemy.getPartyM(0).getName() << "'s turn" << endl;
+					srand(time(NULL));
+					int randPartyM = rand() % (you.getPartySize() + 1);
+					if (!randPartyM)
+					{
+						cout << enemy.getPartyM(0).getName() << " attacks " << you.getName() << endl;
+						enemy.attack(you);
+					}
+					else
+					{
+						cout << enemy.getPartyM(0).getName() << " attacks " << you.getPartyM(randPartyM - 1).getName() << endl;
+						enemy.getPartyM(0).attack(you.getPartyM(randPartyM - 1));
+					}
+
+					enemyTurns--;
+
+					if (enemy.getPartySize() >= 2)
+					{
+						cout << enemy.getPartyM(1).getName() << "'s turn" << endl;
+						srand(time(NULL));
+						int randPartyM = rand() % (you.getPartySize() + 1);
+						if (!randPartyM)
+						{
+							cout << enemy.getPartyM(1).getName() << " attacks " << you.getName() << endl;
+							enemy.attack(you);
+						}
+						else
+						{
+							cout << enemy.getPartyM(1).getName() << " attacks " << you.getPartyM(randPartyM - 1).getName() << endl;
+							enemy.getPartyM(1).attack(you.getPartyM(randPartyM - 1));
+						}
+
+						enemyTurns--;
+
+						if (enemy.getPartySize() == 3)
+						{
+							cout << enemy.getPartyM(2).getName() << "'s turn" << endl;
+							srand(time(NULL));
+							int randPartyM = rand() % (you.getPartySize() + 1);
+							if (!randPartyM)
+							{
+								cout << enemy.getPartyM(2).getName() << " attacks " << you.getName() << endl;
+								enemy.attack(you);
+							}
+							else
+							{
+								cout << enemy.getPartyM(2).getName() << " attacks " << you.getPartyM(randPartyM - 1).getName() << endl;
+								enemy.getPartyM(2).attack(you.getPartyM(randPartyM - 1));
+							}
+
+							enemyTurns--;
+						}
+					}
+				}
+
 				stopBlocking = false;
 			}
 
@@ -653,16 +740,17 @@ void testCode()
 	Swordmaster sm("Lyn");
 	Sharpshooter john("John");
 	Monk m("Wallace");
-	m.addPartyM(sm);
+
 	
 	Monster jaggi("Jaggi");
 	Monster luddy("Ludroth");
 	jaggi.addPartyM(luddy);
 	
-	m.setHP(m.getHP() - 10);
+	sm.setHP(sm.getHP() - 10);
 	Item hamburger(0, 1, "hamburger");
-	m.addItem(hamburger);
+	sm.addItem(hamburger);
 	
+	m.addPartyM(sm);
 	//printInventory(m);
 	//m.useItem("hamburger");
 	//cout << m.getHP() << endl;
