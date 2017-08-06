@@ -150,6 +150,7 @@ bool checkValidTargetInput(Monster & you, Monster & enemy)
 			{
 				if(enemy.getPartyM(i).getHP() > 0)
 					cout << i + 2 << ". " << enemy.getPartyM(i).getName() << endl;
+
 			}
 		}
 
@@ -287,7 +288,7 @@ bool checkValidSkillTarget(Monster & you, Monster & enemy, string i)
 }
 
 //checks if target for item is valid and then go throughs with the calculations
-bool checkValidItemTarget(Monster & you, string i)
+bool checkValidItemTarget(Monster & you, string i, bool partyM, Monster & yLeader)
 {
 
 	bool targetChosen = false;
@@ -297,6 +298,8 @@ bool checkValidItemTarget(Monster & you, string i)
 		cout << "choose target or cancel by pressing c" << endl;
 		cout << "1." << you.getName() << endl;
 		
+		if (partyM)
+			cout << "6." << yLeader.getName() << endl;
 
 		for (int i = 0; i < you.getPartySize(); i++)
 		{
@@ -309,7 +312,7 @@ bool checkValidItemTarget(Monster & you, string i)
 		cout << ">>";
 		cin >> target;
 
-		if (target != "1" && target != "2" && target != "3" && target != "4" && target != "c")
+		if (target != "1" && target != "2" && target != "3" && target != "4" && target != "6" && target != "c")
 			cout << "Invalid input" << endl;
 		else if (target == "4" && you.getPartySize() < 3)
 			cout << "Invalid input" << endl;
@@ -331,10 +334,12 @@ bool checkValidItemTarget(Monster & you, string i)
 				tgt = 2;
 			else if (target == "c")
 				return false;
+			else if (target == "6")
+				tgt = 6;
 
 			int item = stoi(i)-1;
 
-			if (tgt != 5)
+			if (tgt != 5 && tgt != 6)
 			{
 				int tgt = stoi(target);
 				
@@ -343,6 +348,14 @@ bool checkValidItemTarget(Monster & you, string i)
 
 				you.useItemParty(tgt-2, you.getInventory()[item].getName());
 
+				return true;
+			}
+			else if (tgt == 6)
+			{
+				cout << you.getName() << " uses " << you.getInventory()[item].getName() << " on " <<
+					yLeader.getName() << endl;
+
+				you.useItemLeader(yLeader, you.getInventory()[item].getName());
 				return true;
 			}
 			else
@@ -370,7 +383,7 @@ void printMenu()
 
 bool stopBlocking = false;
 
-void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
+void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns, bool partyM, Monster & yLeader)
 {
 	bool choiceLoop = false;
 	while (!choiceLoop)
@@ -483,7 +496,7 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 				}
 
 				cout << "your input: " << input << endl;
-				if (input != "c" && checkValidItemTarget(you, input))
+				if (input != "c" && checkValidItemTarget(you, input, partyM, yLeader))
 				{
 					choiceLoop = true;
 					yTurns--;
@@ -543,7 +556,7 @@ void turnLoop(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 
 		cout << you.getName() << "'s turn" << endl;
 
-		choice(you, enemy, yTurns, eTurns);
+		choice(you, enemy, yTurns, eTurns, false, you);
 
 		cout << "-----------------------------------------" << endl;
 		cout << "Remaining Turns: " << yTurns << endl;
@@ -561,7 +574,7 @@ void turnLoop(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 			if (you.getPartyM(0).getHP() > 0)
 			{
 				cout << you.getPartyM(0).getName() << "'s turn" << endl;
-				choice(you.getPartyM(0), enemy, yTurns, eTurns);
+				choice(you.getPartyM(0), enemy, yTurns, eTurns, true, you);
 
 				if (checkDead(enemy) == 1 + enemy.getPartySize())
 					return;
@@ -576,7 +589,7 @@ void turnLoop(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 				if (you.getPartyM(1).getHP() > 0)
 				{
 					cout << you.getPartyM(1).getName() << "'s turn" << endl;
-					choice(you.getPartyM(1), enemy, yTurns, eTurns);
+					choice(you.getPartyM(1), enemy, yTurns, eTurns, true, you);
 
 					if (checkDead(enemy) == 1 + enemy.getPartySize())
 						return;
@@ -592,7 +605,7 @@ void turnLoop(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 					if (you.getPartyM(2).getHP() > 0)
 					{
 						cout << you.getPartyM(2).getName() << "'s turn" << endl;
-						choice(you.getPartyM(2), enemy, yTurns, eTurns);
+						choice(you.getPartyM(2), enemy, yTurns, eTurns, true, you);
 
 						if (checkDead(enemy) == 1 + enemy.getPartySize())
 							return;
@@ -775,7 +788,7 @@ void testCode()
 	Monster luddy("Ludroth");
 	jaggi.addPartyM(luddy);
 	
-	sm.setHP(sm.getHP() - 10);
+	m.setHP(m.getHP() - 10);
 	Item hamburger(0, 1, "hamburger");
 	sm.addItem(hamburger);
 	

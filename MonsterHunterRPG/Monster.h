@@ -69,6 +69,7 @@ public:
 	void setMaxMDef(int mdef);
 	void setName(string name);
 	Monster & getPartyM(int i);
+	void useItemLeader(Monster & m, string name);
 	string getSkill(int i);
 	void setPartyMHP(int i, int hp);
 	void setPartyMMP(int i, int mp);
