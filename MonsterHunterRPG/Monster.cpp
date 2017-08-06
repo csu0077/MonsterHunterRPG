@@ -316,6 +316,144 @@ Monster & Monster::getPartyM(int i)
 	return party[i];
 }
 
+void Monster::useItemLeader(Monster & m, string name)
+{
+	for (unsigned int i = 0; i < inventory.size(); i++)
+	{
+		if (inventory[i].getName() == name)
+		{
+			if (name == "hamburger")
+			{
+				int health = 50;
+				cout << m.getName() << " has healed " << health << "hp!" << endl;
+
+				if (health + m.getHP() > m.getMaxHP())
+					m.setHP(m.getMaxHP());
+				else
+					m.setHP(m.getHP() + health);
+
+				cout << "Current HP: " << m.getHP() << endl;
+
+				inventory[i].setCount(inventory[i].getCount() - 1);
+
+				if (inventory[i].getCount() == 0)
+					removeItem(i);
+			}
+			else if (name == "cheeseburger")
+			{
+				int health = 150;
+
+				cout << m.getName() << " has healed " << health << "hp!" << endl;
+
+				if (health + m.getHP() > m.getMaxHP())
+					m.setHP(m.getMaxHP());
+				else
+					m.setHP(m.getHP() + health);
+
+				cout << "Current HP: " << m.getHP() << endl;
+
+				inventory[i].setCount(inventory[i].getCount() - 1);
+
+				if (inventory[i].getCount() == 0)
+					removeItem(i);
+
+			}
+			else if (name == "Western bacon burger")
+			{
+				int health = 200;
+
+				cout << m.getName() << " has healed " << health << "hp!" << endl;
+
+				if (health + m.getHP() > m.getMaxHP())
+					m.setHP(m.getMaxHP());
+				else
+					m.setHP(m.getHP() + health);
+
+				cout << "Current HP: " << m.getHP() << endl;
+
+				inventory[i].setCount(inventory[i].getCount() - 1);
+
+				if (inventory[i].getCount() == 0)
+					removeItem(i);
+
+			}
+			else if (name == "7up")
+			{
+				int mp = 25;
+
+				cout << m.getName() << " has healed " << mp << "mp!" << endl;
+
+				if (mp + getMP() > getMaxMP())
+					m.setMP(getMaxMP());
+				else
+					m.setMP(getMP() + mp);
+
+				cout << "Current MP: " << m.getMP() << endl;
+
+				inventory[i].setCount(inventory[i].getCount() - 1);
+
+				if (inventory[i].getCount() == 0)
+					removeItem(i);
+
+			}
+			else if (name == "Coke")
+			{
+				int mp = 50;
+
+				cout << m.getName() << " has healed " << mp << "mp!" << endl;
+
+				if (mp + getMP() > getMaxMP())
+					m.setMP(getMaxMP());
+				else
+					setMP(getMP() + mp);
+
+				cout << "Current MP: " << m.getMP() << endl;
+
+				inventory[i].setCount(inventory[i].getCount() - 1);
+
+				if (inventory[i].getCount() == 0)
+					removeItem(i);
+			}
+			else if (name == "Pepsi")
+			{
+				int mp = 100;
+
+				cout << m.getName() << " has healed " << mp << "mp!" << endl;
+
+				if (mp + m.getMP() > m.getMaxMP())
+					m.setMP(m.getMaxMP());
+				else
+					m.setMP(m.getMP() + mp);
+
+				cout << "Current MP: " << m.getMP() << endl;
+
+				inventory[i].setCount(inventory[i].getCount() - 1);
+
+				if (inventory[i].getCount() == 0)
+					removeItem(i);
+			}
+			else if (name == "Pepsi Max")
+			{
+				int mp = 150;
+
+				cout << m.getName() << " has healed " << mp << "mp!" << endl;
+
+				if (mp + m.getMP() > m.getMaxMP())
+					m.setHP(m.getMaxMP());
+				else
+					setHP(m.getMP() + mp);
+
+				cout << "Current MP: " << m.getMP() << endl;
+
+				inventory[i].setCount(inventory[i].getCount() - 1);
+
+				if (inventory[i].getCount() == 0)
+					removeItem(i);
+			}
+		}
+	}
+}
+
 string Monster::getSkill(int i)
 {
 	return skills[i];
