@@ -410,24 +410,26 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 					skillChoiceValid = true;
 			}
 
-			if ((you.getSkill(stoi(input)-1) == "slash1" ||
-				you.getSkill(stoi(input)-1) == "impact1" ||
-				you.getSkill(stoi(input)-1) == "shot1" ||
-				you.getSkill(stoi(input)-1) == "fire1" ||
-				you.getSkill(stoi(input)-1) == "ice1" ||
-					you.getSkill(stoi(input)-1) == "thunder1" ||
-					you.getSkill(stoi(input)-1) == "water1" ||
-						you.getSkill(stoi(input)-1) == "dragon1") && you.getMP() < 5)
+			if (input != "c")
 			{
-				cout << "Not enough MP!" << endl;
+				if ((you.getSkill(stoi(input) - 1) == "slash1" ||
+					you.getSkill(stoi(input) - 1) == "impact1" ||
+					you.getSkill(stoi(input) - 1) == "shot1" ||
+					you.getSkill(stoi(input) - 1) == "fire1" ||
+					you.getSkill(stoi(input) - 1) == "ice1" ||
+					you.getSkill(stoi(input) - 1) == "thunder1" ||
+					you.getSkill(stoi(input) - 1) == "water1" ||
+					you.getSkill(stoi(input) - 1) == "dragon1") && you.getMP() < 5)
+				{
+					cout << "Not enough MP!" << endl;
+				}
+				else if (input != "c" && checkValidSkillTarget(you, enemy, input))
+				{
+					choiceLoop = true;
+					yTurns--;
+				}
 			}
-			else if (input != "c" && checkValidSkillTarget(you, enemy, input))
-			{
-				choiceLoop = true;
-				yTurns--;
-			}
-
-			
+		
 		}
 		else if (choice == "d")	//defend
 		{
@@ -554,7 +556,7 @@ void turnLoop(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 			
 			
 
-		if (you.getPartySize() >= 1)
+		if (you.getPartyM(0).getHP() > 0 && you.getPartySize() >= 1)
 		{
 			cout << you.getPartyM(0).getName() << "'s turn" << endl;
 			choice(you.getPartyM(0), enemy, yTurns, eTurns);
@@ -566,7 +568,7 @@ void turnLoop(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 			cout << "Remaining Turns: " << yTurns << endl;
 			cout << "-----------------------------------------" << endl;
 
-			if (you.getPartySize() >= 2)
+			if (you.getPartyM(1).getHP() > 0 && you.getPartySize() >= 2)
 			{
 				cout << you.getPartyM(1).getName() << "'s turn" << endl;
 				choice(you.getPartyM(1), enemy, yTurns, eTurns);
@@ -578,7 +580,7 @@ void turnLoop(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 				cout << "Remaining Turns: " << yTurns << endl;
 				cout << "-----------------------------------------" << endl;
 
-				if (you.getPartySize() >= 3)
+				if (you.getPartyM(2).getHP() > 0 && you.getPartySize() >= 3)
 				{
 					cout << you.getPartyM(2).getName() << "'s turn" << endl;
 					choice(you.getPartyM(2), enemy, yTurns, eTurns);
@@ -596,11 +598,80 @@ void turnLoop(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 	}
 }
 
+
+void enemyTurn(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
+{
+	if (enemy.getName() == "Ludroth" || enemy.getName() == "Jaggi")
+	{
+		cout << enemy.getName() << "'s turn" << endl;
+		srand(time(NULL));
+		int randPartyM = rand() % (you.getPartySize() + 1);
+
+		if (randPartyM == 0 && you.getHP() <= 0)
+		{
+			if (you.getPartySize() == 1 && you.getPartyM(0).getHP() > 0)
+				randPartyM = 1;
+			else if (you.getPartySize() == 2 && you.getPartyM(1).getHP() > 0)
+				randPartyM = 2;
+			else if (you.getPartySize() == 3 && you.getPartyM(2).getHP() > 0)
+				randPartyM = 3;
+		}
+		else if (randPartyM == 1 && you.getPartyM(0).getHP() <= 0)
+		{
+			if (you.getPartySize() == 1 && you.getHP() > 0)
+				randPartyM = 0;
+			else if (you.getPartySize() == 2 && you.getPartyM(1).getHP() > 0)
+				randPartyM = 2;
+			else if (you.getPartySize() == 3 && you.getPartyM(2).getHP() > 0)
+				randPartyM = 3;
+		}
+		else if (randPartyM == 2 && you.getPartyM(1).getHP() <= 0)
+		{
+			if (you.getPartySize() == 1 && you.getHP() > 0)
+				randPartyM = 0;
+			else if (you.getPartySize() == 2 && you.getPartyM(0).getHP() > 0)
+				randPartyM = 1;
+			else if (you.getPartySize() == 3 && you.getPartyM(2).getHP() > 0)
+				randPartyM = 3;
+		}
+		else if (randPartyM == 3 && you.getPartyM(2).getHP() <= 0)
+		{
+			if (you.getPartySize() == 1 && you.getHP() > 0)
+				randPartyM = 0;
+			else if (you.getPartySize() == 2 && you.getPartyM(0).getHP() > 0)
+				randPartyM = 1;
+			else if (you.getPartySize() == 3 && you.getPartyM(1).getHP() > 0)
+				randPartyM = 2;
+		}
+
+		if (!randPartyM)
+		{
+			cout << enemy.getName() << " attacks " << you.getName() << endl;
+			enemy.attack(you);
+		}
+		else
+		{
+			cout << enemy.getName() << " attacks " << you.getPartyM(randPartyM - 1).getName() << endl;
+			enemy.attack(you.getPartyM(randPartyM - 1));
+		}
+	}
+	eTurns--;
+}
+
 void battle(Monster you, Monster enemy)
 {
 	cout << "Initializing Combat..." << endl;
 	bool battleEnd = false;
 	int yourTurns = you.getPartySize() + 1;
+
+	for (int i = 0; i < you.getPartySize(); i++)
+	{
+		if (you.getPartyM(i).getHP() <= 0)
+		{
+			yourTurns--;
+		}
+	}
+
 	int enemyTurns = enemy.getPartySize() + 1;
 	bool yourTurn = true; //true == your turn, false == enemy turn
 
@@ -627,7 +698,7 @@ void battle(Monster you, Monster enemy)
 			{
 				battleEnd = true;
 			}
-			
+
 			enemyTurns = enemy.getPartySize() + 1 - checkDead(enemy);
 
 		}
@@ -638,97 +709,41 @@ void battle(Monster you, Monster enemy)
 			cout << "Remaining Turns: " << enemyTurns << endl;
 			cout << "-----------------------------------------" << endl;
 
-			while (enemyTurns)
+			while (enemyTurns > 0)
 			{
-				if (enemy.getHP() > 0 && (enemy.getName() == "Jaggi" || enemy.getName() == "Ludroth"))	//jaggi/ludroth script
+				if (enemy.getHP() > 0)	//jaggi/ludroth script
 				{
-					cout << enemy.getName() << "'s turn" << endl;
-					srand(time(NULL));
-					int randPartyM = rand() % (you.getPartySize() + 1);
-					if (!randPartyM)
-					{
-						cout << enemy.getName() << " attacks " << you.getName() << endl;
-						enemy.attack(you);
-					}	
-					else
-					{
-						cout << enemy.getName() << " attacks " << you.getPartyM(randPartyM-1).getName() << endl;
-						enemy.attack(you.getPartyM(randPartyM-1));
-					}
-					
-					enemyTurns--;
+					enemyTurn(you, enemy, yourTurns, enemyTurns);
 				}
 
 				if (enemy.getPartySize() >= 1)
 				{
-					cout << enemy.getPartyM(0).getName() << "'s turn" << endl;
-					srand(time(NULL));
-					int randPartyM = rand() % (you.getPartySize() + 1);
-					if (!randPartyM)
-					{
-						cout << enemy.getPartyM(0).getName() << " attacks " << you.getName() << endl;
-						enemy.attack(you);
-					}
-					else
-					{
-						cout << enemy.getPartyM(0).getName() << " attacks " << you.getPartyM(randPartyM - 1).getName() << endl;
-						enemy.getPartyM(0).attack(you.getPartyM(randPartyM - 1));
-					}
+					if (enemy.getPartyM(0).getHP() > 0)
+						enemyTurn(you, enemy.getPartyM(0), yourTurns, enemyTurns);
+				}
 
-					enemyTurns--;
+				if (enemy.getPartySize() >= 2)
+				{
+					if (enemy.getPartyM(1).getHP() > 0)
+						enemyTurn(you, enemy.getPartyM(1), yourTurns, enemyTurns);
+				}
 
-					if (enemy.getPartySize() >= 2)
-					{
-						cout << enemy.getPartyM(1).getName() << "'s turn" << endl;
-						srand(time(NULL));
-						int randPartyM = rand() % (you.getPartySize() + 1);
-						if (!randPartyM)
-						{
-							cout << enemy.getPartyM(1).getName() << " attacks " << you.getName() << endl;
-							enemy.attack(you);
-						}
-						else
-						{
-							cout << enemy.getPartyM(1).getName() << " attacks " << you.getPartyM(randPartyM - 1).getName() << endl;
-							enemy.getPartyM(1).attack(you.getPartyM(randPartyM - 1));
-						}
-
-						enemyTurns--;
-
-						if (enemy.getPartySize() == 3)
-						{
-							cout << enemy.getPartyM(2).getName() << "'s turn" << endl;
-							srand(time(NULL));
-							int randPartyM = rand() % (you.getPartySize() + 1);
-							if (!randPartyM)
-							{
-								cout << enemy.getPartyM(2).getName() << " attacks " << you.getName() << endl;
-								enemy.attack(you);
-							}
-							else
-							{
-								cout << enemy.getPartyM(2).getName() << " attacks " << you.getPartyM(randPartyM - 1).getName() << endl;
-								enemy.getPartyM(2).attack(you.getPartyM(randPartyM - 1));
-							}
-
-							enemyTurns--;
-						}
-					}
+				if (enemy.getPartySize() == 3)
+				{
+					if (enemy.getPartyM(2).getHP() > 0)
+						enemyTurn(you, enemy.getPartyM(2), yourTurns, enemyTurns);
 				}
 
 				stopBlocking = false;
+				yourTurn = true;
+				yourTurns = you.getPartySize() + 1 - checkDead(you);
+
+				if (checkDead(you) == 1 + you.getPartySize())
+					battleEnd = true;
 			}
-
-			yourTurn = true;
-			yourTurns = you.getPartySize() + 1 - checkDead(you);
-
-			
 		}
-
-		if (checkDead(you) == 1 + you.getPartySize())
-			battleEnd = true;
-		
 	}
+
 	cout << "Battle Complete" << endl;
 	expCalc(you, enemy);
 	//reset(you);
@@ -746,7 +761,7 @@ void testCode()
 	Monster luddy("Ludroth");
 	jaggi.addPartyM(luddy);
 	
-	sm.setHP(sm.getHP() - 10);
+	sm.setHP(sm.getHP() - 100);
 	Item hamburger(0, 1, "hamburger");
 	sm.addItem(hamburger);
 	
