@@ -209,7 +209,7 @@ bool checkValidTargetInput(Monster & you, Monster & enemy)
 }
 
 //checks if target for skills is valid and then go throughs with damage calculations
-bool checkValidSkillTarget(Monster & you, Monster & enemy, string i)
+bool checkValidSkillTarget(Monster & you, Monster & enemy, string i, int & turns)
 {
 	bool targetChosen = false;
 
@@ -266,19 +266,13 @@ bool checkValidSkillTarget(Monster & you, Monster & enemy, string i)
 
 			if (tgt != 5)
 			{
-				Monster temp = enemy.getPartyM(tgt);
+				you.skill(enemy.getPartyM(tgt), skill, turns);
 
-				
-
-				you.skill(temp, skill);
-				int modHP = temp.getHP();
-
-				enemy.setPartyMHP(tgt, modHP);
 				return true;
 			}
 			else
 			{
-				you.skill(enemy, skill);
+				you.skill(enemy, skill, turns);
 				/*cout << you.getName() << " attacks " << enemy.getName() << endl;
 				cout << enemy.getName() << "'s HP: " << enemy.getHP() << endl;*/
 				return true;
@@ -436,7 +430,7 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns, bool par
 				{
 					cout << "Not enough MP!" << endl;
 				}
-				else if (input != "c" && checkValidSkillTarget(you, enemy, input))
+				else if (input != "c" && checkValidSkillTarget(you, enemy, input, yTurns))
 				{
 					choiceLoop = true;
 					yTurns--;

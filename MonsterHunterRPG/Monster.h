@@ -83,7 +83,7 @@ public:
 	void printPartySize();
 	void operator = (const Monster & m);
 	void attack(Monster & m);
-	void skill(Monster & m, int i);
+	void skill(Monster & m, int i, int & turns);
 	void addSkill(string s);
 	void removeSkill(int i);
 	int getSkillSetSize();
@@ -107,37 +107,37 @@ public:
 	vector <Item> getInventory();
 
 	//1= weak, 2 = medium, 3 = strong
-	void slash1(Monster & mon); //weak slash damage
-	void slash2(Monster & mon); //medium slash damage
-	void slash3(Monster & mon); //strong slash damage
+	void slash1(Monster & mon, int & turns); //weak slash damage
+	void slash2(Monster & mon, int & turns); //medium slash damage
+	void slash3(Monster & mon, int & turns); //strong slash damage
 
-	void impact1(Monster & mon); //weak impact damage
-	void impact2(Monster & mon); //medium impact damage
-	void impact3(Monster & mon); //strong impact damage
+	void impact1(Monster & mon, int & turns); //weak impact damage
+	void impact2(Monster & mon, int & turns); //medium impact damage
+	void impact3(Monster & mon, int & turns); //strong impact damage
 
-	void shot1(Monster & mon);
-	void shot2(Monster & mon);
-	void shot3(Monster & mon);
+	void shot1(Monster & mon, int & turns);
+	void shot2(Monster & mon, int & turns);
+	void shot3(Monster & mon, int & turns);
 
-	void fire1(Monster & mon);
-	void fire2(Monster & mon);
-	void fire3(Monster & mon);
+	void fire1(Monster & mon, int & turns);
+	void fire2(Monster & mon, int & turns);
+	void fire3(Monster & mon, int & turns);
 
-	void ice1(Monster & mon);
-	void ice2(Monster & mon);
-	void ice3(Monster & mon);
+	void ice1(Monster & mon, int & turns);
+	void ice2(Monster & mon, int & turns);
+	void ice3(Monster & mon, int & turns);
 
-	void water1(Monster & mon);
-	void water2(Monster & mon);
-	void water3(Monster & mon);
+	void water1(Monster & mon, int & turns);
+	void water2(Monster & mon, int & turns);
+	void water3(Monster & mon, int & turns);
 
-	void thunder1(Monster & mon);
-	void thunder2(Monster & mon);
-	void thunder3(Monster & mon);
+	void thunder1(Monster & mon, int & turns);
+	void thunder2(Monster & mon, int & turns);
+	void thunder3(Monster & mon, int & turns);
 
-	void dragon1(Monster & mon);
-	void dragon2(Monster & mon);
-	void dragon3(Monster & mon);
+	void dragon1(Monster & mon, int & turns);
+	void dragon2(Monster & mon, int & turns);
+	void dragon3(Monster & mon, int & turns);
 
 	~Monster();
 
@@ -167,7 +167,7 @@ private:
 	vector <string> skills;
 	vector <Item> inventory = vector <Item>(10);
 
-	void damageCalc(Monster & mon, int type, int power)	//type is type of damage i.e. slash damage, power is how strong the attack will be i.e. weak/medium/strong
+	void damageCalc(Monster & mon, int type, int power, int & turns)	//type is type of damage i.e. slash damage, power is how strong the attack will be i.e. weak/medium/strong
 	{
 		double attackPow = double(getAtk());
 		switch (power)
@@ -192,6 +192,7 @@ private:
 		{
 			if (mon.getRes()[type] == 2)		//if the bool is true at index, that is the weakness
 			{
+				turns += 1;
 				damage *= 2;
 				cout << mon.getName() << "'s weakness was hit!!!" << endl;
 			}
