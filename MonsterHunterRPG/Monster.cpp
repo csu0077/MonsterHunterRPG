@@ -42,6 +42,7 @@ Monster::Monster()
 
 void Monster::setInitStats(string name, int hp, int mp, int atk, int def, int mag, int mdef, string role)
 {
+	this->level = 1;
 	this->name = name;
 	this->role = role;
 	this->HP = hp;
@@ -713,11 +714,19 @@ void Monster::setPartyExp(int m, int exp)
 
 void Monster::setStats(int hp, int mp, int atk, int def, int mag, int mdef)
 {
+	this->level++;
+	cout << "LV: " << getLevel() << endl;
+	cout << "gained " << hp << " hp" << endl;
 	this->HP += hp;
+	cout << "gained " << mp << " mp" << endl;
 	this->MP += mp;
+	cout << "gained " << atk << " attack" << endl;
 	this->atk += atk;
+	cout << "gained " << def << " defence" << endl;
 	this->def += def;
+	cout << "gained " << mag << " magic" << endl;
 	this->mag += mag;
+	cout << "gained " << mdef << " magic defence" << endl;
 	this->mDef += mdef;
 
 	this->maxHP += hp;
@@ -860,6 +869,7 @@ void Monster::levelUP()
 			 this->role == "Apex Deviljho")
 		setStats(500, 500, 500, 500, 500, 500);
 
+	setExp(getExp()-100);
 }
 
 void Monster::levelUpPartyM(int i)

@@ -68,7 +68,7 @@ void expCalc(Monster & you, Monster & enemy)
 
 	for (int i = 0; i < you.getPartySize(); i++)
 	{
-		you.setPartyExp(i, expVec[i + 1]);
+		you.getPartyM(i).setExp(you.getPartyM(i).getExp() + expVec[i + 1]);
 		cout << you.getPartyM(i).getName() << " received " << expVec[i + 1] << " exp" << endl;
 	}
 		
@@ -84,7 +84,7 @@ void expCalc(Monster & you, Monster & enemy)
 		if (you.getPartyM(i).getExp() >= 100)
 		{
 			cout << you.getPartyM(i).getName() << " leveled up!" << endl;
-			you.levelUpPartyM(i);
+			you.getPartyM(i).levelUP();
 		}
 	}
 }
@@ -504,7 +504,7 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns, bool par
 	}
 }
 
-int checkDead(Monster y)	//returns number of dead party members
+int checkDead(Monster & y)	//returns number of dead party members
 {
 	int bodyCount = 0;
 	
@@ -614,7 +614,6 @@ void turnLoop(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 	}
 }
 
-
 void enemyTurn(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 {
 	if (enemy.getName() == "Ludroth" || enemy.getName() == "Jaggi")
@@ -674,7 +673,7 @@ void enemyTurn(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 	eTurns--;
 }
 
-void battle(Monster you, Monster enemy)
+void battle(Monster & you, Monster & enemy)
 {
 	cout << "Initializing Combat..." << endl;
 	bool battleEnd = false;
@@ -714,6 +713,7 @@ void battle(Monster you, Monster enemy)
 			{
 				battleEnd = true;
 				expCalc(you, enemy);
+
 			}
 
 			enemyTurns = enemy.getPartySize() + 1 - checkDead(enemy);
@@ -782,16 +782,17 @@ void testCode()
 	Monster luddy("Ludroth");
 	jaggi.addPartyM(luddy);
 	
-	m.setHP(m.getHP() - 10);
+	//m.setHP(m.getHP());
 	Item hamburger(0, 1, "hamburger");
 	sm.addItem(hamburger);
-	
+	sm.setExp(90);
 	m.addPartyM(sm);
 	//printInventory(m);
 	//m.useItem("hamburger");
 	//cout << m.getHP() << endl;
 
 	battle(m, jaggi);
+
 	//todo
 	//give exp at end of battle	(done)
 	//add leveling up (done)
