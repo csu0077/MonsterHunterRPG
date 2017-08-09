@@ -773,60 +773,56 @@ void battle(Monster & you, Monster & enemy)
 	//reset(you);
 }
 
-vector <bool> saveSlots(3);
 
 void save(Monster & you)//fix this mess
 {
 	bool saved = false;
 	while (!saved)
 	{
-		for (int i = 0; i < saveSlots.size(); i++)
+		ofstream savefile;
+
+		string savefilename = "save.txt";
+		savefile.open(savefilename);
+
+		savefile << "Your character:" << you.getName() << endl;
+		savefile << "LV:" << you.getLevel() << endl;
+		savefile << "Exp:" << you.getExp() << endl;
+		savefile << "HP:" << you.getMaxHP() << endl;
+		savefile << "MP:" << you.getMaxMP() << endl;
+		savefile << "Atk:" << you.getMaxAtk() << endl;
+		savefile << "Def:" << you.getMaxDef() << endl;
+		savefile << "Mag:" << you.getMaxMag() << endl;
+		savefile << "MDef:" << you.getMaxMDef() << endl << endl;
+
+		savefile << you.getName() << "'s Inventory:" << endl;
+
+		for (int i = 0; i < you.getInventory().size(); i++)
 		{
-				ofstream savefile;
+			savefile << "Name: " << you.getInventory()[i].getName() << endl;
+		}
 
-				string savefilename = "save" + to_string(i) + ".txt";
-				savefile.open(savefilename);
+		savefile << endl << "Party" << endl;
 
-				savefile << "Your character:" << you.getName() << endl;
-				savefile << "LV:" << you.getLevel() << endl;
-				savefile << "Exp:" << you.getExp() << endl;
-				savefile << "HP:" << you.getMaxHP() << endl;
-				savefile << "MP:" << you.getMaxMP() << endl;
-				savefile << "Atk:" << you.getMaxAtk() << endl;
-				savefile << "Def:" << you.getMaxDef() << endl;
-				savefile << "Mag:" << you.getMaxMag() << endl;
-				savefile << "MDef:" << you.getMaxMDef() << endl << endl;
+		for (int i = 0; i < you.getPartySize(); i++)
+		{
+			savefile << "Party member " << to_string(i + 1) << "." << you.getPartyM(i).getName() << endl;
+			savefile << "LV:" << you.getPartyM(i).getLevel() << endl;
+			savefile << "Exp:" << you.getPartyM(i).getExp() << endl;
+			savefile << "HP:" << you.getPartyM(i).getMaxHP() << endl;
+			savefile << "MP:" << you.getPartyM(i).getMaxMP() << endl;
+			savefile << "Atk:" << you.getPartyM(i).getMaxAtk() << endl;
+			savefile << "Def:" << you.getPartyM(i).getMaxDef() << endl;
+			savefile << "Mag:" << you.getPartyM(i).getMaxMag() << endl;
+			savefile << "MDef:" << you.getPartyM(i).getMaxMDef() << endl << endl;
 
-				savefile << you.getName() << "'s Inventory:" << endl;
+			savefile << you.getPartyM(i).getName() << "'s Inventory:" << endl;
 
-				for (int i = 0; i < you.getInventory().size(); i++)
-				{
-					savefile << "Name: " << you.getInventory()[i].getName() << endl;
-				}
-
-				savefile << endl << "Party" << endl;
-
-				for (int i = 0; i < you.getPartySize(); i++)
-				{
-					savefile << "Party member " << to_string(i + 1) << "." << you.getPartyM(i).getName() << endl;
-					savefile << "LV:" << you.getPartyM(i).getLevel() << endl;
-					savefile << "Exp:" << you.getPartyM(i).getExp() << endl;
-					savefile << "HP:" << you.getPartyM(i).getMaxHP() << endl;
-					savefile << "MP:" << you.getPartyM(i).getMaxMP() << endl;
-					savefile << "Atk:" << you.getPartyM(i).getMaxAtk() << endl;
-					savefile << "Def:" << you.getPartyM(i).getMaxDef() << endl;
-					savefile << "Mag:" << you.getPartyM(i).getMaxMag() << endl;
-					savefile << "MDef:" << you.getPartyM(i).getMaxMDef() << endl << endl;
-
-					savefile << you.getPartyM(i).getName() << "'s Inventory:" << endl;
-
-					for (int j = 0; j < you.getPartyM(i).getInventory().size(); j++)
-					{
-						savefile << "Name: " << you.getPartyM(i).getInventory()[j].getName() << endl;
-					}
-				}
+			for (int j = 0; j < you.getPartyM(i).getInventory().size(); j++)
+			{
+				savefile << "Name: " << you.getPartyM(i).getInventory()[j].getName() << endl;
 			}
 		}
+	}
 }
 
 void load();
