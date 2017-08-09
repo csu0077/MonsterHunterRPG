@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <time.h>
+#include <fstream>
 #include "Monster.h"
 #include "Sharpshooter.h"
 #include "swordmaster.h"
@@ -9,6 +10,7 @@
 #include "Item.h"
 #include "Potion.h"
 #include "Tonic.h"
+
 
 using namespace std;
 
@@ -273,8 +275,6 @@ bool checkValidSkillTarget(Monster & you, Monster & enemy, string i, int & turns
 			else
 			{
 				you.skill(enemy, skill, turns);
-				/*cout << you.getName() << " attacks " << enemy.getName() << endl;
-				cout << enemy.getName() << "'s HP: " << enemy.getHP() << endl;*/
 				return true;
 			}
 		}
@@ -670,6 +670,10 @@ void enemyTurn(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 			enemy.attack(you.getPartyM(randPartyM - 1));
 		}
 	}
+	else if (enemy.getName() == "Rathian")
+	{
+		cout << enemy.getName() << "'s turn" << endl;
+	}
 	eTurns--;
 }
 
@@ -713,7 +717,6 @@ void battle(Monster & you, Monster & enemy)
 			{
 				battleEnd = true;
 				expCalc(you, enemy);
-
 			}
 
 			enemyTurns = enemy.getPartySize() + 1 - checkDead(enemy);
@@ -770,6 +773,64 @@ void battle(Monster & you, Monster & enemy)
 	//reset(you);
 }
 
+vector <bool> saveSlots(3);
+
+void save(Monster & you)//fix this mess
+{
+	bool saved = false;
+	while (!saved)
+	{
+		for (int i = 0; i < saveSlots.size(); i++)
+		{
+				ofstream savefile;
+
+				string savefilename = "save" + to_string(i) + ".txt";
+				savefile.open(savefilename);
+
+				savefile << "Your character:" << you.getName() << endl;
+				savefile << "LV:" << you.getLevel() << endl;
+				savefile << "Exp:" << you.getExp() << endl;
+				savefile << "HP:" << you.getMaxHP() << endl;
+				savefile << "MP:" << you.getMaxMP() << endl;
+				savefile << "Atk:" << you.getMaxAtk() << endl;
+				savefile << "Def:" << you.getMaxDef() << endl;
+				savefile << "Mag:" << you.getMaxMag() << endl;
+				savefile << "MDef:" << you.getMaxMDef() << endl << endl;
+
+				savefile << you.getName() << "'s Inventory:" << endl;
+
+				for (int i = 0; i < you.getInventory().size(); i++)
+				{
+					savefile << "Name: " << you.getInventory()[i].getName() << endl;
+				}
+
+				savefile << endl << "Party" << endl;
+
+				for (int i = 0; i < you.getPartySize(); i++)
+				{
+					savefile << "Party member " << to_string(i + 1) << "." << you.getPartyM(i).getName() << endl;
+					savefile << "LV:" << you.getPartyM(i).getLevel() << endl;
+					savefile << "Exp:" << you.getPartyM(i).getExp() << endl;
+					savefile << "HP:" << you.getPartyM(i).getMaxHP() << endl;
+					savefile << "MP:" << you.getPartyM(i).getMaxMP() << endl;
+					savefile << "Atk:" << you.getPartyM(i).getMaxAtk() << endl;
+					savefile << "Def:" << you.getPartyM(i).getMaxDef() << endl;
+					savefile << "Mag:" << you.getPartyM(i).getMaxMag() << endl;
+					savefile << "MDef:" << you.getPartyM(i).getMaxMDef() << endl << endl;
+
+					savefile << you.getPartyM(i).getName() << "'s Inventory:" << endl;
+
+					for (int j = 0; j < you.getPartyM(i).getInventory().size(); j++)
+					{
+						savefile << "Name: " << you.getPartyM(i).getInventory()[j].getName() << endl;
+					}
+				}
+			}
+		}
+}
+
+void load();
+
 void testCode()
 {
 	
@@ -792,6 +853,7 @@ void testCode()
 	//cout << m.getHP() << endl;
 
 	battle(m, jaggi);
+	save(m);
 
 	//todo
 	//give exp at end of battle	(done)
