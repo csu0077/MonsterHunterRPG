@@ -104,7 +104,8 @@ public:
 	void removeItem(int i); //removes item from invetory
 	void useItem(string name);
 	void useItemParty(int member, string name);
-	vector <Item> getInventory();
+	vector <Item>  getInventory();
+	vector <string> getSkills();
 
 	//1= weak, 2 = medium, 3 = strong
 	void slash1(Monster & mon, int & turns); //weak slash damage

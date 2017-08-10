@@ -1337,6 +1337,11 @@ vector<Item> Monster::getInventory()
 	return inventory;
 }
 
+vector<string> Monster::getSkills()
+{
+	return skills;
+}
+
 Monster::~Monster()
 {
 }

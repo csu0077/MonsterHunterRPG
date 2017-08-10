@@ -802,8 +802,13 @@ void save(Monster & you)//fix this mess
 			savefile << "Name: " << you.getInventory()[i].getName() << endl;
 		}
 
-		savefile << endl << "Party" << endl;
+		savefile << endl;
 
+		for (int i = 0; i < you.getSkills().size(); i++)
+		{
+			savefile << "Skill:" << you.getSkills()[i] << endl;
+		}
+			
 		for (int i = 0; i < you.getPartySize(); i++)
 		{
 			savefile << "Party member " << to_string(i + 1) << "." << you.getPartyM(i).getName() << endl;
@@ -821,6 +826,11 @@ void save(Monster & you)//fix this mess
 			for (int j = 0; j < you.getPartyM(i).getInventory().size(); j++)
 			{
 				savefile << "Name: " << you.getPartyM(i).getInventory()[j].getName() << endl;
+			}
+
+			for (int j = 0; i < you.getPartyM(i).getSkills().size(); j++)
+			{
+				savefile << "Skill:" << you.getPartyM(i).getSkills()[j] << endl;
 			}
 		}
 		saved = true;
