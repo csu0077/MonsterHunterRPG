@@ -827,7 +827,21 @@ void save(Monster & you)//fix this mess
 
 void load();
 
-void characterCreator(Monster & you);
+void characterCreator(Monster & you)
+{
+	cout << "What class would you like to be?" << endl;
+	cout << "1. Swordmaster" << endl;
+	cout << "2. Monk" << endl;
+	cout << "3. Sharpshooter" << endl;
+	cout << "4. Mage" << endl;
+	cout << "c. cancel character creation" << endl;
+
+	string input;
+	cin >> input;
+
+	if (input == "c")
+		return;
+}
 
 void startGame(Monster & you);
 
@@ -835,9 +849,11 @@ void mainGame()
 {
 	Monster you;
 
+	cout << "\t\t<Monster Hunter RPG>" << endl;
+													
 	while (1)
 	{
-		cout << "\t\t*****Monster Hunter RPG*****" << endl;
+		
 		cout << "1.New Game" << endl;
 		cout << "2.Load Game" << endl;
 
@@ -848,12 +864,12 @@ void mainGame()
 		if (choice == "1")
 		{
 			characterCreator(you);
-			startGame(you);
+			//startGame(you);
 		}
 		else if (choice == "2")
 		{
-			load();
-			startGame(you);
+			//load();
+			//startGame(you);
 		}
 	}
 	
@@ -861,7 +877,8 @@ void mainGame()
 
 void testCode()
 {	
-	Swordmaster sm("Lyn");
+	mainGame();
+	/*Swordmaster sm("Lyn");
 	Sharpshooter john("John");
 	Monk m("Wallace");
 
@@ -880,7 +897,7 @@ void testCode()
 	//cout << m.getHP() << endl;
 
 	battle(m, jaggi);
-	save(m);
+	save(m);*/
 
 	//todo
 	//give exp at end of battle	(done)
