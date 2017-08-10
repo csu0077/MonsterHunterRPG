@@ -827,9 +827,40 @@ void save(Monster & you)//fix this mess
 
 void load();
 
-void testCode()
+void characterCreator(Monster & you);
+
+void startGame(Monster & you);
+
+void mainGame()
 {
+	Monster you;
+
+	while (1)
+	{
+		cout << "\t\t*****Monster Hunter RPG*****" << endl;
+		cout << "1.New Game" << endl;
+		cout << "2.Load Game" << endl;
+
+		string choice;
+
+		cin >> choice;
+
+		if (choice == "1")
+		{
+			characterCreator(you);
+			startGame(you);
+		}
+		else if (choice == "2")
+		{
+			load();
+			startGame(you);
+		}
+	}
 	
+}
+
+void testCode()
+{	
 	Swordmaster sm("Lyn");
 	Sharpshooter john("John");
 	Monk m("Wallace");
@@ -864,6 +895,7 @@ void testCode()
 	//add leveling up for monsters like what stats they level up (mostly done)
 	//fix it so dead targets cannot be selected (done)
 }
+
 
 int main()
 {
