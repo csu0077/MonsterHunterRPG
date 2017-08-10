@@ -587,6 +587,7 @@ void Monster::printPartySize()
 
 void Monster::operator=(const Monster & m)
 {
+	this->level = m.level;
 	this->name = m.name;
 	this->HP = m.HP;
 	this->MP = m.MP;
@@ -605,7 +606,6 @@ void Monster::operator=(const Monster & m)
 	for (int i = 0; i < m.resistances.size(); i++)
 	{
 		resistances[i] = m.resistances[i];
-		cout << resistances[i] << endl;
 	}
 
 	for (int i = 0; i < m.skills.size(); i++)

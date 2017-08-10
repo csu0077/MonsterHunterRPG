@@ -823,10 +823,14 @@ void save(Monster & you)//fix this mess
 				savefile << "Name: " << you.getPartyM(i).getInventory()[j].getName() << endl;
 			}
 		}
+		saved = true;
 	}
 }
 
-void load();
+void load(Monster & you)
+{
+
+}
 
 void characterCreator(Monster & you)
 {
@@ -877,10 +881,32 @@ void characterCreator(Monster & you)
 	}
 }
 
+void desertedIslandLR(Monster & you);
+void floodedForestLR(Monster & you);
+void tundraLR(Monster & you);
+void desertLR(Monster & you);
+void volcanoLR(Monster & you);
+void volcanoDepths(Monster & you);
+
 void startGame(Monster & you)
 {
-	Monster jaggi("Jaggi");
-	battle(you, jaggi);
+	string input;
+
+	while (input != "q")
+	{
+		cout << "Welcome to the Hunter's Guild." << endl;
+		cout << "1.Travel" << endl;
+		cout << "2.Buy Items" << endl;
+		cout << "3.Save" << endl;
+		//cout << "4.Load" << endl;
+		cout << "q.Quit to Main Menu" << endl;
+
+		cin >> input;
+
+		if (input == "3")
+			save(you);
+	}
+
 }
 
 void mainGame()
@@ -906,8 +932,8 @@ void mainGame()
 		}
 		else if (choice == "2")
 		{
-			//load();
-			//startGame(you);
+			load(you);
+			startGame(you);
 		}
 	}
 	
@@ -915,7 +941,7 @@ void mainGame()
 
 void testCode()
 {	
-	mainGame();
+	
 	/*Swordmaster sm("Lyn");
 	Sharpshooter john("John");
 	Monk m("Wallace");
@@ -954,7 +980,8 @@ void testCode()
 
 int main()
 {
-	testCode();
+	//testCode();
+	mainGame();
 	string doo;
 	cin >> doo;
 
