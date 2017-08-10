@@ -42,6 +42,7 @@ Monster::Monster()
 
 void Monster::setInitStats(string name, int hp, int mp, int atk, int def, int mag, int mdef, string role)
 {
+	this->level = 1;
 	this->name = name;
 	this->role = role;
 	this->HP = hp;
@@ -560,93 +561,94 @@ void Monster::operator=(const Monster & m)
 
 void Monster::attack(Monster & m)
 {
-	damageCalc(m, 100, WEAK); //100 is non elemental damage
+	int filler = 0;
+	damageCalc(m, 100, WEAK, filler); //100 is non elemental damage
 }
 
-void Monster::skill(Monster & m, int i)
+void Monster::skill(Monster & m, int i, int & turns)
 {
 	string s = skills[i - 1];
 
 	if (s == "slash1")
 	{
 		setMP(getMP() - 5);
-		slash1(m);
+		slash1(m, turns);
 		cout << "Remaining MP: " << getMP() << endl;
 	}	
 	else if (s == "slash2")
-		slash2(m);
+		slash2(m, turns);
 	else if (s == "slash3")
-		slash3(m);
+		slash3(m, turns);
 	else if (s == "impact1")
 	{
 		setMP(getMP() - 5);
-		impact1(m);
+		impact1(m, turns);
 		cout << "Remaining MP: " << getMP() << endl;
 	}
 	else if (s == "impact2")
-		impact2(m);
+		impact2(m, turns);
 	else if (s == "imapact3")
-		impact3(m);
+		impact3(m, turns);
 	else if (s == "shot1")
 	{
 		setMP(getMP() - 5);
-		shot1(m);
+		shot1(m, turns);
 		cout << "Remaining MP: " << getMP() << endl;
 	}
 	else if (s == "shot2")
-		shot2(m);
+		shot2(m, turns);
 	else if (s == "shot3")
-		shot3(m);
+		shot3(m, turns);
 	else if (s == "fire1")
 	{
 		setMP(getMP() - 5);
-		fire1(m);
+		fire1(m, turns);
 		cout << "Remaining MP: " << getMP() << endl;
 	}
 	else if (s == "fire2")
-		fire2(m);
+		fire2(m, turns);
 	else if (s == "fire3")
-		fire3(m);
+		fire3(m, turns);
 	else if (s == "ice1")
 	{
 		setMP(getMP() - 5);
-		ice1(m);
+		ice1(m, turns);
 		cout << "Remaining MP: " << getMP() << endl;
 	}
 	else if (s == "ice2")
-		ice2(m);
+		ice2(m, turns);
 	else if (s == "ice3")
-		ice3(m);
+		ice3(m, turns);
 	else if (s == "thunder1")
 	{
 		setMP(getMP() - 5);
-		thunder1(m);
+		thunder1(m, turns);
 		cout << "Remaining MP: " << getMP() << endl;
 	}
 	else if (s == "thunder2")
-		thunder2(m);
+		thunder2(m, turns);
 	else if (s == "thunder3")
-		thunder3(m);
+		thunder3(m, turns);
 	else if (s == "water1")
 	{
 		setMP(getMP() - 5); 
-		water1(m);
+		water1(m, turns);
 		cout << "Remaining MP: " << getMP() << endl;
 	}
 	else if (s == "water2")
-		water2(m);
+		water2(m, turns);
 	else if (s == "water3")
-		water3(m);
+		water3(m, turns);
 	else if (s == "dragon1")
 	{
 		setMP(getMP() - 5);
-		dragon1(m);
+		dragon1(m, turns);
 		cout << "Remaining MP: " << getMP() << endl;
 	}
 	else if (s == "dragon2")
-		dragon2(m);
+		dragon2(m, turns);
 	else if (s == "dragon3")
-		dragon3(m);
+		dragon3(m, turns);
 }
 
 void Monster::addSkill(string s)
@@ -712,11 +714,19 @@ void Monster::setPartyExp(int m, int exp)
 
 void Monster::setStats(int hp, int mp, int atk, int def, int mag, int mdef)
 {
+	this->level++;
+	cout << "LV: " << getLevel() << endl;
+	cout << "gained " << hp << " hp" << endl;
 	this->HP += hp;
+	cout << "gained " << mp << " mp" << endl;
 	this->MP += mp;
+	cout << "gained " << atk << " attack" << endl;
 	this->atk += atk;
+	cout << "gained " << def << " defence" << endl;
 	this->def += def;
+	cout << "gained " << mag << " magic" << endl;
 	this->mag += mag;
+	cout << "gained " << mdef << " magic defence" << endl;
 	this->mDef += mdef;
 
 	this->maxHP += hp;
@@ -859,6 +869,7 @@ void Monster::levelUP()
 			 this->role == "Apex Deviljho")
 		setStats(500, 500, 500, 500, 500, 500);
 
+	setExp(getExp()-100);
 }
 
 void Monster::levelUpPartyM(int i)
@@ -868,149 +879,149 @@ void Monster::levelUpPartyM(int i)
 
 
 
-void Monster::slash1(Monster & mon) //weak slash damage
+void Monster::slash1(Monster & mon, int & turns) //weak slash damage
 {
 	cout << "slash 1" << endl;
-	damageCalc(mon, SLASH, WEAK); //in the monster.h file
+	damageCalc(mon, SLASH, WEAK, turns); //in the monster.h file
 }
 
-void Monster::slash2(Monster & mon) //medium slash damage
+void Monster::slash2(Monster & mon, int & turns) //medium slash damage
 {
 	cout << "slash 2" << endl;
-	damageCalc(mon, SLASH, MEDIUM);
+	damageCalc(mon, SLASH, MEDIUM, turns);
 }
 
-void Monster::slash3(Monster & mon) //strong slash damage
+void Monster::slash3(Monster & mon, int & turns) //strong slash damage
 {
 	cout << "slash 3" << endl;
-	damageCalc(mon, SLASH, STRONG);
+	damageCalc(mon, SLASH, STRONG, turns);
 }
 
-void Monster::impact1(Monster & mon) 
+void Monster::impact1(Monster & mon, int & turns)
 {
 	cout << "impact 1" << endl;
-	damageCalc(mon, IMPACT, WEAK);
+	damageCalc(mon, IMPACT, WEAK, turns);
 }
 
-void Monster::impact2(Monster & mon)
+void Monster::impact2(Monster & mon, int & turns)
 {
 	cout << "impact 2" << endl;
-	damageCalc(mon, IMPACT, MEDIUM);
+	damageCalc(mon, IMPACT, MEDIUM, turns);
 }
 
-void Monster::impact3(Monster & mon)
+void Monster::impact3(Monster & mon, int & turns)
 {
 	cout << "impact 3" << endl;
-	damageCalc(mon, IMPACT, STRONG);
+	damageCalc(mon, IMPACT, STRONG, turns);
 }
 
-void Monster::shot1(Monster & mon)
+void Monster::shot1(Monster & mon, int & turns)
 {
 	cout << "shot 1" << endl;
-	damageCalc(mon, SHOT, WEAK);
+	damageCalc(mon, SHOT, WEAK, turns);
 }
 
-void Monster::shot2(Monster & mon)
+void Monster::shot2(Monster & mon, int & turns)
 {
 	cout << "shot 2" << endl;
-	damageCalc(mon, SHOT, MEDIUM);
+	damageCalc(mon, SHOT, MEDIUM, turns);
 }
 
-void Monster::shot3(Monster & mon)
+void Monster::shot3(Monster & mon, int & turns)
 {
 	cout << "shot 3" << endl;
-	damageCalc(mon, SHOT, STRONG);
+	damageCalc(mon, SHOT, STRONG, turns);
 }
 
-void Monster::fire1(Monster & mon)
+void Monster::fire1(Monster & mon, int & turns)
 {
 	cout << "fire 1" << endl;
-	damageCalc(mon, FIRE, WEAK);
+	damageCalc(mon, FIRE, WEAK, turns);
 }
 
-void Monster::fire2(Monster & mon)
+void Monster::fire2(Monster & mon, int & turns)
 {
 	cout << "fire 2" << endl;
-	damageCalc(mon, FIRE, MEDIUM);
+	damageCalc(mon, FIRE, MEDIUM, turns);
 }
 
-void Monster::fire3(Monster & mon)
+void Monster::fire3(Monster & mon, int & turns)
 {
 	cout << "fire 3" << endl;
-	damageCalc(mon, FIRE, STRONG);
+	damageCalc(mon, FIRE, STRONG, turns);
 }
 
 
-void Monster::ice1(Monster & mon)
+void Monster::ice1(Monster & mon, int & turns)
 {
 	cout << "ice 1" << endl;
-	damageCalc(mon, ICE, WEAK);
+	damageCalc(mon, ICE, WEAK, turns);
 }
 
-void Monster::ice2(Monster & mon)
+void Monster::ice2(Monster & mon, int & turns)
 {
 	cout << "ice 2" << endl;
-	damageCalc(mon, ICE, MEDIUM);
+	damageCalc(mon, ICE, MEDIUM, turns);
 }
 
-void Monster::ice3(Monster & mon)
+void Monster::ice3(Monster & mon, int & turns)
 {
 	cout << "ice 3" << endl;
-	damageCalc(mon, ICE, STRONG);
+	damageCalc(mon, ICE, STRONG, turns);
 }
 
-void Monster::water1(Monster & mon)
+void Monster::water1(Monster & mon, int & turns)
 {
 	cout << "water 1" << endl;
-	damageCalc(mon, WATER, WEAK);
+	damageCalc(mon, WATER, WEAK, turns);
 }
 
-void Monster::water2(Monster & mon)
+void Monster::water2(Monster & mon, int & turns)
 {
 	cout << "water 2" << endl;
-	damageCalc(mon, WATER, MEDIUM);
+	damageCalc(mon, WATER, MEDIUM, turns);
 }
 
-void Monster::water3(Monster & mon)
+void Monster::water3(Monster & mon, int & turns)
 {
 	cout << "water 3" << endl;
-	damageCalc(mon, WATER, STRONG);
+	damageCalc(mon, WATER, STRONG, turns);
 }
 
-void Monster::thunder1(Monster & mon)
+void Monster::thunder1(Monster & mon, int & turns)
 {
 	cout << "thunder 1" << endl;
-	damageCalc(mon, THUNDER, WEAK);
+	damageCalc(mon, THUNDER, WEAK, turns);
 }
 
-void Monster::thunder2(Monster & mon)
+void Monster::thunder2(Monster & mon, int & turns)
 {
 	cout << "thunder 2" << endl;
-	damageCalc(mon, THUNDER, MEDIUM);
+	damageCalc(mon, THUNDER, MEDIUM, turns);
 }
 
-void Monster::thunder3(Monster & mon)
+void Monster::thunder3(Monster & mon, int & turns)
 {
 	cout << "thunder 3" << endl;
-	damageCalc(mon, THUNDER, STRONG);
+	damageCalc(mon, THUNDER, STRONG, turns);
 }
 
-void Monster::dragon1(Monster & mon)
+void Monster::dragon1(Monster & mon, int & turns)
 {
 	cout << "dragon 1" << endl;
-	damageCalc(mon, DRAGON, WEAK);
+	damageCalc(mon, DRAGON, WEAK, turns);
 }
 
-void Monster::dragon2(Monster & mon)
+void Monster::dragon2(Monster & mon, int & turns)
 {
 	cout << "dragon 2" << endl;
-	damageCalc(mon, DRAGON, MEDIUM);
+	damageCalc(mon, DRAGON, MEDIUM, turns);
 }
 
-void Monster::dragon3(Monster & mon)
+void Monster::dragon3(Monster & mon, int & turns)
 {
 	cout << "dragon 3" << endl;
-	damageCalc(mon, DRAGON, STRONG);
+	damageCalc(mon, DRAGON, STRONG, turns);
 }
 
 Item Monster::getItem(int i)

@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <time.h>
+#include <fstream>
 #include "Monster.h"
 #include "Sharpshooter.h"
 #include "swordmaster.h"
@@ -9,6 +10,7 @@
 #include "Item.h"
 #include "Potion.h"
 #include "Tonic.h"
+
 
 using namespace std;
 
@@ -68,7 +70,7 @@ void expCalc(Monster & you, Monster & enemy)
 
 	for (int i = 0; i < you.getPartySize(); i++)
 	{
-		you.setPartyExp(i, expVec[i + 1]);
+		you.getPartyM(i).setExp(you.getPartyM(i).getExp() + expVec[i + 1]);
 		cout << you.getPartyM(i).getName() << " received " << expVec[i + 1] << " exp" << endl;
 	}
 		
@@ -84,7 +86,7 @@ void expCalc(Monster & you, Monster & enemy)
 		if (you.getPartyM(i).getExp() >= 100)
 		{
 			cout << you.getPartyM(i).getName() << " leveled up!" << endl;
-			you.levelUpPartyM(i);
+			you.getPartyM(i).levelUP();
 		}
 	}
 }
@@ -209,7 +211,7 @@ bool checkValidTargetInput(Monster & you, Monster & enemy)
 }
 
 //checks if target for skills is valid and then go throughs with damage calculations
-bool checkValidSkillTarget(Monster & you, Monster & enemy, string i)
+bool checkValidSkillTarget(Monster & you, Monster & enemy, string i, int & turns)
 {
 	bool targetChosen = false;
 
@@ -266,21 +268,13 @@ bool checkValidSkillTarget(Monster & you, Monster & enemy, string i)
 
 			if (tgt != 5)
 			{
-				Monster temp = enemy.getPartyM(tgt);
+				you.skill(enemy.getPartyM(tgt), skill, turns);
 
-				
-
-				you.skill(temp, skill);
-				int modHP = temp.getHP();
-
-				enemy.setPartyMHP(tgt, modHP);
 				return true;
 			}
 			else
 			{
-				you.skill(enemy, skill);
-				/*cout << you.getName() << " attacks " << enemy.getName() << endl;
-				cout << enemy.getName() << "'s HP: " << enemy.getHP() << endl;*/
+				you.skill(enemy, skill, turns);
 				return true;
 			}
 		}
@@ -436,7 +430,7 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns, bool par
 				{
 					cout << "Not enough MP!" << endl;
 				}
-				else if (input != "c" && checkValidSkillTarget(you, enemy, input))
+				else if (input != "c" && checkValidSkillTarget(you, enemy, input, yTurns))
 				{
 					choiceLoop = true;
 					yTurns--;
@@ -510,7 +504,7 @@ void choice(Monster & you, Monster & enemy, int & yTurns, int & eTurns, bool par
 	}
 }
 
-int checkDead(Monster y)	//returns number of dead party members
+int checkDead(Monster & y)	//returns number of dead party members
 {
 	int bodyCount = 0;
 	
@@ -620,7 +614,6 @@ void turnLoop(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 	}
 }
 
-
 void enemyTurn(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 {
 	if (enemy.getName() == "Ludroth" || enemy.getName() == "Jaggi")
@@ -677,10 +670,14 @@ void enemyTurn(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 			enemy.attack(you.getPartyM(randPartyM - 1));
 		}
 	}
+	else if (enemy.getName() == "Rathian")
+	{
+		cout << enemy.getName() << "'s turn" << endl;
+	}
 	eTurns--;
 }
 
-void battle(Monster you, Monster enemy)
+void battle(Monster & you, Monster & enemy)
 {
 	cout << "Initializing Combat..." << endl;
 	bool battleEnd = false;
@@ -776,10 +773,112 @@ void battle(Monster you, Monster enemy)
 	//reset(you);
 }
 
-void testCode()
+
+void save(Monster & you)//fix this mess
 {
+	bool saved = false;
+	while (!saved)
+	{
+		ofstream savefile;
+
+		string savefilename = "save.txt";
+		savefile.open(savefilename);
+
+		savefile << "Your character:" << you.getName() << endl;
+		savefile << "LV:" << you.getLevel() << endl;
+		savefile << "Exp:" << you.getExp() << endl;
+		savefile << "HP:" << you.getMaxHP() << endl;
+		savefile << "MP:" << you.getMaxMP() << endl;
+		savefile << "Atk:" << you.getMaxAtk() << endl;
+		savefile << "Def:" << you.getMaxDef() << endl;
+		savefile << "Mag:" << you.getMaxMag() << endl;
+		savefile << "MDef:" << you.getMaxMDef() << endl << endl;
+
+		savefile << you.getName() << "'s Inventory:" << endl;
+
+		for (int i = 0; i < you.getInventory().size(); i++)
+		{
+			savefile << "Name: " << you.getInventory()[i].getName() << endl;
+		}
+
+		savefile << endl << "Party" << endl;
+
+		for (int i = 0; i < you.getPartySize(); i++)
+		{
+			savefile << "Party member " << to_string(i + 1) << "." << you.getPartyM(i).getName() << endl;
+			savefile << "LV:" << you.getPartyM(i).getLevel() << endl;
+			savefile << "Exp:" << you.getPartyM(i).getExp() << endl;
+			savefile << "HP:" << you.getPartyM(i).getMaxHP() << endl;
+			savefile << "MP:" << you.getPartyM(i).getMaxMP() << endl;
+			savefile << "Atk:" << you.getPartyM(i).getMaxAtk() << endl;
+			savefile << "Def:" << you.getPartyM(i).getMaxDef() << endl;
+			savefile << "Mag:" << you.getPartyM(i).getMaxMag() << endl;
+			savefile << "MDef:" << you.getPartyM(i).getMaxMDef() << endl << endl;
+
+			savefile << you.getPartyM(i).getName() << "'s Inventory:" << endl;
+
+			for (int j = 0; j < you.getPartyM(i).getInventory().size(); j++)
+			{
+				savefile << "Name: " << you.getPartyM(i).getInventory()[j].getName() << endl;
+			}
+		}
+	}
+}
+
+void load();
+
+void characterCreator(Monster & you)
+{
+	cout << "What class would you like to be?" << endl;
+	cout << "1. Swordmaster" << endl;
+	cout << "2. Monk" << endl;
+	cout << "3. Sharpshooter" << endl;
+	cout << "4. Mage" << endl;
+	cout << "c. cancel character creation" << endl;
+
+	string input;
+	cin >> input;
+
+	if (input == "c")
+		return;
+}
+
+void startGame(Monster & you);
+
+void mainGame()
+{
+	Monster you;
+
+	cout << "\t\t<Monster Hunter RPG>" << endl;
+													
+	while (1)
+	{
+		
+		cout << "1.New Game" << endl;
+		cout << "2.Load Game" << endl;
+
+		string choice;
+
+		cin >> choice;
+
+		if (choice == "1")
+		{
+			characterCreator(you);
+			//startGame(you);
+		}
+		else if (choice == "2")
+		{
+			//load();
+			//startGame(you);
+		}
+	}
 	
-	Swordmaster sm("Lyn");
+}
+
+void testCode()
+{	
+	mainGame();
+	/*Swordmaster sm("Lyn");
 	Sharpshooter john("John");
 	Monk m("Wallace");
 
@@ -788,16 +887,18 @@ void testCode()
 	Monster luddy("Ludroth");
 	jaggi.addPartyM(luddy);
 	
-	m.setHP(m.getHP() - 10);
+	//m.setHP(m.getHP());
 	Item hamburger(0, 1, "hamburger");
 	sm.addItem(hamburger);
-	
+	sm.setExp(90);
 	m.addPartyM(sm);
 	//printInventory(m);
 	//m.useItem("hamburger");
 	//cout << m.getHP() << endl;
 
 	battle(m, jaggi);
+	save(m);*/
+
 	//todo
 	//give exp at end of battle	(done)
 	//add leveling up (done)
@@ -811,6 +912,7 @@ void testCode()
 	//add leveling up for monsters like what stats they level up (mostly done)
 	//fix it so dead targets cannot be selected (done)
 }
+
 
 int main()
 {

@@ -53,11 +53,6 @@ Sharpshooter::Sharpshooter(string name, int hp, int mp, int atk, int def, int ma
 	addSkill("shot1");
 }
 
-void Sharpshooter::attack(Monster & mon)
-{
-	shot1(mon);
-}
-
 Sharpshooter::~Sharpshooter()
 {
 }

@@ -8,7 +8,6 @@ class Swordmaster :
 		Swordmaster();
 		Swordmaster(string name);
 		Swordmaster(string name, int hp, int mp, int atk, int def, int mag, int mdef);
-		void attack(Monster & mon);
 		virtual ~Swordmaster();
 };
 
