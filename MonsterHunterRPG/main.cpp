@@ -829,8 +829,75 @@ void save(Monster & you)//fix this mess
 
 void load(Monster & you)
 {
+	string line;
+	ifstream myfile("./save.txt");
 
+	bool gotLeader = false;
+	bool gotPartyM1 = false;
+	bool gotPartyM2 = false;
+	bool gotPartyM3 = false;
+
+	if (myfile.is_open())
+	{
+		
+		while (getline(myfile, line))
+		{
+			if (line.substr(0, 4) == "Your")
+			{
+				you.setName(line.substr(15));
+			}
+			
+			else if (line.substr(0, 2) == "LV" && !gotLeader)
+			{
+				//cout << line.substr(3) << endl;
+				you.setLevel(stoi(line.substr(3)));
+			}
+			else if (line.substr(0, 3) == "Exp" && !gotLeader)
+			{
+				//cout << line.substr(4) << endl;
+				you.setExp(stoi(line.substr(4)));
+			}
+			else if (line.substr(0, 2) == "HP" && !gotLeader)
+			{
+				you.setHP(stoi(line.substr(3)));
+				you.setMaxHP(stoi(line.substr(3)));
+			}
+			else if (line.substr(0, 2) == "MP" && !gotLeader)
+			{
+				you.setMP(stoi(line.substr(3)));
+				you.setMaxMP(stoi(line.substr(3)));
+			}
+			else if (line.substr(0, 3) == "Atk" && !gotLeader)
+			{
+				you.setAtk(stoi(line.substr(4)));
+				you.setMaxAtk(stoi(line.substr(4)));
+			}
+			else if (line.substr(0, 3) == "Def" && !gotLeader)
+			{
+				you.setDef(stoi(line.substr(4)));
+				you.setMaxDef(stoi(line.substr(4)));
+			}
+			else if (line.substr(0, 3) == "Mag" && !gotLeader)
+			{
+				you.setMag(stoi(line.substr(4)));
+				you.setMaxMag(stoi(line.substr(4)));
+			}
+			else if (line.substr(0, 4) == "MDef" && !gotLeader)
+			{
+				you.setMDef(stoi(line.substr(5)));
+				you.setMaxMDef(stoi(line.substr(5)));
+			}
+				
+		}
+			
+
+		myfile.close();
+	}
+	else
+		cout << "Unable to open file";
 }
+
+void startGame(Monster & you);
 
 void characterCreator(Monster & you)
 {
@@ -876,9 +943,12 @@ void characterCreator(Monster & you)
 				you = Mage(name);
 			
 			cout << "Welcome to Monster Hunter RPG " << name << "!" << endl;
+			startGame(you);
 		}
 		
 	}
+
+	
 }
 
 void desertedIslandLR(Monster & you);
@@ -898,6 +968,7 @@ void startGame(Monster & you)
 		cout << "1.Travel" << endl;
 		cout << "2.Buy Items" << endl;
 		cout << "3.Save" << endl;
+		cout << "4.Show your stats" << endl;
 		//cout << "4.Load" << endl;
 		cout << "q.Quit to Main Menu" << endl;
 
@@ -905,6 +976,8 @@ void startGame(Monster & you)
 
 		if (input == "3")
 			save(you);
+		else if (input == "4")
+			printStats(you);
 	}
 
 }
@@ -928,7 +1001,6 @@ void mainGame()
 		if (choice == "1")
 		{
 			characterCreator(you);
-			startGame(you);
 		}
 		else if (choice == "2")
 		{
