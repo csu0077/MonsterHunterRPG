@@ -6,6 +6,7 @@
 #include "Monster.h"
 #include "Sharpshooter.h"
 #include "swordmaster.h"
+#include "Mage.h"
 #include "Monk.h"
 #include "Item.h"
 #include "Potion.h"
@@ -829,11 +830,13 @@ void load();
 
 void characterCreator(Monster & you)
 {
+	
 	cout << "What class would you like to be?" << endl;
-	cout << "1. Swordmaster" << endl;
-	cout << "2. Monk" << endl;
-	cout << "3. Sharpshooter" << endl;
-	cout << "4. Mage" << endl;
+	cout << "Stats\t\t\tHP\tMP\tAtk\tDef\tMag\tMDef" << endl;
+	cout << "1. Swordmaster\t\t100\t50\t150\t100\t50\t100" << endl;
+	cout << "2. Monk\t\t\t200\t50\t100\t100\t100\t100" << endl;
+	cout << "3. Sharpshooter\t\t100\t100\t150\t50\t50\t50" << endl;
+	cout << "4. Mage\t\t\t50\t200\t50\t50\t200\t150" << endl;
 	cout << "c. cancel character creation" << endl;
 
 	string input;
@@ -841,6 +844,35 @@ void characterCreator(Monster & you)
 
 	if (input == "c")
 		return;
+	else
+	{
+		if (input == "1")
+			cout << "Swordmasters cleaves their enemies with high attack power" << endl;
+		else if (input == "2")
+			cout << "Monks are very durable and can dish out the pain with their fists (and feet)" << endl;
+		else if (input == "3")
+			cout << "Sharpshooters dish out high damage but also provide good ulitily" << endl;
+		else if (input == "4")
+			cout << "Mages can hit weakness well with high damage" << endl;
+		cout << "Please enter you name or input 'c' to cancel" << endl;
+		
+		string name;
+
+		cin >> name;
+
+		if (input != "c")
+		{
+			if (input == "1")
+				you = Swordmaster(name);
+			else if (input == "2")
+				you = Monk(name);
+			else if (input == "3")
+				you = Sharpshooter(name);
+			else if (input == "4")
+				you = Mage(name);
+		}
+		
+	}
 }
 
 void startGame(Monster & you);
