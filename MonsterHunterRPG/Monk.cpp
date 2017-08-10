@@ -8,7 +8,7 @@ Monk::Monk(string name)
 {
 	setInitStats(name, 200, 50, 100, 100, 100, 100, "Monk");
 
-	for (int i = 0; i < getRes().size() - 1; i++)
+	for (int i = 0; i < getRes().size(); i++)
 	{
 		setRes(i, 1);
 

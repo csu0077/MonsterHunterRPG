@@ -853,11 +853,11 @@ void characterCreator(Monster & you)
 		else if (input == "3")
 			cout << "Sharpshooters dish out high damage but also provide good ulitily" << endl;
 		else if (input == "4")
-			cout << "Mages can hit weakness well with high damage" << endl;
+			cout << "Mages can hit weakness well with high damage. They are squishy though!" << endl;
+
 		cout << "Please enter you name or input 'c' to cancel" << endl;
 		
 		string name;
-
 		cin >> name;
 
 		if (input != "c")
@@ -870,12 +870,18 @@ void characterCreator(Monster & you)
 				you = Sharpshooter(name);
 			else if (input == "4")
 				you = Mage(name);
+			
+			cout << "Welcome to Monster Hunter RPG " << name << "!" << endl;
 		}
 		
 	}
 }
 
-void startGame(Monster & you);
+void startGame(Monster & you)
+{
+	Monster jaggi("Jaggi");
+	battle(you, jaggi);
+}
 
 void mainGame()
 {
@@ -896,7 +902,7 @@ void mainGame()
 		if (choice == "1")
 		{
 			characterCreator(you);
-			//startGame(you);
+			startGame(you);
 		}
 		else if (choice == "2")
 		{
@@ -914,8 +920,8 @@ void testCode()
 	Sharpshooter john("John");
 	Monk m("Wallace");
 
-	
 	Monster jaggi("Jaggi");
+	
 	Monster luddy("Ludroth");
 	jaggi.addPartyM(luddy);
 	

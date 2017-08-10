@@ -198,7 +198,11 @@ private:
 			}
 				
 			else if (!mon.getRes()[type])
+			{
+				cout << "No damage was done!" << endl;
 				damage = 0;
+			}
+				
 		}
 		
 		if (damage <= 0)

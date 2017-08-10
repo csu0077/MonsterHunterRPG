@@ -9,7 +9,7 @@ Swordmaster::Swordmaster(string name)
 {
 	setInitStats(name, 100, 50, 150, 100, 50, 100, "Swordmaster");
 
-	for (int i = 0; i < getRes().size() - 1; i++)
+	for (int i = 0; i < getRes().size(); i++)
 	{
 		setRes(i, 1);
 

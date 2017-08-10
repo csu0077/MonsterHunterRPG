@@ -10,7 +10,7 @@ Mage::Mage(string name)
 {
 	setInitStats(name, 50, 200, 50, 50, 200, 150, "Mage");
 
-	for (int i = 0; i < getRes().size() - 1; i++)
+	for (int i = 0; i < getRes().size(); i++)
 	{
 		setRes(i, 1);
 
