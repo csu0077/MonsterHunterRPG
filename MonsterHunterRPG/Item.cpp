@@ -8,6 +8,11 @@ Item::Item()
 {
 }
 
+Item::Item(string name)
+	:name(name)
+{
+}
+
 Item::Item(int tier, int count, string name)
 	:tier(tier), count(count), name(name)
 {

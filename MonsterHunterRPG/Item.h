@@ -6,6 +6,7 @@ class Item
 {
 public:
 	Item();
+	Item(string name);
 	Item(int tier, int count, string name);
 	int getTier();
 	int getCount();

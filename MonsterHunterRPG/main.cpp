@@ -100,6 +100,28 @@ void reset(Monster & m)	//reset party stats after every battle
 		m.resetPartyMStats(i);
 }
 
+void printItem(Item i)
+{
+	cout << "item name: " << i.getName() << endl <<
+		"tier:" << i.getTier() << endl <<
+		"count:" << i.getCount() << endl << endl;
+}
+
+void printInventory(Monster h)
+{
+	cout << h.getName() << "'s inventory" << endl;
+	for (unsigned int i = 0; i < h.getInventory().size(); i++)
+	{
+
+
+		if (h.getInventory()[i].getName() != "")
+		{
+			cout << i + 1 << ":";
+			printItem(h.getInventory()[i]);
+		}
+
+	}
+}
 void printStats(Monster & m)
 {
 	cout << "name:" << m.getName() << endl <<
@@ -109,30 +131,16 @@ void printStats(Monster & m)
 		"Def:" << m.getDef() << endl <<
 		"Mag:" << m.getMag() << endl <<
 		"Mdef:" << m.getMDef() << endl << endl;
-}
 
-void printItem(Item i)
-{
-	cout << "item name: " << i.getName() << endl <<
-		"tier:" << i.getTier() << endl <<
-		"count:" << i.getCount() << endl << endl;
-}
+	printInventory(m);
 
-void printInventory(Monster h)
-{	
-	cout << h.getName() << "'s inventory" << endl;
-	for (unsigned int i = 0; i < h.getInventory().size(); i++)
+	for (int i = 0; i < m.getSkills().size(); i++)
 	{
-		
-
-		if (h.getInventory()[i].getName() != "")
-		{
-			cout << i + 1 << ":";
-			printItem(h.getInventory()[i]);
-		}
-			
+		cout << "Skill:" << m.getSkill(i) << endl;
 	}
 }
+
+
 
 //checks if target for normal attacks is valid and then go throughs with damage calculations
 bool checkValidTargetInput(Monster & you, Monster & enemy)
@@ -781,13 +789,14 @@ void save(Monster & you)//fix this mess
 	while (!saved)
 	{
 		ofstream savefile;
-
+		//time_t t = time(0);
 		string savefilename = "save.txt";
 		savefile.open(savefilename);
 
 		savefile << "Your character:" << you.getName() << endl;
 		savefile << "LV:" << you.getLevel() << endl;
 		savefile << "Exp:" << you.getExp() << endl;
+		savefile << "Role:" << you.getRole() << endl;
 		savefile << "HP:" << you.getMaxHP() << endl;
 		savefile << "MP:" << you.getMaxMP() << endl;
 		savefile << "Atk:" << you.getMaxAtk() << endl;
@@ -852,6 +861,8 @@ void load(Monster & you)
 		
 		while (getline(myfile, line))
 		{
+			size_t found = line.find("Name:");
+
 			if (line.substr(0, 4) == "Your")
 			{
 				you.setName(line.substr(15));
@@ -866,6 +877,10 @@ void load(Monster & you)
 			{
 				//cout << line.substr(4) << endl;
 				you.setExp(stoi(line.substr(4)));
+			}
+			else if (line.substr(0, 4) == "Role" && !gotLeader)
+			{
+				you.setRole(line.substr(5));
 			}
 			else if (line.substr(0, 2) == "HP" && !gotLeader)
 			{
@@ -896,6 +911,19 @@ void load(Monster & you)
 			{
 				you.setMDef(stoi(line.substr(5)));
 				you.setMaxMDef(stoi(line.substr(5)));
+			}
+			else if (line.substr(0, 4) == "Name" && !gotLeader)
+			{
+				if (line != "Name:")
+				{
+					Item item(line.substr(5));
+					you.getInventory().push_back(item);
+				}
+
+			}
+			else if (line.substr(0, 4) == "Skill" && !gotLeader)
+			{
+				you.addSkill(line.substr(5));
 			}
 				
 		}
@@ -974,7 +1002,7 @@ void startGame(Monster & you)
 
 	while (input != "q")
 	{
-		cout << "Welcome to the Hunter's Guild." << endl;
+		//cout << "Welcome to the Hunter's Guild." << endl;
 		cout << "1.Travel" << endl;
 		cout << "2.Buy Items" << endl;
 		cout << "3.Save" << endl;
