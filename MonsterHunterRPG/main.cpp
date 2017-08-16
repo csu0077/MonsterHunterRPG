@@ -533,7 +533,6 @@ int checkDead(Monster & y)	//returns number of dead party members
 
 void turnLoop(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 {
-
 	while (yTurns)
 	{
 		cout << you.getName() << "\t\t";
@@ -569,8 +568,6 @@ void turnLoop(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 		{
 			return;
 		}
-			
-			
 
 		if ( you.getPartySize() >= 1)
 		{
@@ -808,21 +805,22 @@ void save(Monster & you)//fix this mess
 
 		for (int i = 0; i < you.getInventory().size(); i++)
 		{
-			savefile << "Name: " << you.getInventory()[i].getName() << endl;
+			savefile << "Name:" << you.getInventory()[i].getName() << endl;
 		}
-
-		savefile << endl;
 
 		for (int i = 0; i < you.getSkills().size(); i++)
 		{
 			savefile << "Skill:" << you.getSkills()[i] << endl;
 		}
-			
+		
+		savefile << endl;
+
 		for (int i = 0; i < you.getPartySize(); i++)
 		{
-			savefile << "Party member " << to_string(i + 1) << "." << you.getPartyM(i).getName() << endl;
+			savefile << "Party member " << to_string(i + 1) << ": " << you.getPartyM(i).getName() << endl;
 			savefile << "LV:" << you.getPartyM(i).getLevel() << endl;
 			savefile << "Exp:" << you.getPartyM(i).getExp() << endl;
+			savefile << "Role:" << you.getPartyM(i).getRole() << endl;
 			savefile << "HP:" << you.getPartyM(i).getMaxHP() << endl;
 			savefile << "MP:" << you.getPartyM(i).getMaxMP() << endl;
 			savefile << "Atk:" << you.getPartyM(i).getMaxAtk() << endl;
@@ -834,10 +832,10 @@ void save(Monster & you)//fix this mess
 
 			for (int j = 0; j < you.getPartyM(i).getInventory().size(); j++)
 			{
-				savefile << "Name: " << you.getPartyM(i).getInventory()[j].getName() << endl;
+				savefile << "Name:" << you.getPartyM(i).getInventory()[j].getName() << endl;
 			}
 
-			for (int j = 0; i < you.getPartyM(i).getSkills().size(); j++)
+			for (int j = 0; j < you.getPartyM(i).getSkills().size(); j++)
 			{
 				savefile << "Skill:" << you.getPartyM(i).getSkills()[j] << endl;
 			}
@@ -856,18 +854,20 @@ void load(Monster & you)
 	bool gotPartyM2 = false;
 	bool gotPartyM3 = false;
 
+	Monster newTeamMember;
+
 	if (myfile.is_open())
 	{
-		
+		string currentPerson;
 		while (getline(myfile, line))
 		{
-			size_t found = line.find("Name:");
-
-			if (line.substr(0, 4) == "Your")
+			//size_t found = line.find();
+			
+			if (line.substr(0, 4) == "Your" && !gotLeader)
 			{
 				you.setName(line.substr(15));
+				currentPerson = you.getName();
 			}
-			
 			else if (line.substr(0, 2) == "LV" && !gotLeader)
 			{
 				//cout << line.substr(3) << endl;
@@ -922,6 +922,72 @@ void load(Monster & you)
 
 			}
 			else if (line.substr(0, 4) == "Skill" && !gotLeader)
+			{
+				you.addSkill(line.substr(5));
+			}
+			else if (line.substr(0, 12) == "Party member")
+			{
+				gotLeader = true;
+
+				if (line.at(14) == '2' && line.at(14) == '3' && line.at(13) == '4')
+				{
+					you.addPartyM(newTeamMember);
+				}
+			}
+			else if (line.substr(0, 2) == "LV")
+			{
+				//cout << line.substr(3) << endl;
+				you.setLevel(stoi(line.substr(3)));
+			}
+			else if (line.substr(0, 3) == "Exp")
+			{
+				//cout << line.substr(4) << endl;
+				you.setExp(stoi(line.substr(4)));
+			}
+			else if (line.substr(0, 4) == "Role")
+			{
+				you.setRole(line.substr(5));
+			}
+			else if (line.substr(0, 2) == "HP")
+			{
+				you.setHP(stoi(line.substr(3)));
+				you.setMaxHP(stoi(line.substr(3)));
+			}
+			else if (line.substr(0, 2) == "MP")
+			{
+				you.setMP(stoi(line.substr(3)));
+				you.setMaxMP(stoi(line.substr(3)));
+			}
+			else if (line.substr(0, 3) == "Atk")
+			{
+				you.setAtk(stoi(line.substr(4)));
+				you.setMaxAtk(stoi(line.substr(4)));
+			}
+			else if (line.substr(0, 3) == "Def")
+			{
+				you.setDef(stoi(line.substr(4)));
+				you.setMaxDef(stoi(line.substr(4)));
+			}
+			else if (line.substr(0, 3) == "Mag")
+			{
+				you.setMag(stoi(line.substr(4)));
+				you.setMaxMag(stoi(line.substr(4)));
+			}
+			else if (line.substr(0, 4) == "MDef")
+			{
+				you.setMDef(stoi(line.substr(5)));
+				you.setMaxMDef(stoi(line.substr(5)));
+			}
+			else if (line.substr(0, 4) == "Name")
+			{
+				if (line != "Name:")
+				{
+					Item item(line.substr(5));
+					you.getInventory().push_back(item);
+				}
+
+			}
+			else if (line.substr(0, 4) == "Skill")
 			{
 				you.addSkill(line.substr(5));
 			}
@@ -998,6 +1064,10 @@ void volcanoDepths(Monster & you);
 
 void startGame(Monster & you)
 {
+	Monk wallace("Wallace");
+
+	//you.addPartyM(wallace);
+
 	string input;
 
 	while (input != "q")
