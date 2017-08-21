@@ -6,6 +6,7 @@
 #include "Monster.h"
 #include "Sharpshooter.h"
 #include "swordmaster.h"
+#include "Mage.h"
 #include "Monk.h"
 #include "Item.h"
 #include "Potion.h"
@@ -99,6 +100,28 @@ void reset(Monster & m)	//reset party stats after every battle
 		m.resetPartyMStats(i);
 }
 
+void printItem(Item i)
+{
+	cout << "item name: " << i.getName() << endl <<
+		"tier:" << i.getTier() << endl <<
+		"count:" << i.getCount() << endl << endl;
+}
+
+void printInventory(Monster h)
+{
+	cout << h.getName() << "'s inventory" << endl;
+	for (unsigned int i = 0; i < h.getInventory().size(); i++)
+	{
+
+
+		if (h.getInventory()[i].getName() != "")
+		{
+			cout << i + 1 << ":";
+			printItem(h.getInventory()[i]);
+		}
+
+	}
+}
 void printStats(Monster & m)
 {
 	cout << "name:" << m.getName() << endl <<
@@ -108,30 +131,16 @@ void printStats(Monster & m)
 		"Def:" << m.getDef() << endl <<
 		"Mag:" << m.getMag() << endl <<
 		"Mdef:" << m.getMDef() << endl << endl;
-}
 
-void printItem(Item i)
-{
-	cout << "item name: " << i.getName() << endl <<
-		"tier:" << i.getTier() << endl <<
-		"count:" << i.getCount() << endl << endl;
-}
+	printInventory(m);
 
-void printInventory(Monster h)
-{	
-	cout << h.getName() << "'s inventory" << endl;
-	for (unsigned int i = 0; i < h.getInventory().size(); i++)
+	for (int i = 0; i < m.getSkills().size(); i++)
 	{
-		
-
-		if (h.getInventory()[i].getName() != "")
-		{
-			cout << i + 1 << ":";
-			printItem(h.getInventory()[i]);
-		}
-			
+		cout << "Skill:" << m.getSkill(i) << endl;
 	}
 }
+
+
 
 //checks if target for normal attacks is valid and then go throughs with damage calculations
 bool checkValidTargetInput(Monster & you, Monster & enemy)
@@ -524,7 +533,6 @@ int checkDead(Monster & y)	//returns number of dead party members
 
 void turnLoop(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 {
-
 	while (yTurns)
 	{
 		cout << you.getName() << "\t\t";
@@ -560,8 +568,6 @@ void turnLoop(Monster & you, Monster & enemy, int & yTurns, int & eTurns)
 		{
 			return;
 		}
-			
-			
 
 		if ( you.getPartySize() >= 1)
 		{
@@ -780,13 +786,14 @@ void save(Monster & you)//fix this mess
 	while (!saved)
 	{
 		ofstream savefile;
-
+		//time_t t = time(0);
 		string savefilename = "save.txt";
 		savefile.open(savefilename);
 
 		savefile << "Your character:" << you.getName() << endl;
 		savefile << "LV:" << you.getLevel() << endl;
 		savefile << "Exp:" << you.getExp() << endl;
+		savefile << "Role:" << you.getRole() << endl;
 		savefile << "HP:" << you.getMaxHP() << endl;
 		savefile << "MP:" << you.getMaxMP() << endl;
 		savefile << "Atk:" << you.getMaxAtk() << endl;
@@ -798,16 +805,22 @@ void save(Monster & you)//fix this mess
 
 		for (int i = 0; i < you.getInventory().size(); i++)
 		{
-			savefile << "Name: " << you.getInventory()[i].getName() << endl;
+			savefile << "Name:" << you.getInventory()[i].getName() << endl;
 		}
 
-		savefile << endl << "Party" << endl;
+		for (int i = 0; i < you.getSkills().size(); i++)
+		{
+			savefile << "Skill:" << you.getSkills()[i] << endl;
+		}
+		
+		savefile << endl;
 
 		for (int i = 0; i < you.getPartySize(); i++)
 		{
-			savefile << "Party member " << to_string(i + 1) << "." << you.getPartyM(i).getName() << endl;
+			savefile << "Party member " << to_string(i + 1) << ": " << you.getPartyM(i).getName() << endl;
 			savefile << "LV:" << you.getPartyM(i).getLevel() << endl;
 			savefile << "Exp:" << you.getPartyM(i).getExp() << endl;
+			savefile << "Role:" << you.getPartyM(i).getRole() << endl;
 			savefile << "HP:" << you.getPartyM(i).getMaxHP() << endl;
 			savefile << "MP:" << you.getPartyM(i).getMaxMP() << endl;
 			savefile << "Atk:" << you.getPartyM(i).getMaxAtk() << endl;
@@ -819,21 +832,186 @@ void save(Monster & you)//fix this mess
 
 			for (int j = 0; j < you.getPartyM(i).getInventory().size(); j++)
 			{
-				savefile << "Name: " << you.getPartyM(i).getInventory()[j].getName() << endl;
+				savefile << "Name:" << you.getPartyM(i).getInventory()[j].getName() << endl;
+			}
+
+			for (int j = 0; j < you.getPartyM(i).getSkills().size(); j++)
+			{
+				savefile << "Skill:" << you.getPartyM(i).getSkills()[j] << endl;
 			}
 		}
+		saved = true;
 	}
 }
 
-void load();
+void load(Monster & you)
+{
+	string line;
+	ifstream myfile("./save.txt");
+
+	bool gotLeader = false;
+	bool gotPartyM1 = false;
+	bool gotPartyM2 = false;
+	bool gotPartyM3 = false;
+
+	Monster newTeamMember;
+
+	if (myfile.is_open())
+	{
+		string currentPerson;
+		while (getline(myfile, line))
+		{
+			//size_t found = line.find();
+			
+			if (line.substr(0, 4) == "Your" && !gotLeader)
+			{
+				you.setName(line.substr(15));
+				currentPerson = you.getName();
+			}
+			else if (line.substr(0, 2) == "LV" && !gotLeader)
+			{
+				//cout << line.substr(3) << endl;
+				you.setLevel(stoi(line.substr(3)));
+			}
+			else if (line.substr(0, 3) == "Exp" && !gotLeader)
+			{
+				//cout << line.substr(4) << endl;
+				you.setExp(stoi(line.substr(4)));
+			}
+			else if (line.substr(0, 4) == "Role" && !gotLeader)
+			{
+				you.setRole(line.substr(5));
+			}
+			else if (line.substr(0, 2) == "HP" && !gotLeader)
+			{
+				you.setHP(stoi(line.substr(3)));
+				you.setMaxHP(stoi(line.substr(3)));
+			}
+			else if (line.substr(0, 2) == "MP" && !gotLeader)
+			{
+				you.setMP(stoi(line.substr(3)));
+				you.setMaxMP(stoi(line.substr(3)));
+			}
+			else if (line.substr(0, 3) == "Atk" && !gotLeader)
+			{
+				you.setAtk(stoi(line.substr(4)));
+				you.setMaxAtk(stoi(line.substr(4)));
+			}
+			else if (line.substr(0, 3) == "Def" && !gotLeader)
+			{
+				you.setDef(stoi(line.substr(4)));
+				you.setMaxDef(stoi(line.substr(4)));
+			}
+			else if (line.substr(0, 3) == "Mag" && !gotLeader)
+			{
+				you.setMag(stoi(line.substr(4)));
+				you.setMaxMag(stoi(line.substr(4)));
+			}
+			else if (line.substr(0, 4) == "MDef" && !gotLeader)
+			{
+				you.setMDef(stoi(line.substr(5)));
+				you.setMaxMDef(stoi(line.substr(5)));
+			}
+			else if (line.substr(0, 4) == "Name" && !gotLeader)
+			{
+				if (line != "Name:")
+				{
+					Item item(line.substr(5));
+					you.getInventory().push_back(item);
+				}
+
+			}
+			else if (line.substr(0, 4) == "Skill" && !gotLeader)
+			{
+				you.addSkill(line.substr(5));
+			}
+			else if (line.substr(0, 12) == "Party member")
+			{
+				gotLeader = true;
+
+				if (line.at(14) == '2' && line.at(14) == '3' && line.at(13) == '4')
+				{
+					you.addPartyM(newTeamMember);
+				}
+			}
+			else if (line.substr(0, 2) == "LV")
+			{
+				//cout << line.substr(3) << endl;
+				you.setLevel(stoi(line.substr(3)));
+			}
+			else if (line.substr(0, 3) == "Exp")
+			{
+				//cout << line.substr(4) << endl;
+				you.setExp(stoi(line.substr(4)));
+			}
+			else if (line.substr(0, 4) == "Role")
+			{
+				you.setRole(line.substr(5));
+			}
+			else if (line.substr(0, 2) == "HP")
+			{
+				you.setHP(stoi(line.substr(3)));
+				you.setMaxHP(stoi(line.substr(3)));
+			}
+			else if (line.substr(0, 2) == "MP")
+			{
+				you.setMP(stoi(line.substr(3)));
+				you.setMaxMP(stoi(line.substr(3)));
+			}
+			else if (line.substr(0, 3) == "Atk")
+			{
+				you.setAtk(stoi(line.substr(4)));
+				you.setMaxAtk(stoi(line.substr(4)));
+			}
+			else if (line.substr(0, 3) == "Def")
+			{
+				you.setDef(stoi(line.substr(4)));
+				you.setMaxDef(stoi(line.substr(4)));
+			}
+			else if (line.substr(0, 3) == "Mag")
+			{
+				you.setMag(stoi(line.substr(4)));
+				you.setMaxMag(stoi(line.substr(4)));
+			}
+			else if (line.substr(0, 4) == "MDef")
+			{
+				you.setMDef(stoi(line.substr(5)));
+				you.setMaxMDef(stoi(line.substr(5)));
+			}
+			else if (line.substr(0, 4) == "Name")
+			{
+				if (line != "Name:")
+				{
+					Item item(line.substr(5));
+					you.getInventory().push_back(item);
+				}
+
+			}
+			else if (line.substr(0, 4) == "Skill")
+			{
+				you.addSkill(line.substr(5));
+			}
+				
+		}
+			
+
+		myfile.close();
+	}
+	else
+		cout << "Unable to open file";
+}
+
+void startGame(Monster & you);
 
 void characterCreator(Monster & you)
 {
+	
 	cout << "What class would you like to be?" << endl;
-	cout << "1. Swordmaster" << endl;
-	cout << "2. Monk" << endl;
-	cout << "3. Sharpshooter" << endl;
-	cout << "4. Mage" << endl;
+	cout << "Stats\t\t\tHP\tMP\tAtk\tDef\tMag\tMDef" << endl;
+	cout << "1. Swordmaster\t\t100\t50\t150\t100\t50\t100" << endl;
+	cout << "2. Monk\t\t\t200\t50\t100\t100\t100\t100" << endl;
+	cout << "3. Sharpshooter\t\t100\t100\t150\t50\t50\t50" << endl;
+	cout << "4. Mage\t\t\t50\t200\t50\t50\t200\t150" << endl;
 	cout << "c. cancel character creation" << endl;
 
 	string input;
@@ -841,9 +1019,76 @@ void characterCreator(Monster & you)
 
 	if (input == "c")
 		return;
+	else
+	{
+		if (input == "1")
+			cout << "Swordmasters cleaves their enemies with high attack power" << endl;
+		else if (input == "2")
+			cout << "Monks are very durable and can dish out the pain with their fists (and feet)" << endl;
+		else if (input == "3")
+			cout << "Sharpshooters dish out high damage but also provide good ulitily" << endl;
+		else if (input == "4")
+			cout << "Mages can hit weakness well with high damage. They are squishy though!" << endl;
+
+		cout << "Please enter you name or input 'c' to cancel" << endl;
+		
+		string name;
+		cin >> name;
+
+		if (input != "c")
+		{
+			if (input == "1")
+				you = Swordmaster(name);
+			else if (input == "2")
+				you = Monk(name);
+			else if (input == "3")
+				you = Sharpshooter(name);
+			else if (input == "4")
+				you = Mage(name);
+			
+			cout << "Welcome to Monster Hunter RPG " << name << "!" << endl;
+			startGame(you);
+		}
+		
+	}
+
+	
 }
 
-void startGame(Monster & you);
+void desertedIslandLR(Monster & you);
+void floodedForestLR(Monster & you);
+void tundraLR(Monster & you);
+void desertLR(Monster & you);
+void volcanoLR(Monster & you);
+void volcanoDepths(Monster & you);
+
+void startGame(Monster & you)
+{
+	Monk wallace("Wallace");
+
+	//you.addPartyM(wallace);
+
+	string input;
+
+	while (input != "q")
+	{
+		//cout << "Welcome to the Hunter's Guild." << endl;
+		cout << "1.Travel" << endl;
+		cout << "2.Buy Items" << endl;
+		cout << "3.Save" << endl;
+		cout << "4.Show your stats" << endl;
+		//cout << "4.Load" << endl;
+		cout << "q.Quit to Main Menu" << endl;
+
+		cin >> input;
+
+		if (input == "3")
+			save(you);
+		else if (input == "4")
+			printStats(you);
+	}
+
+}
 
 void mainGame()
 {
@@ -864,12 +1109,11 @@ void mainGame()
 		if (choice == "1")
 		{
 			characterCreator(you);
-			//startGame(you);
 		}
 		else if (choice == "2")
 		{
-			//load();
-			//startGame(you);
+			load(you);
+			startGame(you);
 		}
 	}
 	
@@ -877,13 +1121,13 @@ void mainGame()
 
 void testCode()
 {	
-	mainGame();
+	
 	/*Swordmaster sm("Lyn");
 	Sharpshooter john("John");
 	Monk m("Wallace");
 
-	
 	Monster jaggi("Jaggi");
+	
 	Monster luddy("Ludroth");
 	jaggi.addPartyM(luddy);
 	
@@ -916,7 +1160,8 @@ void testCode()
 
 int main()
 {
-	testCode();
+	//testCode();
+	mainGame();
 	string doo;
 	cin >> doo;
 

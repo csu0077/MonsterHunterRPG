@@ -104,7 +104,8 @@ public:
 	void removeItem(int i); //removes item from invetory
 	void useItem(string name);
 	void useItemParty(int member, string name);
-	vector <Item> getInventory();
+	vector <Item>  getInventory();
+	vector <string> getSkills();
 
 	//1= weak, 2 = medium, 3 = strong
 	void slash1(Monster & mon, int & turns); //weak slash damage
@@ -198,7 +199,11 @@ private:
 			}
 				
 			else if (!mon.getRes()[type])
+			{
+				cout << "No damage was done!" << endl;
 				damage = 0;
+			}
+				
 		}
 		
 		if (damage <= 0)

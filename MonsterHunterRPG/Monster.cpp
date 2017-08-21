@@ -67,22 +67,42 @@ Monster::Monster(string name)		//mostly just for monsters
 		this->level = 1;
 
 		this->setRes(SLASH, 2);
+		this->setRes(IMPACT, 1);
+		this->setRes(SHOT, 1);
+		this->setRes(FIRE, 1);
+		this->setRes(ICE, 1);
+		this->setRes(WATER, 1);
+		this->setRes(THUNDER, 1);
+		this->setRes(DRAGON, 1);
 	}
 	else if (name == "Jaggi")
 	{
 		setInitStats("Jaggi", 100, 25, 125, 25, 0, 25, "Jaggi");
 		this->level = 1;
 
-		setRes(IMPACT, 2);
+		this->setRes(IMPACT, 2);
+		this->setRes(SLASH, 2);
+		this->setRes(SHOT, 1);
+		this->setRes(FIRE, 1);
+		this->setRes(ICE, 1);
+		this->setRes(WATER, 1);
+		this->setRes(THUNDER, 1);
+		this->setRes(DRAGON, 1);
+		
 	}
 	else if (name == "Queropeco")
 	{
 		setInitStats("Queropeco", 200, 100, 150, 50, 50, 50, "Queropeco");
 		this->level = 3;
 		
-		setRes(WATER, 2);
-		setRes(SHOT, 2);
-		setRes(FIRE, 1);
+		this->setRes(WATER, 2);
+		this->setRes(SHOT, 2);
+		this->setRes(SLASH, 1);
+		this->setRes(IMPACT, 1);
+		this->setRes(FIRE, 1);
+		this->setRes(ICE, 1);
+		this->setRes(THUNDER, 1);
+		this->setRes(DRAGON, 1);
 	}
 	else if (name == "Rathian")
 	{
@@ -92,6 +112,12 @@ Monster::Monster(string name)		//mostly just for monsters
 		setRes(THUNDER, 2);
 		setRes(SHOT, 2);
 		setRes(FIRE, 0);
+
+		this->setRes(SLASH, 1);
+		this->setRes(IMPACT, 1);
+		this->setRes(ICE, 1);
+		this->setRes(WATER, 1);
+		this->setRes(DRAGON, 1);
 	}
 	else if (name == "Great Jaggi")
 	{
@@ -101,6 +127,12 @@ Monster::Monster(string name)		//mostly just for monsters
 		setRes(IMPACT, 2);
 		setRes(SLASH, 2);
 		setRes(FIRE, 2);
+
+		this->setRes(FIRE, 1);
+		this->setRes(ICE, 1);
+		this->setRes(WATER, 1);
+		this->setRes(THUNDER, 1);
+		this->setRes(DRAGON, 1);
 	}
 	else if (name == "Royal Ludroth")
 	{
@@ -109,6 +141,13 @@ Monster::Monster(string name)		//mostly just for monsters
 
 		setRes(IMPACT, 2);
 		setRes(FIRE, 2);
+
+		this->setRes(SLASH, 1);
+		this->setRes(SHOT, 1);
+		this->setRes(ICE, 1);
+		this->setRes(WATER, 1);
+		this->setRes(THUNDER, 1);
+		this->setRes(DRAGON, 1);
 	}
 	else if (name == "Rathalos")
 	{
@@ -118,6 +157,12 @@ Monster::Monster(string name)		//mostly just for monsters
 		setRes(THUNDER, 2);
 		setRes(DRAGON, 2);
 		setRes(FIRE, 2);
+
+		this->setRes(SLASH, 1);
+		this->setRes(IMPACT, 1);
+		this->setRes(SHOT, 1);
+		this->setRes(ICE, 1);
+		this->setRes(WATER, 1);
 	}
 }
 
@@ -542,6 +587,7 @@ void Monster::printPartySize()
 
 void Monster::operator=(const Monster & m)
 {
+	this->level = m.level;
 	this->name = m.name;
 	this->HP = m.HP;
 	this->MP = m.MP;
@@ -557,6 +603,15 @@ void Monster::operator=(const Monster & m)
 	this->maxMag = m.maxMag;
 	this->maxMDef = m.maxMDef;
 
+	for (int i = 0; i < m.resistances.size(); i++)
+	{
+		resistances[i] = m.resistances[i];
+	}
+
+	for (int i = 0; i < m.skills.size(); i++)
+	{
+		skills.push_back(m.skills[i]);
+	}
 }
 
 void Monster::attack(Monster & m)
@@ -1280,6 +1335,11 @@ void Monster::useItemParty(int member, string name)
 vector<Item> Monster::getInventory()
 {
 	return inventory;
+}
+
+vector<string> Monster::getSkills()
+{
+	return skills;
 }
 
 Monster::~Monster()
